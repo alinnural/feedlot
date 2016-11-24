@@ -85,7 +85,8 @@ class HomeController extends BaseController
         return view('front.calculate',[
                     'initial_tableau' => $initial_tableau,
                     'num' => $this->num,
-                    'total_number' => $this->total_number]);
+                    'total_number' => $this->total_number,
+                    'simplex'=>$simplex]);
         $this->print_dump($initial_tableau);
     }
 

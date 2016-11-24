@@ -5,7 +5,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <!--<div class="panel-heading">Hasil Optimasi</div>-->
+                <div class="panel-heading">
+                    <div class="btn-group pull-right">
+                        <a href="/welcome" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                    </div>
+                    <h4> Hasil Optimasi </h4>
+                </div>
                 <div class="panel-body">
                     <h4>Inisialisasi Tableau</h4>
                     <table class="table table-bordered">
@@ -38,6 +43,8 @@
                         @endfor
                         </tr>
 					</table>
+
+                    @include('front.table-iteration')
                 </div>
             </div>
         </div>

@@ -19,7 +19,7 @@
                                 <div class="row">
                                     @for ($i = 1;$i<=intval($data['var']); $i++)
                                     <div class="col-md-2">
-                                        {!! Form::number('var'.$i.'', 'value',['class'=>'form-control','placeholder'=>'X'.$i.'']) !!}
+                                        {!! Form::text('var'.$i.'', '0',['class'=>'form-control','placeholder'=>'X'.$i.'']) !!}
                                     </div>
                                     @if($i != intval($data['var']))
                                     <div class="col-md-1">
@@ -40,7 +40,7 @@
                                         <div class="col-md-12">
                                         @for($j=1; $j<=intval($data['var']); $j++)
                                             <div class="col-md-2">
-                                                {!! Form::number('cons'.$k.'_'.$j.'', 'value',['class'=>'form-control','placeholder'=>'X'.$j.'']) !!}
+                                                {!! Form::text('cons'.$k.'_'.$j.'', '0',['class'=>'form-control','placeholder'=>'X'.$j.'']) !!}
                                             </div>
                                             @if($i != intval($data['var']))
                                             <div class="col-md-1">
@@ -55,7 +55,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2">
-                                            {!! Form::number('answer'.$k.'','value',['class'=>'form-control']) !!}
+                                            {!! Form::text('answer'.$k.'','0',['class'=>'form-control']) !!}
                                         </div>
                                         </div>
                                     </div>
