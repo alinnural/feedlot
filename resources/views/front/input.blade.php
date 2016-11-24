@@ -31,17 +31,38 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {!! Form::label('var', 'Berapa Variabel?', ['class' => 'col-sm-4 control-label']) !!}
-                            <div class="col-md-8">
-                                {!! Form::number('var', 'value',['class'=>'form-control']) !!}
+                            <div class="col-md-12">
+                                Constraints
+                            </div>
+                            <div class="col-md-12">
+                                @for($k=1; $k<=intval($data['cons']); $k++)
+                                    <div class="row" style="padding-top:5pt;">
+                                        <div class="col-md-12">
+                                        @for($j=1; $j<=intval($data['var']); $j++)
+                                            <div class="col-md-2">
+                                                {!! Form::number('cons'.$k.'_'.$j.'', 'value',['class'=>'form-control','placeholder'=>'X'.$j.'']) !!}
+                                            </div>
+                                            @if($i != intval($data['var']))
+                                            <div class="col-md-1">
+                                            +
+                                            </div>
+                                            @endif
+                                        @endfor
+                                        <div class="col-md-2">
+                                            <select name='sign{{ $k }}'>
+                                            <option value='lessThan'><=</option>
+                                            <option value='greaterThan'>>=</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            {!! Form::number('answer'.$k.'','value',['class'=>'form-control']) !!}
+                                        </div>
+                                        </div>
+                                    </div>
+                                @endfor
                             </div>
                         </div>
-                        <div class="form-group">
-                            {!! Form::label('cons', 'Berapa Constraint?', ['class' => 'col-sm-4 control-label']) !!}
-                            <div class="col-md-8">
-                                {!! Form::number('cons', 'value',['class'=>'form-control']) !!}
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="panel-footer">
                         <div class="row">
