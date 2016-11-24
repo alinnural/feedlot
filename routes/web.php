@@ -18,3 +18,4 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index');
 Route::get('/welcome', 'HomeController@home');
 Route::post('/input','HomeController@input');
+Route::post('/calculate','HomeController@calculate');
