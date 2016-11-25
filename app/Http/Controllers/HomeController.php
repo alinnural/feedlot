@@ -73,21 +73,23 @@ class HomeController extends BaseController
         //after transposing the matrix, negate the last row
         $this->transpose_negate_last_row();
         
+
         //add the slack variables, the number of slack variables would be the number of unknown variables
         $this->add_slack_variables();
-        
+
         //add the the coefficients of the objective function to the last column of the array
         $this->add_coefficients_objective($request);
-        
+
         //display the initial tableau
         $initial_tableau = $this->valuesArray;
         
+        #$this->print_dump($initial_tableau);
+
         return view('front.calculate',[
                     'initial_tableau' => $initial_tableau,
                     'num' => $this->num,
                     'total_number' => $this->total_number,
                     'simplex'=>$simplex]);
-        $this->print_dump($initial_tableau);
     }
 
     private function insert_value($request)

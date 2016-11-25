@@ -19,7 +19,7 @@
     
     <!--display the iteration number-->
     @php $itr=$max+1; @endphp
-    <h4>Iterasi ke-: {{ $itr }}</h4>
+    <h4>Iterasi ke: {{ $itr }}</h4>
     
     <!--normalize the pivot row-->
     <!--divide the pivot row by the pivot element-->
@@ -27,8 +27,8 @@
         @if($i!=$minCol)
             @php $initial_tableau[$minRow][$i]=$initial_tableau[$minRow][$i]/$initial_tableau[$minRow][$minCol]; @endphp
         @endif
-        @php $initial_tableau[$minRow][$minCol]=1; @endphp
     @endfor
+    @php $initial_tableau[$minRow][$minCol]=1; @endphp
     
     <!--make the rest of the elements of the pivot column 0-->
     @for($i=0; $i<=$num[0]; $i++)
@@ -37,8 +37,8 @@
                 @if($j!=$minCol)
                     @php $initial_tableau[$i][$j]=$initial_tableau[$i][$j]-($initial_tableau[$i][$minCol] * $initial_tableau[$minRow][$j]); @endphp
                 @endif
-                @php $initial_tableau[$i][$minCol]=0; @endphp
             @endfor
+            @php $initial_tableau[$i][$minCol]=0; @endphp
         @endif
     @endfor
     
