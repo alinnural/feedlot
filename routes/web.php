@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/formula-ransum','FormulaRansumController@index');
+
 Route::get('/home', 'HomeController@index');
 Route::get('/welcome', 'HomeController@home');
 Route::post('/input','HomeController@input');

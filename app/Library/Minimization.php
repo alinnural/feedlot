@@ -1,64 +1,35 @@
-<?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
-use Illuminate\Http\Request;
+<?php 
+namespace App\library;
 
 use App\Library\SimplexMethod;
-use App\Library\Minimization;
+use Illuminate\Http\Request;
 
-class HomeController extends BaseController
+class Minimization extends SimplexMethod
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    private $valuesArray = array();
-    //$num[0]=num of variables and $num[1]=num of constraints
+    private $valueArray = array();
     private $num = array();
     private $total_number;
 
     public function index()
     {
-        //$FmyFunctions1 = new SimplexMethod;
-        $FmyFunctions1 = new Minimization;
-        $is_ok = ($FmyFunctions1->index());
-        echo $is_ok;
+        return "Minimization extends SimplexMethod";
     }
 
-    public function home()
+    public function optimize(Request $request)
     {
-        return view('front.index');
-    }
-
-    public function input(Request $request)
-    {
-        $data = array(
-            'var'=> $request->input('var'),
-            'cons'=> $request->input('cons'),
-        );
-        return view('front.input')->with('data',$data);
-    }
-
-    public function calculate(Request $request)
-    {
-        #print_r($_POST);
-        $flag=0;
-        $minRow=0;
-
         //solves for the minimization problem
         //get the number of constraints from the hidden form input named numbers and put it into the array named num
-        $i=0;
+        $flag = 0;
+        $minRow = 0;
+        $i = 0;
         $token=strtok($request->input('numbers'), ',');
+        
         while($token)
         {
             $this->num[$i++]=$token;
             $token=strtok(',');
         }
-        
+
         //$n+1 would be the total number of columns
         $this->total_number = $this->num[0]+$this->num[1];
 
@@ -87,11 +58,7 @@ class HomeController extends BaseController
         
         #$this->print_dump($initial_tableau);
 
-        return view('front.calculate',[
-                    'initial_tableau' => $initial_tableau,
-                    'num' => $this->num,
-                    'total_number' => $this->total_number,
-                    'simplex'=>$simplex]);
+        return $this->valuesArray;
     }
 
     private function insert_value($request)
@@ -174,6 +141,11 @@ class HomeController extends BaseController
         }
     }
 
+    private function render_view()
+    {
+        
+    }
+
     private function print_dump($array)
     {
         echo "<pre>";
@@ -181,3 +153,4 @@ class HomeController extends BaseController
         die();
     }
 }
+
