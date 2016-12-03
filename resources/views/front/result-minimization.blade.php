@@ -43,7 +43,7 @@
                         </tr>
 					</table>
 
-                    @include('front.table-iteration-using-class')
+                    @include('front.table-iteration-minimization')
                 </div>
             </div>
         </div>

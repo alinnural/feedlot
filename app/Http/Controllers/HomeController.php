@@ -50,7 +50,7 @@ class HomeController extends BaseController
             $maximization = new Maximization;
             $initial_tableau = $maximization->optimize($request);
 
-            return view('front.calculate',[
+            return view('front.result-maximization',[
                 'maximization'=> $maximization 
                 ])->with('initial_tableau',$initial_tableau);
         }
@@ -59,7 +59,7 @@ class HomeController extends BaseController
             $minimization = new Minimization;
             $initial_tableau = $minimization->optimize($request);
 
-            return view('front.calculate',[
+            return view('front.result-minimization',[
                 'minimization'=> $minimization 
                 ])->with('initial_tableau',$initial_tableau);
         }
