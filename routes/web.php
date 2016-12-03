@@ -20,4 +20,4 @@ Route::get('/formula-ransum','FormulaRansumController@index');
 Route::get('/home', 'HomeController@index');
 Route::get('/welcome', 'HomeController@home');
 Route::post('/input','HomeController@input');
-Route::post('/calculate','HomeController@calculate');
+Route::post('/calculate','HomeController@calculate_using_minimization_class');

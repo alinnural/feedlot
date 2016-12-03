@@ -12,7 +12,19 @@ class Minimization extends SimplexMethod
 
     public function index()
     {
+        echo SimplexMethod::is_ok();
         return "Minimization extends SimplexMethod";
+
+    }
+
+    public function get_num()
+    {
+        return $this->num;
+    }
+
+    public function get_total_number()
+    {
+        return $this->total_number;
     }
 
     public function optimize(Request $request)
@@ -143,7 +155,7 @@ class Minimization extends SimplexMethod
 
     private function render_view()
     {
-        
+        $this->valuesArray;
     }
 
     private function print_dump($array)
