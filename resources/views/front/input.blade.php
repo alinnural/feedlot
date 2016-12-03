@@ -8,8 +8,17 @@
                 <div class="panel-heading">Input Value</div>
 
                     {!! Form::open(['url' => 'calculate','class'=>'form-horizontal']) !!}
-                    <div class="panel-body">  
-                        <input name="numbers" type="text" value="{{ $data['var'] }},{{ $data['cons'] }}">  
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">
+                                Pilih Persamaan
+                            </div>
+                            <div class="col-md-8">
+                                {{ Form::radio('category', 'minimization', true) }} Minimization
+                                {{ Form::radio('category','maximization') }} Maximization
+                            </div>
+                        </div>  
+                        <input name="numbers" type="hidden" value="{{ $data['var'] }},{{ $data['cons'] }}">  
                         <br>
                         <div class="form-group">
                             <div class="col-md-4 control-label">
@@ -19,7 +28,7 @@
                                 <div class="row">
                                     @for ($i = 1;$i<=intval($data['var']); $i++)
                                     <div class="col-md-2">
-                                        {!! Form::text('var'.$i.'', '0',['class'=>'form-control','placeholder'=>'X'.$i.'']) !!}
+                                        {!! Form::text('var'.$i.'', '',['class'=>'form-control','placeholder'=>'X'.$i.'']) !!}
                                     </div>
                                     @if($i != intval($data['var']))
                                     <div class="col-md-1">
@@ -40,7 +49,7 @@
                                         <div class="col-md-12">
                                         @for($j=1; $j<=intval($data['var']); $j++)
                                             <div class="col-md-2">
-                                                {!! Form::text('cons'.$k.'_'.$j.'', '0',['class'=>'form-control','placeholder'=>'X'.$j.'']) !!}
+                                                {!! Form::text('cons'.$k.'_'.$j.'', '',['class'=>'form-control','placeholder'=>'X'.$j.'']) !!}
                                             </div>
                                             @if($i != intval($data['var']))
                                             <div class="col-md-1">
@@ -55,7 +64,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2">
-                                            {!! Form::text('answer'.$k.'','0',['class'=>'form-control']) !!}
+                                            {!! Form::text('answer'.$k.'','',['class'=>'form-control']) !!}
                                         </div>
                                         </div>
                                     </div>

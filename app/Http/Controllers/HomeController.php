@@ -45,12 +45,24 @@ class HomeController extends BaseController
 
     public function calculate_using_minimization_class(Request $request)
     {
-        $minimization = new Minimization;
-        $initial_tableau = $minimization->optimize($request);
+        if($request->input('category') == 'maximization')
+        {
+            $maximization = new Maximization;
+            $initial_tableau = $maximization->optimize($request);
 
-        return view('front.calculate',[
-            'minimization'=> $minimization 
-            ])->with('initial_tableau',$initial_tableau);
+            return view('front.calculate',[
+                'maximization'=> $maximization 
+                ])->with('initial_tableau',$initial_tableau);
+        }
+        else
+        {
+            $minimization = new Minimization;
+            $initial_tableau = $minimization->optimize($request);
+
+            return view('front.calculate',[
+                'minimization'=> $minimization 
+                ])->with('initial_tableau',$initial_tableau);
+        }
     }
 
     private function print_dump($array)
