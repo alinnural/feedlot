@@ -41,9 +41,9 @@ class CreateFeedsTable extends Migration
             $table->float('sulfur')->comment('Sulfur (S)');
             $table->float('cobalt')->comment('Cobalt (Co)');
             $table->float('copper')->comment('Copper (Cu)');
-            $table->float('Iodine')->comment('Iodine (I)');
-            $table->float('Manganese')->comment('Manganese (Mn)');
-            $table->float('Selenium')->comment('Selenium (Se)');
+            $table->float('iodine')->comment('Iodine (I)');
+            $table->float('manganese')->comment('Manganese (Mn)');
+            $table->float('selenium')->comment('Selenium (Se)');
             $table->float('zinc')->comment('Zinc (Zn)');
             $table->timestamps();
 

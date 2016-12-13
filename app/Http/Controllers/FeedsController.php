@@ -7,6 +7,7 @@ use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use App\Feed;
 use App\GroupFeed;
+use Session;
 
 class FeedsController extends Controller
 {
@@ -27,8 +28,8 @@ class FeedsController extends Controller
                 ->addColumn('action', function($feeds){
                     return view('datatable._action',[
                         'model' => $feeds,
-                        'edit_url' => route('groupfeeds.edit',$feeds->id),
-                        'delete_url' => route('groupfeeds.destroy', $feeds->id),
+                        'edit_url' => route('feeds.edit',$feeds->id),
+                        'delete_url' => route('feeds.destroy', $feeds->id),
                         'confirm_message' => 'Are you sure to delete '. $feeds->name . '?'
                     ]);
             })->make(true);
@@ -47,9 +48,7 @@ class FeedsController extends Controller
      */
     public function create()
     {
-        $feeds = Feed::with('groupfeed')->first()->groupfeed->name;
-        print_r($feeds);
-        die();
+        return view('feeds.create');
     }
 
     /**
@@ -60,7 +59,16 @@ class FeedsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // print_r($request->all());
+        // die();
+        $this->validate($request, ['feed_stuff'=> 'required|unique:feeds']);
+        $feeds = Feed::create($request->all());
+
+        Session::flash("flash_notification", [
+            "level"=>"success",
+            "message"=>"Berhasil menyimpan $feeds->feed_stuff"
+        ]);
+        return redirect()->route('feeds.index');
     }
 
     /**
@@ -82,7 +90,8 @@ class FeedsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $feeds = Feed::find($id);
+        return view('feeds.edit')->with(compact('feeds'));
     }
 
     /**
@@ -94,7 +103,14 @@ class FeedsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,['name'=>'required']);
+        $feeds = Feed::find($id);
+        $feeds->update($request->all());
+
+        Session::flash("flash_notification", [
+            "level"=>"success",
+            "message"=>"Berhasil menyimpan $feeds->feed_stuff" ]);
+        return redirect()->route('feeds.index');
     }
 
     /**
