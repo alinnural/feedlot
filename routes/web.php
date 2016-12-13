@@ -17,13 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function () {
-  Route::resource('feeds', 'FeedController');
+Route::group(['middleware'=>'web'],function(){
+    Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
+        Route::resource('groupfeeds','GroupFeedsController');
+    });
 });
-
-Route::get('/formula-ransum','FormulaRansumController@index');
 Route::get('/welcome', 'HomeController@home');
 Route::post('/input','HomeController@input');
 Route::post('/calculate','HomeController@calculate_using_minimization_class');
-Route::get('feedapp','FeedAppController@index');
 Route::get('/home', 'HomeController@index');

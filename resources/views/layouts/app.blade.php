@@ -11,9 +11,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/jquery.dataTables.css" rel="stylesheet"> 
     <link href="/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/css/selectize.css" rel="stylesheet">
+    <link href="/css/selectize.bootstrap3.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -38,14 +41,22 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'Feedlot') }}
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        @if (Auth::check())
+                            {!! Html::smartNav(url('/home'), 'Dashboard') !!}
+                        @endif
+                        @role('admin')
+                            {!! Html::smartNav(route('groupfeeds.index'), 'Group Feeds') !!}
+                        @endrole
+                        @if (auth()->check())
+                            {!! Html::smartNav(url('/settings/profile'), 'Profil') !!}
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -79,7 +90,7 @@
                 </div>
             </div>
         </nav>
-
+        @include('layouts._flash')
         @yield('content')
     </div>
 
@@ -87,6 +98,8 @@
     <script src="/js/app.js"></script>
     <script src="/js/jquery.dataTables.min.js"></script> 
     <script src="/js/dataTables.bootstrap.min.js"></script>
+    <script src="/js/selectize.min.js"></script>
+    <script src="/js/custom.js"></script>
     @yield('scripts')
 </body>
 </html>
