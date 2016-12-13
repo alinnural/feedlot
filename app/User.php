@@ -28,4 +28,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $casts = [ 
+        'is_verified' => 'boolean',
+    ];
 }
