@@ -8,20 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Larapus') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/jquery.dataTables.min.css">
-    <link href="/css/dataTables.bootstrap.min.css">
-    @yield('styles')
-    
-    <!--AngularJS-->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
-	<script src="js/app.js"></script>
-    
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -45,14 +36,14 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Larapus') }}
+                        {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/') }}">Dashboard</a></li>
+                        &nbsp;
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -60,7 +51,7 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Daftar</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -87,17 +78,10 @@
             </div>
         </nav>
 
-        @include('layouts._flash')
         @yield('content')
     </div>
 
     <!-- Scripts -->
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="/js/jquery.dataTables.min.js"></script>
-    <script src="/js/dataTables.bootstrap.min.js"></script>
-    @yield('scripts')
-    {{-- <script src="/js/app.js"></script> --}}
+    <script src="/js/app.js"></script>
 </body>
 </html>

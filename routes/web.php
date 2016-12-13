@@ -23,3 +23,7 @@ Route::post('/input','HomeController@input');
 Route::post('/calculate','HomeController@calculate_using_minimization_class');
 
 Route::get('feedapp','FeedAppController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
