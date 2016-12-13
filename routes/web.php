@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index');
 Route::get('/welcome', 'HomeController@home');
 Route::post('/input','HomeController@input');
 Route::post('/calculate','HomeController@calculate_using_minimization_class');
+
+Route::get('feedapp','FeedAppController@index');
