@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        require base_path() . '/app/Helpers/frontend.php';
         //
     }
 

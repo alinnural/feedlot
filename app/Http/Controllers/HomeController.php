@@ -2,34 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
 use Illuminate\Http\Request;
 
-use App\Library\SimplexMethod;
-
-class HomeController extends BaseController
+class HomeController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function index(){
-        $FmyFunctions1 = new SimplexMethod;
-        $is_ok = ($FmyFunctions1->is_ok());
-        echo $is_ok;
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
-    public function home(){
-        return view('front.index');
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('home');
     }
 
-    public function input(Request $request){
-        $data = array(
-            'var'=> $request->input('var'),
-            'cons'=> $request->input('cons'),
-        );
-        return view('front.input')->with('data',$data);
+    public function home()
+    {
+        return view('home');
     }
 }

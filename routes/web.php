@@ -15,6 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'HomeController@index');
+Auth::routes();
+
+Route::group(['middleware'=>'web'],function(){
+    Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
+        Route::resource('groupfeeds','GroupFeedsController');
+        Route::resource('feeds','FeedsController');
+    });
+});
 Route::get('/welcome', 'HomeController@home');
 Route::post('/input','HomeController@input');
+Route::post('/calculate','HomeController@calculate_using_minimization_class');
+Route::get('/home', 'HomeController@index');
