@@ -8,6 +8,7 @@ use Yajra\Datatables\Datatables;
 use App\Feed;
 use App\GroupFeed;
 use Session;
+use Excel;
 
 class FeedsController extends Controller
 {
@@ -122,5 +123,51 @@ class FeedsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function generateExcelTemplate() 
+    {
+        Excel::create('Template Import Feeds', function($excel) 
+        { // Set the properties
+            $excel->setTitle('Template Import Feeds')
+                ->setCreator('Ihsan Arif Rahman')
+                ->setCompany('Feedlot')
+                ->setDescription('Template import feeds untuk Feedlot');
+            $excel->sheet('Data Feeds', function($sheet) { 
+            $row = 1;
+            $sheet->row($row, [
+                'feed_stuff',
+                'group_feed_id',
+                'dry_matter',
+                'mineral',
+                'organic_matter',
+                'lignin',
+                'neutral_detergent_fiber',
+                'ether_extract',
+                'nonfiber_carbohydrates',
+                'total_digestible_nutrients',
+                'metabolizable_energy',
+                'rumen_degradable',
+                'rumen_undegradable',
+                'rumen_soluble',
+                'rumen_insoluble',
+                'degradation_rate',
+                'crude_protein',
+                'metabolizable_protein',
+                'calcium',
+                'phosphorus',
+                'magnesium',
+                'potassium',
+                'sodium',
+                'sulfur',
+                'cobalt',
+                'copper',
+                'iodine',
+                'manganese',
+                'selenium',
+                'zinc'       
+                ]); 
+            });
+        })->export('xlsx');
     }
 }
