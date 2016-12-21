@@ -182,9 +182,22 @@ class FeedsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $feeds = Feed::find($id);
+
+        if(!$feeds->delete()) 
+            return redirect()->back();
+        
+        // handle hapus feeds via ajax
+        if ($request->ajax()) 
+            return response()->json(['id' => $id]);
+        
+        Session::flash("flash_notification", [
+            "level"=>"success",
+            "message"=>"Feeds berhasil dihapus"
+        ]);
+        return redirect()->route('feeds.index');
     }
 
     public function generateExcelTemplate() 
