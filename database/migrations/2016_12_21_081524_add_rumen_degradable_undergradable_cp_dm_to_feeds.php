@@ -31,8 +31,8 @@ class AddRumenDegradableUndergradableCpDmToFeeds extends Migration
     public function down()
     {
         Schema::table('feeds', function (Blueprint $table) {
-            $table->dropColumn('rumen_degradable');
-            $table->dropColumn('rumen_undegradable');
+            // $table->dropColumn('rumen_degradable');
+            // $table->dropColumn('rumen_undegradable');
         });
     }
 }

@@ -26,6 +26,10 @@ Route::group(['middleware'=>'web'],function(){
             'as'   => 'template.feeds',
             'uses' => 'FeedsController@generateExcelTemplate'
         ]);
+        Route::post('import/feeds', [
+            'as'   => 'import.feeds',
+            'uses' => 'FeedsController@importExcel'
+        ]);
     });
 });
 

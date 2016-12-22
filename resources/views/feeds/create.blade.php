@@ -33,7 +33,7 @@
               </div>
              <div role="tabpanel" class="tab-pane" id="upload">
                 <br><br>
-                {!! Form::open(['url' => route('feeds.store'),
+                {!! Form::open(['url' => route('import.feeds'),
                 'method' => 'post', 'files'=>'true', 'class'=>'form-horizontal']) !!}
                 @include('feeds._import')
                 {!! Form::close() !!}

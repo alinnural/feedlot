@@ -74,8 +74,10 @@ class FeedsController extends Controller
             'nonfiber_carbohydrates'=> 'required',
             'total_digestible_nutrients'=> 'required',
             'metabolizable_energy'=> 'required',
-            'rumen_degradable'=> 'required',
-            'rumen_undegradable'=> 'required',
+            'rumen_undergradable_cp'=> 'required',
+            'rumen_undegradable_dm'=> 'required',
+            'rumen_degradable_cp'=> 'required',
+            'rumen_degradable_dm'=> 'required',
             'rumen_soluble'=> 'required',
             'rumen_insoluble'=> 'required',
             'degradation_rate'=> 'required',
@@ -147,8 +149,10 @@ class FeedsController extends Controller
             'nonfiber_carbohydrates'=> 'required',
             'total_digestible_nutrients'=> 'required',
             'metabolizable_energy'=> 'required',
-            'rumen_degradable'=> 'required',
-            'rumen_undegradable'=> 'required',
+            'rumen_undergradable_cp'=> 'required',
+            'rumen_undegradable_dm'=> 'required',
+            'rumen_degradable_cp'=> 'required',
+            'rumen_degradable_dm'=> 'required',
             'rumen_soluble'=> 'required',
             'rumen_insoluble'=> 'required',
             'degradation_rate'=> 'required',
@@ -246,5 +250,120 @@ class FeedsController extends Controller
                 ]); 
             });
         })->export('xlsx');
+    }
+
+    public function importExcel(Request $request) 
+    {
+         // validasi untuk memastikan file yang diupload adalah excel
+        $this->validate($request, [ 'excel' => 'required|mimes:xls,xlsx' ]);
+        // ambil file yang baru diupload
+        $excel = $request->file('excel');
+        // baca sheet pertama
+        $excels = Excel::selectSheetsByIndex(0)->load($excel, function($reader) {
+            // options, jika ada
+        })->get();
+        // rule untuk validasi setiap row pada file excel
+        $rowRules = [
+            'feed_stuff'=> 'required',
+            'group_feed_id' => 'required',
+            'dry_matter' => 'required',
+            'mineral' => 'required',
+            'organic_matter'=> 'required',
+            'lignin'=> 'required',
+            'neutral_detergent_fiber'=> 'required',
+            'ether_extract'=> 'required',
+            'nonfiber_carbohydrates'=> 'required',
+            'total_digestible_nutrients'=> 'required',
+            'metabolizable_energy'=> 'required',
+            'rumen_undergradable_cp'=> 'required',
+            'rumen_undegradable_dm'=> 'required',
+            'rumen_degradable_cp'=> 'required',
+            'rumen_degradable_dm'=> 'required',
+            'rumen_soluble'=> 'required',
+            'rumen_insoluble'=> 'required',
+            'degradation_rate'=> 'required',
+            'crude_protein'=> 'required',
+            'metabolizable_protein'=> 'required',
+            'calcium'=> 'required',
+            'phosphorus'=> 'required',
+            'magnesium'=> 'required',
+            'potassium'=> 'required',
+            'sodium'=> 'required',
+            'sulfur'=> 'required',
+            'cobalt'=> 'required',
+            'copper'=> 'required',
+            'iodine'=> 'required',
+            'manganese'=> 'required',
+            'selenium'=> 'required',
+            'zinc' => 'required'
+        ];
+        // Catat semua id feeds baru
+        // ID ini kita butuhkan untuk menghitung total buku yang berhasil diimport
+        $feeds_id = [];
+        // looping setiap baris, mulai dari baris ke 2 (karena baris ke 1 adalah nama kolom)
+        foreach ($excels as $row) {
+            // Membuat validasi untuk row di excel
+            // Disini kita ubah baris yang sedang di proses menjadi array
+            $validator = Validator::make($row->toArray(), $rowRules);
+            // Skip baris ini jika tidak valid, langsung ke baris selanjutnya
+            if ($validator->fails()) continue;
+            // buat feeds baru
+            $feed = Feed::create([
+                'feed_stuff'=> $row['feed_stuff'],
+                'group_feed_id' => $row['group_feed_id'],
+                'dry_matter' => $row['dry_matter'],
+                'mineral' => $row['mineral'],
+                'organic_matter'=> $row['organic_matter'],
+                'lignin'=> $row['lignin'],
+                'neutral_detergent_fiber'=> $row['neutral_detergent_fiber'],
+                'ether_extract'=> $row['ether_extract'],
+                'nonfiber_carbohydrates'=> $row['nonfiber_carbohydrates'],
+                'total_digestible_nutrients'=> $row['total_digestible_nutrients'],
+                'metabolizable_energy'=> $row['metabolizable_energy'],
+                'rumen_undergradable_cp'=> $row['rumen_undergradable_cp'],
+                'rumen_undegradable_dm'=> $row['rumen_undegradable_dm'],
+                'rumen_degradable_cp'=> $row['rumen_degradable_cp'],
+                'rumen_degradable_dm'=> $row['rumen_degradable_dm'],
+                'rumen_soluble'=> $row['rumen_soluble'],
+                'rumen_insoluble'=> $row['rumen_insoluble'],
+                'degradation_rate'=> $row['degradation_rate'],
+                'crude_protein'=> $row['crude_protein'],
+                'metabolizable_protein'=> $row['metabolizable_protein'],
+                'calcium'=> $row['calcium'],
+                'phosphorus'=> $row['phosphorus'],
+                'magnesium'=> $row['magnesium'],
+                'potassium'=> $row['potassium'],
+                'sodium'=> $row['sodium'],
+                'sulfur'=> $row['sulfur'],
+                'cobalt'=> $row['cobalt'],
+                'copper'=> $row['copper'],
+                'iodine'=> $row['iodine'],
+                'manganese'=> $row['manganese'],
+                'selenium'=> $row['selenium'],
+                'zinc' => $row['zinc']
+            ]);
+            
+            // catat id dari buku yang baru dibuat
+            array_push($feeds_id, $feed->id);
+        }
+        
+        // Ambil semua buku yang baru dibuat
+        $feed = Feed::whereIn('id', $feeds_id)->get();
+        // redirect ke form jika tidak ada buku yang berhasil diimport
+        if ($feed->count() == 0) 
+        {
+            Session::flash("flash_notification", [
+                "level"   => "danger",
+                "message" => "Tidak ada buku yang berhasil diimport."
+            ]);
+            return redirect()->back();
+        }
+        // set feedback
+        Session::flash("flash_notification", [
+            "level"   => "success",
+            "message" => "Berhasil mengimport " . $feed->count() . " pakan."
+        ]);
+        // Tampilkan halaman review buku
+        return redirect()->route('feeds.index');
     }
 }
