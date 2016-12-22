@@ -66,36 +66,36 @@ class FeedsController extends Controller
         $this->validate($request, [
             'feed_stuff'=> 'required|unique:feeds',
             'group_feed_id' => 'required',
-            'dry_matter' => 'required',
-            'mineral' => 'required',
-            'organic_matter'=> 'required',
-            'lignin'=> 'required',
-            'neutral_detergent_fiber'=> 'required',
-            'ether_extract'=> 'required',
-            'nonfiber_carbohydrates'=> 'required',
-            'total_digestible_nutrients'=> 'required',
-            'metabolizable_energy'=> 'required',
-            'rumen_undergradable_cp'=> 'required',
-            'rumen_undergradable_dm'=> 'required',
-            'rumen_degradable_cp'=> 'required',
-            'rumen_degradable_dm'=> 'required',
-            'rumen_soluble'=> 'required',
-            'rumen_insoluble'=> 'required',
-            'degradation_rate'=> 'required',
-            'crude_protein'=> 'required',
-            'metabolizable_protein'=> 'required',
-            'calcium'=> 'required',
-            'phosphorus'=> 'required',
-            'magnesium'=> 'required',
-            'potassium'=> 'required',
-            'sodium'=> 'required',
-            'sulfur'=> 'required',
-            'cobalt'=> 'required',
-            'copper'=> 'required',
-            'iodine'=> 'required',
-            'manganese'=> 'required',
-            'selenium'=> 'required',
-            'zinc' => 'required'
+            'dry_matter' => 'required|numeric',
+            'mineral' => 'required|numeric',
+            'organic_matter'=> 'required|numeric',
+            'lignin'=> 'required|numeric',
+            'neutral_detergent_fiber'=> 'required|numeric',
+            'ether_extract'=> 'required|numeric',
+            'nonfiber_carbohydrates'=> 'required|numeric',
+            'total_digestible_nutrients'=> 'required|numeric',
+            'metabolizable_energy'=> 'required|numeric',
+            'rumen_undergradable_cp'=> 'required|numeric',
+            'rumen_undergradable_dm'=> 'required|numeric',
+            'rumen_degradable_cp'=> 'required|numeric',
+            'rumen_degradable_dm'=> 'required|numeric',
+            'rumen_soluble'=> 'required|numeric',
+            'rumen_insoluble'=> 'required|numeric',
+            'degradation_rate'=> 'required|numeric',
+            'crude_protein'=> 'required|numeric',
+            'metabolizable_protein'=> 'required|numeric',
+            'calcium'=> 'required|numeric',
+            'phosphorus'=> 'required|numeric',
+            'magnesium'=> 'required|numeric',
+            'potassium'=> 'required|numeric',
+            'sodium'=> 'required|numeric',
+            'sulfur'=> 'required|numeric',
+            'cobalt'=> 'required|numeric',
+            'copper'=> 'required|numeric',
+            'iodine'=> 'required|numeric',
+            'manganese'=> 'required|numeric',
+            'selenium'=> 'required|numeric',
+            'zinc' => 'required|numeric'
         ]);
         $feeds = Feed::create($request->all());
 
@@ -141,36 +141,36 @@ class FeedsController extends Controller
         $this->validate($request,[
             'feed_stuff'=> 'required',
             'group_feed_id' => 'required',
-            'dry_matter' => 'required',
-            'mineral' => 'required',
-            'organic_matter'=> 'required',
-            'lignin'=> 'required',
-            'neutral_detergent_fiber'=> 'required',
-            'ether_extract'=> 'required',
-            'nonfiber_carbohydrates'=> 'required',
-            'total_digestible_nutrients'=> 'required',
-            'metabolizable_energy'=> 'required',
-            'rumen_undergradable_cp'=> 'required',
-            'rumen_undergradable_dm'=> 'required',
-            'rumen_degradable_cp'=> 'required',
-            'rumen_degradable_dm'=> 'required',
-            'rumen_soluble'=> 'required',
-            'rumen_insoluble'=> 'required',
-            'degradation_rate'=> 'required',
-            'crude_protein'=> 'required',
-            'metabolizable_protein'=> 'required',
-            'calcium'=> 'required',
-            'phosphorus'=> 'required',
-            'magnesium'=> 'required',
-            'potassium'=> 'required',
-            'sodium'=> 'required',
-            'sulfur'=> 'required',
-            'cobalt'=> 'required',
-            'copper'=> 'required',
-            'iodine'=> 'required',
-            'manganese'=> 'required',
-            'selenium'=> 'required',
-            'zinc' => 'required'
+            'dry_matter' => 'required|numeric',
+            'mineral' => 'required|numeric',
+            'organic_matter'=> 'required|numeric',
+            'lignin'=> 'required|numeric',
+            'neutral_detergent_fiber'=> 'required|numeric',
+            'ether_extract'=> 'required|numeric',
+            'nonfiber_carbohydrates'=> 'required|numeric',
+            'total_digestible_nutrients'=> 'required|numeric',
+            'metabolizable_energy'=> 'required|numeric',
+            'rumen_undergradable_cp'=> 'required|numeric',
+            'rumen_undergradable_dm'=> 'required|numeric',
+            'rumen_degradable_cp'=> 'required|numeric',
+            'rumen_degradable_dm'=> 'required|numeric',
+            'rumen_soluble'=> 'required|numeric',
+            'rumen_insoluble'=> 'required|numeric',
+            'degradation_rate'=> 'required|numeric',
+            'crude_protein'=> 'required|numeric',
+            'metabolizable_protein'=> 'required|numeric',
+            'calcium'=> 'required|numeric',
+            'phosphorus'=> 'required|numeric',
+            'magnesium'=> 'required|numeric',
+            'potassium'=> 'required|numeric',
+            'sodium'=> 'required|numeric',
+            'sulfur'=> 'required|numeric',
+            'cobalt'=> 'required|numeric',
+            'copper'=> 'required|numeric',
+            'iodine'=> 'required|numeric',
+            'manganese'=> 'required|numeric',
+            'selenium'=> 'required|numeric',
+            'zinc' => 'required|numeric'
         ]);
         $feeds = Feed::find($id);
         $feeds->update($request->all());
@@ -266,37 +266,7 @@ class FeedsController extends Controller
         // rule untuk validasi setiap row pada file excel
         $rowRules = [
             'feed_stuff'=> 'required',
-            'group_feed_id' => 'required',
-            'dry_matter' => 'required',
-            'mineral' => 'required',
-            'organic_matter'=> 'required',
-            'lignin'=> 'required',
-            'neutral_detergent_fiber'=> 'required',
-            'ether_extract'=> 'required',
-            'nonfiber_carbohydrates'=> 'required',
-            'total_digestible_nutrients'=> 'required',
-            'metabolizable_energy'=> 'required',
-            'rumen_undergradable_cp'=> 'required',
-            'rumen_undergradable_dm'=> 'required',
-            'rumen_degradable_cp'=> 'required',
-            'rumen_degradable_dm'=> 'required',
-            'rumen_soluble'=> 'required',
-            'rumen_insoluble'=> 'required',
-            'degradation_rate'=> 'required',
-            'crude_protein'=> 'required',
-            'metabolizable_protein'=> 'required',
-            'calcium'=> 'required',
-            'phosphorus'=> 'required',
-            'magnesium'=> 'required',
-            'potassium'=> 'required',
-            'sodium'=> 'required',
-            'sulfur'=> 'required',
-            'cobalt'=> 'required',
-            'copper'=> 'required',
-            'iodine'=> 'required',
-            'manganese'=> 'required',
-            'selenium'=> 'required',
-            'zinc' => 'required'
+            'group_feed_id' => 'required'
         ];
         // Catat semua id feeds baru
         // ID ini kita butuhkan untuk menghitung total buku yang berhasil diimport
@@ -308,10 +278,17 @@ class FeedsController extends Controller
             $validator = Validator::make($row->toArray(), $rowRules);
             // Skip baris ini jika tidak valid, langsung ke baris selanjutnya
             if ($validator->fails()) continue;
+            // check data group feed
+            $group_feeds = GroupFeed::where('name', $row['group_feed_id'])->first();
+            // buat penulis jika belum ada
+            if (!$group_feeds) 
+            {
+                $group_feeds = GroupFeed::create(['name'=>$row['group_feed_id']]);
+            }
             // buat feeds baru
             $feed = Feed::create([
                 'feed_stuff'=> $row['feed_stuff'],
-                'group_feed_id' => $row['group_feed_id'],
+                'group_feed_id' => $group_feeds->id,
                 'dry_matter' => $row['dry_matter'],
                 'mineral' => $row['mineral'],
                 'organic_matter'=> $row['organic_matter'],
@@ -355,7 +332,7 @@ class FeedsController extends Controller
         {
             Session::flash("flash_notification", [
                 "level"   => "danger",
-                "message" => "Tidak ada buku yang berhasil diimport."
+                "message" => "Tidak ada pakan yang berhasil diimport."
             ]);
             return redirect()->back();
         }

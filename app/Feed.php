@@ -19,7 +19,7 @@ class Feed extends Model
         'total_digestible_nutrients',
         'metabolizable_energy',
         'rumen_undergradable_cp',
-        'rumen_undegradable_dm',
+        'rumen_undergradable_dm',
         'rumen_degradable_cp',
         'rumen_degradable_dm',
         'rumen_soluble',
