@@ -14,10 +14,11 @@ class AddRumenDegradableUndergradableCpDmToFeeds extends Migration
     public function up()
     {
         Schema::table('feeds', function (Blueprint $table) {
-            $table->float('rumen_undergradable_cp')->after('metabolizable_energy');
-            $table->float('rumen_undegradable_dm')->after('metabolizable_energy');
-            $table->float('rumen_degradable_cp')->after('metabolizable_energy');
-            $table->float('rumen_degradable_dm')->after('metabolizable_energy');
+            $value = 0;
+            $table->float('rumen_undergradable_cp')->after('metabolizable_energy')->default($value);
+            $table->float('rumen_undergradable_dm')->after('metabolizable_energy')->default($value);
+            $table->float('rumen_degradable_cp')->after('metabolizable_energy')->default($value);
+            $table->float('rumen_degradable_dm')->after('metabolizable_energy')->default($value);
             $table->dropColumn('rumen_degradable');
             $table->dropColumn('rumen_undegradable');
         });

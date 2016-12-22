@@ -9,6 +9,7 @@ use App\Feed;
 use App\GroupFeed;
 use Session;
 use Excel;
+use Validator;
 
 class FeedsController extends Controller
 {
@@ -75,7 +76,7 @@ class FeedsController extends Controller
             'total_digestible_nutrients'=> 'required',
             'metabolizable_energy'=> 'required',
             'rumen_undergradable_cp'=> 'required',
-            'rumen_undegradable_dm'=> 'required',
+            'rumen_undergradable_dm'=> 'required',
             'rumen_degradable_cp'=> 'required',
             'rumen_degradable_dm'=> 'required',
             'rumen_soluble'=> 'required',
@@ -150,7 +151,7 @@ class FeedsController extends Controller
             'total_digestible_nutrients'=> 'required',
             'metabolizable_energy'=> 'required',
             'rumen_undergradable_cp'=> 'required',
-            'rumen_undegradable_dm'=> 'required',
+            'rumen_undergradable_dm'=> 'required',
             'rumen_degradable_cp'=> 'required',
             'rumen_degradable_dm'=> 'required',
             'rumen_soluble'=> 'required',
@@ -227,7 +228,7 @@ class FeedsController extends Controller
                 'total_digestible_nutrients',
                 'metabolizable_energy',
                 'rumen_undergradable_cp',
-                'rumen_undegradable_dm',
+                'rumen_undergradable_dm',
                 'rumen_degradable_cp',
                 'rumen_degradable_dm',
                 'rumen_soluble',
@@ -276,7 +277,7 @@ class FeedsController extends Controller
             'total_digestible_nutrients'=> 'required',
             'metabolizable_energy'=> 'required',
             'rumen_undergradable_cp'=> 'required',
-            'rumen_undegradable_dm'=> 'required',
+            'rumen_undergradable_dm'=> 'required',
             'rumen_degradable_cp'=> 'required',
             'rumen_degradable_dm'=> 'required',
             'rumen_soluble'=> 'required',
@@ -321,7 +322,7 @@ class FeedsController extends Controller
                 'total_digestible_nutrients'=> $row['total_digestible_nutrients'],
                 'metabolizable_energy'=> $row['metabolizable_energy'],
                 'rumen_undergradable_cp'=> $row['rumen_undergradable_cp'],
-                'rumen_undegradable_dm'=> $row['rumen_undegradable_dm'],
+                'rumen_undergradable_dm'=> $row['rumen_undergradable_dm'],
                 'rumen_degradable_cp'=> $row['rumen_degradable_cp'],
                 'rumen_degradable_dm'=> $row['rumen_degradable_dm'],
                 'rumen_soluble'=> $row['rumen_soluble'],

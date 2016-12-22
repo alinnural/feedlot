@@ -115,21 +115,21 @@
     </div>
 </div>
 <div class="col-md-4">
-    <div class="form-group{{ $errors->has('rumen_undegradable_cp') ? ' has-error' : '' }}">
+    <div class="form-group{{ $errors->has('rumen_undergradable_cp') ? ' has-error' : '' }}">
         <div class="row" style="padding-top:3px;padding-bottom:3px;">
-            {!! Form::label('rumen_undegradable_cp', 'Rumen Undegradable (RUP) %CP', ['class'=>'col-md-6 control-label']) !!} 
+            {!! Form::label('rumen_undergradable_cp', 'Rumen Undegradable (RUP) %CP', ['class'=>'col-md-6 control-label']) !!} 
             <div class="col-md-4">
-                {!! Form::text('rumen_undegradable_cp', null, ['class'=>'form-control']) !!}
-                {!! $errors->first('rumen_undegradable_cp', '<p class="help-block">:message</p>') !!}
+                {!! Form::text('rumen_undergradable_cp', null, ['class'=>'form-control']) !!}
+                {!! $errors->first('rumen_undergradable_cp', '<p class="help-block">:message</p>') !!}
             </div>
         </div>
     </div>
-    <div class="form-group{{ $errors->has('rumen_undegradable_dm') ? ' has-error' : '' }}">
+    <div class="form-group{{ $errors->has('rumen_undergradable_dm') ? ' has-error' : '' }}">
         <div class="row" style="padding-top:3px;padding-bottom:3px;">
-            {!! Form::label('rumen_undegradable_dm', 'Rumen Undegradable (RUP) %DM', ['class'=>'col-md-6 control-label']) !!} 
+            {!! Form::label('rumen_undergradable_dm', 'Rumen Undegradable (RUP) %DM', ['class'=>'col-md-6 control-label']) !!} 
             <div class="col-md-4">
-                {!! Form::text('rumen_undegradable_dm', null, ['class'=>'form-control']) !!}
-                {!! $errors->first('rumen_undegradable_dm', '<p class="help-block">:message</p>') !!}
+                {!! Form::text('rumen_undergradable_dm', null, ['class'=>'form-control']) !!}
+                {!! $errors->first('rumen_undergradable_dm', '<p class="help-block">:message</p>') !!}
             </div>
         </div>
     </div>
