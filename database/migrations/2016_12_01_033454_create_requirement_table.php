@@ -27,6 +27,10 @@ class CreateRequirementTable extends Migration
             $table->integer('cp')->comment('Crude protein requirements');
             $table->float('ca', 8, 3)->comment('Total dietary requirements of calcium');
             $table->float('p', 8, 3)->comment('Total dietary requirements of phosphorus');
+            $table->integer('month_pregnant')->comment('month');
+            $table->integer('month_calvin')->comment('Months Since Calving');
+            $table->integer('peak_milk')->comment('Peak Milk');
+            $table->float('current_milk')->comment('Current Milk');
             $table->timestamps();
         });
     }
