@@ -21,6 +21,7 @@ class CreateRequirementTable extends Migration
             $table->integer('current')->comment('Body Weight');
             $table->float('adg', 8, 3)->comment('Average Daily Gain');
             $table->float('dmi', 8, 3)->comment('Dry Matter Intake');
+            $table->float('tdn', 8, 3)->comment('Total Digestible Nutrient');
             $table->float('nem',8,3)->comment('Net energy requirements for maintenance');
             $table->integer('neg')->comment('Net energy requirements for gain');
             $table->integer('cp')->comment('Crude protein requirements');
