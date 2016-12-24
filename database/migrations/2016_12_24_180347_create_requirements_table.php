@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequirementTable extends Migration
+class CreateRequirementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -23,8 +23,8 @@ class CreateRequirementTable extends Migration
             $table->float('dmi', 8, 3)->comment('Dry Matter Intake');
             $table->float('tdn', 8, 3)->comment('Total Digestible Nutrient');
             $table->float('nem',8,3)->comment('Net energy requirements for maintenance');
-            $table->integer('neg')->comment('Net energy requirements for gain');
-            $table->integer('cp')->comment('Crude protein requirements');
+            $table->float('neg',8,3)->comment('Net energy requirements for gain');
+            $table->float('cp',8,3)->comment('Crude protein requirements');
             $table->float('ca', 8, 3)->comment('Total dietary requirements of calcium');
             $table->float('p', 8, 3)->comment('Total dietary requirements of phosphorus');
             $table->integer('month_pregnant')->comment('month');

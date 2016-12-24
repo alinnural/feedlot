@@ -21,6 +21,7 @@ Route::group(['middleware'=>'web'],function(){
     Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
         Route::resource('groupfeeds','GroupFeedsController');
         Route::resource('feeds','FeedsController');
+        Route::resource('requirements','RequirementsController');
 
         Route::get('template/feeds', [
             'as'   => 'template.feeds',
@@ -29,6 +30,15 @@ Route::group(['middleware'=>'web'],function(){
         Route::post('import/feeds', [
             'as'   => 'import.feeds',
             'uses' => 'FeedsController@importExcel'
+        ]);
+
+        Route::get('template/requirements',[
+            'as' => 'template.requirements',
+            'uses' => 'RequirementsController@generateExcelTemplate'
+        ]);
+        Route::post('import/requirements',[
+            'as' => 'import.requirements',
+            'uses' =>'RequirementsController@importExcel'
         ]);
     });
 });

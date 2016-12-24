@@ -54,6 +54,7 @@
                         @role('admin')
                             {!! Html::smartNav(route('groupfeeds.index'), 'Group Feeds') !!}
                             {!! Html::smartNav(route('feeds.index'), 'Feeds Stuff') !!}
+                            {!! Html::smartNav(route('requirements.index'),'Requirements') !!}
                         @endrole
                         @if (auth()->check())
                             {!! Html::smartNav(url('/settings/profile'), 'Profil') !!}
