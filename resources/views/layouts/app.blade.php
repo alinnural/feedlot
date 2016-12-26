@@ -17,6 +17,7 @@
     <link href="/css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="/css/selectize.css" rel="stylesheet">
     <link href="/css/selectize.bootstrap3.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
     <!-- Scripts -->
     <script>
@@ -101,6 +102,7 @@
     <script src="/js/jquery.dataTables.min.js"></script> 
     <script src="/js/dataTables.bootstrap.min.js"></script>
     <script src="/js/selectize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="/js/custom.js"></script>
     @yield('scripts')
 </body>

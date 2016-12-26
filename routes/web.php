@@ -17,6 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/welcome', 'HomeController@home');
+Route::post('/input','HomeController@input');
+Route::post('/calculate','HomeController@calculate_using_minimization_class');
+Route::get('/home', 'HomeController@index');
+
+Route::get('/ajax/requirements/search', 'RequirementsController@AjaxSearch');
+Route::get('/ajax/requirements/find','RequirementsController@AjaxFind');
+
 Route::group(['middleware'=>'web'],function(){
     Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
         Route::resource('groupfeeds','GroupFeedsController');
@@ -42,8 +50,3 @@ Route::group(['middleware'=>'web'],function(){
         ]);
     });
 });
-
-Route::get('/welcome', 'HomeController@home');
-Route::post('/input','HomeController@input');
-Route::post('/calculate','HomeController@calculate_using_minimization_class');
-Route::get('/home', 'HomeController@index');

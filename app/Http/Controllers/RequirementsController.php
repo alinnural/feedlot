@@ -10,6 +10,7 @@ use Session;
 use Excel;
 use Validator;
 
+use App\Http\Requests;
 class RequirementsController extends Controller
 {
     /**
@@ -287,5 +288,30 @@ class RequirementsController extends Controller
         ]);
         // Tampilkan halaman review buku
         return redirect()->route('requirements.index');
+    }
+
+    public function AjaxSearch(Request $request)
+    {
+        $term = trim($request->q);
+        if (empty($term)) {
+            return \Response::json([]);
+        }
+
+        $requirements = Requirement::SearchByKeyword($term)->get();
+
+        $formatted_requirements = [];
+
+        foreach ($requirements as $requirement) {
+            $formatted_requirements[] = ['id' => $requirement->id, 'text' => $requirement->animal_type." (Finish Weight = $requirement->finish"." Current Weight= $requirement->current)"];
+        }
+
+        return \Response::json($formatted_requirements);
+    }
+
+    public function AjaxFind(Request $request)
+    {
+        $requirements = Requirement::find($request->id);
+
+        return \Response::json($requirements);
     }
 }

@@ -23,4 +23,17 @@ class Requirement extends Model
         'peak_milk',
         'current_milk',
     ];
+
+    public function scopeSearchByKeyword($query, $keyword)
+    {
+        if ($keyword!='') {
+            $query->where(function ($query) use ($keyword) {
+                $query->where("animal_type", "LIKE","%$keyword%");
+                    // ->orWhere("email", "LIKE", "%$keyword%")
+                    // ->orWhere("blood_group", "LIKE", "%$keyword%")
+                    // ->orWhere("phone", "LIKE", "%$keyword%");
+            });
+        }
+        return $query;
+    }
 }
