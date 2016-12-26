@@ -19,7 +19,7 @@
                         <div class="row">
                             <div class="col-md-4"></div>
                             <div class="col-md-8">
-                                {!! Form::submit('Lanjut',['class'=>'btn btn-primary']) !!}
+                                <a href="/input" class="pull-right btn btn-primary">Langkah Selanjutnya</a>
                             </div>
                         <div>
                     </div>
@@ -145,7 +145,7 @@
     $(document).ready(function(){
         $("#result").hide();
     });
-    
+
     $('#requirement_list').select2({
         placeholder: "Choose Requirement...",
         minimumInputLength: 2,

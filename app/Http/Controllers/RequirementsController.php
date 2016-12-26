@@ -300,7 +300,6 @@ class RequirementsController extends Controller
         $requirements = Requirement::SearchByKeyword($term)->get();
 
         $formatted_requirements = [];
-
         foreach ($requirements as $requirement) {
             $formatted_requirements[] = ['id' => $requirement->id, 'text' => $requirement->animal_type." (Finish Weight = $requirement->finish"." Current Weight= $requirement->current)"];
         }
@@ -311,7 +310,7 @@ class RequirementsController extends Controller
     public function AjaxFind(Request $request)
     {
         $requirements = Requirement::find($request->id);
-
+        $request->session()->put('requirement_id',$request->id);
         return \Response::json($requirements);
     }
 }

@@ -18,12 +18,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/welcome', 'HomeController@home');
-Route::post('/input','HomeController@input');
+Route::get('/input','HomeController@input');
 Route::post('/calculate','HomeController@calculate_using_minimization_class');
 Route::get('/home', 'HomeController@index');
 
-Route::get('/ajax/requirements/search', 'RequirementsController@AjaxSearch');
-Route::get('/ajax/requirements/find','RequirementsController@AjaxFind');
+Route::group(['prefix'=>'ajax'],function(){
+    Route::get('requirements/search', 'RequirementsController@AjaxSearch');
+    Route::get('requirements/find','RequirementsController@AjaxFind');
+    Route::get('feeds/search','FeedsController@AjaxSearch');
+});
 
 Route::group(['middleware'=>'web'],function(){
     Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){

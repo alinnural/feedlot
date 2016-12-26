@@ -344,4 +344,21 @@ class FeedsController extends Controller
         // Tampilkan halaman review buku
         return redirect()->route('feeds.index');
     }
+
+    public function AjaxSearch(Request $request)
+    {
+        $term = trim($request->q);
+        if (empty($term)) {
+            return \Response::json([]);
+        }
+
+        $feeds = Feed::SearchByKeyword($term)->get();
+
+        $formatted_feeds = [];
+        foreach ($feeds as $feed) {
+            $formatted_feeds[] = ['id' => $feed->id, 'text' => $feed->feed_stuff ];
+        }
+
+        return \Response::json($formatted_feeds);
+    }
 }
