@@ -22,6 +22,13 @@ Route::get('/input','HomeController@input');
 Route::post('/calculate','HomeController@calculate_using_minimization_class');
 Route::get('/home', 'HomeController@index');
 
+Route::group(['prefix'=>'sample'],function(){
+    Route::get('/','HomeController@SampleIndex');
+    Route::post('/input','HomeController@sampleInput');
+    Route::post('/calculate','HomeController@sampleCalculate');
+    Route::get('/simplex','HomeController@sampleSimplexMethod');
+});
+
 Route::group(['prefix'=>'ajax'],function(){
     Route::get('requirements/search', 'RequirementsController@AjaxSearch');
     Route::get('requirements/find','RequirementsController@AjaxFind');

@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Input Parameter</div>
 
-                    {!! Form::open(['url' => 'input','class'=>'form-horizontal']) !!}
+                    {!! Form::open(['url' => 'sample/input','class'=>'form-horizontal']) !!}
                     <div class="panel-body">    
                         <div class="form-group">
                             {!! Form::label('var', 'Berapa Variabel?', ['class' => 'col-sm-4 control-label']) !!}
