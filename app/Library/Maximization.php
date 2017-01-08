@@ -50,9 +50,9 @@ class Maximization extends SimplexMethod
         $this->insert_value($request);
         
         //add the slack variables to the matrix, the number of slack variables depends on the number of constraints
-        $this->add_slack_variables();
+        $this->add_slack_variables($request);
 
-        $cek = $valuesArray;
+        $cek = $this->valuesArray;
         
         //insert the values from the form input with the name answer into the last column of the matrix - this are the constants of the equation
         $this->insert_value_from_name_answer($request);
@@ -76,7 +76,7 @@ class Maximization extends SimplexMethod
         }
     }
 
-    private function add_slack_variables()
+    private function add_slack_variables($request)
     {
         for($i=1; $i<=$this->num[1]+1; $i++)
         {

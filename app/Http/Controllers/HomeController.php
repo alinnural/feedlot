@@ -56,18 +56,19 @@ class HomeController extends Controller
         $pakan = $request->input('feeds');
         $feeds = Feed::WhereIn('id',$pakan)->get();
 
-        print_r($feeds);
+        $this->print_dump($feeds);
     }
 
-    public function SampleIndex()
+    /* Sample Optimization using Simplex Method --------------------------------------------*/
+    public function sampleIndex()
     {
-        return view('front.index');
+        return view('sample.index');
     }
 
     public function SampleInput(Request $request)
     {
         $data = ['var' => $request->get('var'), 'cons'=> $request->get('cons')];
-        return view('front.input')->with('data',$data);
+        return view('sample.input')->with('data',$data);
     }
 
     public function sampleCalculate(Request $request)
@@ -77,7 +78,7 @@ class HomeController extends Controller
             $maximization = new Maximization;
             $initial_tableau = $maximization->optimize($request);
 
-            return view('front.calculate',[
+            return view('sample.result-maximization',[
                 'maximization'=> $maximization 
                 ])->with('initial_tableau',$initial_tableau);
         }
@@ -86,7 +87,7 @@ class HomeController extends Controller
             $minimization = new Minimization;
             $initial_tableau = $minimization->optimize($request);
 
-            return view('front.calculate',[
+            return view('sample.result-minimization',[
                 'minimization'=> $minimization 
                 ])->with('initial_tableau',$initial_tableau);
         }

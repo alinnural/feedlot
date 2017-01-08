@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Input Value</div>
 
-                    {!! Form::open(['url' => 'calculate','class'=>'form-horizontal']) !!}
+                    {!! Form::open(['url' => 'sample/calculate','class'=>'form-horizontal']) !!}
                     <div class="panel-body">
                         <div class="form-group">
                             <div class="col-md-4 control-label">
