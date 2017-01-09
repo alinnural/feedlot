@@ -73,8 +73,6 @@
         e.preventDefault();
         $(this).parents('.feeds-container').remove();
     });
-
-    
 </script>
 @endsection
 

@@ -17,8 +17,8 @@ class CreateRequirementsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('animal_type',100)->comment('Type Animal Ruminan');
-            $table->integer('finish')->comment('Mature Weight');
-            $table->integer('current')->comment('Body Weight');
+            $table->float('finish',8,3)->comment('Mature Weight');
+            $table->float('current',8,3)->comment('Body Weight');
             $table->float('adg', 8, 3)->comment('Average Daily Gain');
             $table->float('dmi', 8, 3)->comment('Dry Matter Intake');
             $table->float('tdn', 8, 3)->comment('Total Digestible Nutrient');
