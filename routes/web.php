@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/welcome', 'HomeController@home');
 Route::get('/input','HomeController@input');
+Route::get('/price','HomeController@price');
 Route::post('/calculate','HomeController@calculate_using_minimization_class');
 Route::get('/home', 'HomeController@index');
 

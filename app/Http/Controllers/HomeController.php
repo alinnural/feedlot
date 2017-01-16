@@ -9,6 +9,7 @@ use App\Requirement;
 use App\Library\SimplexMethod;
 use App\Library\Minimization;
 use App\Library\Maximization;
+use App\Library\MinimizationFeedlot;
 
 /*
 source : https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
@@ -26,12 +27,9 @@ class HomeController extends Controller
      * @return void
      */
 
-    protected $requirement_id;
-
     public function __construct()
     {
         //$this->middleware('auth');
-        $this->requirement_id = "";
     }
 
     /**
@@ -51,79 +49,88 @@ class HomeController extends Controller
 
     public function input(Request $request)
     {
-        $this->requirement_id = $request->session()->get('requirement_id');
+        $request->session()->put('requirement_id',$request->session()->get('requirement_id'));
+        
         $feeds = Feed::pluck('feed_stuff','id')->all();
         return View('formula.input-feed')->with(compact('feeds'));
     }
 
+    public function price(Request $request)
+    {
+        //print_r($request->input('feeds'));
+        $feed_id = $request->input('feeds');
+        $request->session()->put('feed_id',$feed_id);
+
+        $feeds = Feed::WhereIn('id',$feed_id)->get();
+        // $this->print_dump($feeds);
+        // die();
+        return View('formula.input-price')->with(compact('feeds'));
+    }
+
     public function calculate_using_minimization_class(Request $request)
     {
-        $pakan = $request->input('feeds');
-        $feeds = Feed::WhereIn('id',$pakan)->get();
+        $feed_price = $request->input('feeds_price');
+        $feed_id = $request->session()->get('feed_id');
+        $requirement_id = $request->session()->get('requirement_id');
 
-        // $this->print_dump($feeds->);
+        // ambil kandungan tiap pakan
+        $feed = Feed::WhereIn('id',$feed_id)->get();
 
-        foreach($feeds as $f)
+        // ambil kebutuhan sesuai dengan requirement
+        $requirement = Requirement::Where('id',$requirement_id)->get();
+
+        // generate feed array
+        $feeds = array();
+        $no=1;
+        foreach($feed as $value)
         {
-            echo $f->id; echo "&nbsp;"; 
-            echo $f->feed_stuff; echo "&nbsp;";
-            echo $f->dry_matter; echo "&nbsp;";
-            echo $f->mineral; echo "&nbsp;";
-            echo $f->organic_matter; echo "&nbsp;";
-            echo $f->lignin; echo "&nbsp;";
-            echo $f->neutral_detergent_fiber; echo "&nbsp;";
-            echo $f->ether_extract; echo "&nbsp;";
-            echo $f->nonfiber_carbohydrates; echo "&nbsp;";
-            echo $f->total_digestible_nutrients; echo "&nbsp;";
-            echo $f->metabolizable_energy; echo "&nbsp;";
-            echo $f->rumen_undergradable_cp; echo "&nbsp;";
-            echo $f->rumen_undergradable_dm; echo "&nbsp;";
-            echo $f->rumen_degradable_cp; echo "&nbsp;";
-            echo $f->rumen_degradable_dm; echo "&nbsp;";
-            echo $f->rumen_soluble; echo "&nbsp;";
-            echo $f->rumen_insoluble; echo "&nbsp;";
-            echo $f->degradation_rate; echo "&nbsp;";
-            echo $f->crude_protein; echo "&nbsp;";
-            echo $f->metabolizable_protein; echo "&nbsp;";
-            echo $f->calcium; echo "&nbsp;";
-            echo $f->phosphorus; echo "&nbsp;";
-            echo $f->magnesium; echo "&nbsp;";
-            echo $f->potassium; echo "&nbsp;";
-            echo $f->sodium; echo "&nbsp;";
-            echo $f->sulfur; echo "&nbsp;";
-            echo $f->cobalt; echo "&nbsp;";
-            echo $f->copper; echo "&nbsp;";
-            echo $f->iodine; echo "&nbsp;";
-            echo $f->manganese; echo "&nbsp;";
-            echo $f->selenium; echo "&nbsp;";
-            echo $f->zinc; echo "&nbsp;";
-            echo "<br>";
+            $feeds[$no][1] = $value->dry_matter;
+            $feeds[$no][2] = $value->total_digestible_nutrients;
+            $feeds[$no][3] = $value->crude_protein;
+            $feeds[$no][4] = $value->calcium;
+            $feeds[$no][5] = $value->phosphorus;
+            $no++;
         }
 
-        echo "<br>";
-        $this->requirement_id = $request->session()->get('requirement_id');
-        $requirement = Requirement::where('id',$this->requirement_id)->get();
-        //$this->print_dump($requirement);
-        
-        foreach($requirement as $req)
+        // generate requirement array
+        $requirements = array();
+        foreach($requirement as $key=>$re)
         {
-            echo $req->animal_type; echo "&nbsp;";
-            echo $req->finish; echo "&nbsp;";
-            echo $req->current; echo "&nbsp;";
-            echo $req->adg; echo "&nbsp;";
-            echo $req->dmi; echo "&nbsp;";
-            echo $req->tdn; echo "&nbsp;";
-            echo $req->nem; echo "&nbsp;";
-            echo $req->neg; echo "&nbsp;";
-            echo $req->cp; echo "&nbsp;";
-            echo $req->ca; echo "&nbsp;";
-            echo $req->p; echo "&nbsp;";
-            echo $req->month_pregnant; echo "&nbsp;";
-            echo $req->month_calvin; echo "&nbsp;";
-            echo $req->peak_milk; echo "&nbsp;";
-            echo $req->current_milk; echo "&nbsp;";
-            echo "<br>";
+            $requirements[1]=$re->dmi;
+            $requirements[2]=$re->tdn;
+            $requirements[3]=$re->cp;
+            $requirements[4]=$re->ca;
+            $requirements[5]=$re->p;
         }
+
+        $data = array(
+            'feed_price'=>$feed_price,
+            'requirement'=>$requirements,
+            'feed'=>$this->array_transpose($feeds),
+            'numbers'=>count($feeds).",5"
+        );
+        // print_r($data);
+        // die();
+
+        //echo count($feeds);
+        //echo count($requirements);
+        // for($i=1;$i<=5;$i++)
+        // {
+        //     for($j=1;$j<=2;$j++)
+        //     {
+        //         echo $i."_".$j." ".$data['feed'][$i][$j];
+        //         echo "&nbsp;   ";
+        //     }
+        //     echo "  > ".$requirements[$i];
+        //     echo "<br>";
+        // }
+        // $this->print_dump($data);
+        $minimization = new MinimizationFeedlot;
+        $initial_tableau = $minimization->optimize($data);
+        //print_r($initial_tableau);
+        return view('formula.result',[
+                'minimization'=> $minimization 
+                ])->with('initial_tableau',$initial_tableau);
     }
 
     /* Sample Optimization using Simplex Method --------------------------------------------*/
@@ -152,6 +159,7 @@ class HomeController extends Controller
         else
         {
             $minimization = new Minimization;
+            print_r();
             $initial_tableau = $minimization->optimize($request);
 
             return view('sample.result-minimization',[
@@ -174,4 +182,20 @@ class HomeController extends Controller
         print_r($array);
         die();
     }
+
+    function array_transpose($array, $selectKey = false) {
+        if (!is_array($array)) return false;
+        $return = array();
+        foreach($array as $key => $value) {
+            if (!is_array($value)) return $array;
+            if ($selectKey) {
+                if (isset($value[$selectKey])) $return[] = $value[$selectKey];
+            } else {
+                foreach ($value as $key2 => $value2) {
+                    $return[$key2][$key] = $value2;
+                }
+            }
+        }
+        return $return;
+    } 
 }

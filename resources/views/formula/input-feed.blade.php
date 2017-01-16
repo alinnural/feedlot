@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Input Feed</div>
-                    {!! Form::open(['url' => 'calculate','class'=>'form-horizontal']) !!}
+                    {!! Form::open(['url' => 'price','class'=>'form-horizontal','method'=>'GET']) !!}
                     <div class="panel-body">    
                         <div class="form-group feeds-container">
                             {!! Form::label('var', 'Pilih Pakan', ['class' => 'col-sm-4 control-label']) !!}
