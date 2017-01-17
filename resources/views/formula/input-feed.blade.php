@@ -5,13 +5,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Input Feed</div>
+                <div class="panel-heading">Pilih takan ternak yang akan diformulasikan</div>
                     {!! Form::open(['url' => 'price','class'=>'form-horizontal','method'=>'GET']) !!}
                     <div class="panel-body">    
                         <div class="form-group feeds-container">
-                            {!! Form::label('var', 'Pilih Pakan', ['class' => 'col-sm-4 control-label']) !!}
+                            {{--} Form::label('var', 'Pilih Pakan', ['class' => 'col-sm-4 control-label']) --}}
                             <div>
-                            <div class="col-md-6">
+                            <div class="col-md-10">
                                 {!! Form::select('feeds[]',$feeds,null,['class'=>'input-sm feed_list','placeholder' => '- Pilih Pakan -']) !!}
                             </div>
                             <div class="col-md-2">
@@ -42,15 +42,15 @@
     $(document).ready(function(){
         $('.feed_list').select2({
             minimumInputLength: 2,
-            width:350,
+            width:600,
             dropdownAutoWidth : true
         });
     });
     
     var template_feed = '<div class="form-group feeds-container">'+
-                            '{!! Form::label('var', 'Pilih Pakan', ['class' => 'col-sm-4 control-label']) !!} '+
+                            //'{!! Form::label('var', 'Pilih Pakan', ['class' => 'col-sm-4 control-label']) !!} '+
                             '<div>'+
-                            '<div class="col-md-6">'+
+                            '<div class="col-md-10">'+
                                 '{!! Form::select('feeds[]',$feeds,null,['class'=>'input-sm feed_list','placeholder' => '- Pilih Pakan -']) !!}'+
                            '</div>'+
                             '<div class="col-md-2">'+
@@ -64,7 +64,7 @@
         $(".result-btn-add").before(template_feed);
         $('.feed_list').select2({
             minimumInputLength: 2,
-            width:350,
+            width:600,
             dropdownAutoWidth : true
         });
     });

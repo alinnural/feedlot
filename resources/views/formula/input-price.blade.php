@@ -5,14 +5,15 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Masukkan Harga Per kilogram Pakan</div>
+                <div class="panel-heading">Masukkan harga per kilogram pakan</div>
                     {!! Form::open(['url' => 'calculate','class'=>'form-horizontal']) !!}
                     <div class="panel-body">
                         @foreach ($feeds as $fee)
                             <div class="form-group">
-                                {!! Form::label('var', $fee->feed_stuff, ['class' => 'col-sm-4 control-label']) !!}
-                                <div class="col-md-8">
+                                {!! Form::label('var', $fee->feed_stuff, ['class' => 'col-sm-7 control-label']) !!}
+                                <div class="col-md-4">
                                     <input type="number" name="feeds_price[]" class="form-control" placeholder="Rupiah/Kilogram">
+                                    <input type="hidden" name="feeds_price_id[]" value="{{ $fee->id }}">
                                 </div>
                             </div>
                         @endforeach

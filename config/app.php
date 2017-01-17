@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Formula Ransum Sapi Pedaging (Feedlot)',
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +182,7 @@ return [
         Laratrust\LaratrustServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-
+        App\Providers\HelperServiceProvider::class,
     ],
 
     /*
@@ -197,7 +197,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -235,6 +234,7 @@ return [
         'Laratrust'=> Laratrust\LaratrustFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Calculate' => App\Helpers\Calculate::class,
     ],
 
 ];

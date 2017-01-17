@@ -10,6 +10,7 @@ use App\Library\SimplexMethod;
 use App\Library\Minimization;
 use App\Library\Maximization;
 use App\Library\MinimizationFeedlot;
+use App\Helpers\Calculate;
 
 /*
 source : https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
@@ -73,6 +74,9 @@ class HomeController extends Controller
         $feed_id = $request->session()->get('feed_id');
         $requirement_id = $request->session()->get('requirement_id');
 
+        $feed_price = Calculate::generate_feeds_price($feed_price,$request->input('feeds_price_id'));
+        $request->put('feed_price',$feed_price);
+
         // ambil kandungan tiap pakan
         $feed = Feed::WhereIn('id',$feed_id)->get();
 
@@ -80,28 +84,10 @@ class HomeController extends Controller
         $requirement = Requirement::Where('id',$requirement_id)->get();
 
         // generate feed array
-        $feeds = array();
-        $no=1;
-        foreach($feed as $value)
-        {
-            $feeds[$no][1] = $value->dry_matter;
-            $feeds[$no][2] = $value->total_digestible_nutrients;
-            $feeds[$no][3] = $value->crude_protein;
-            $feeds[$no][4] = $value->calcium;
-            $feeds[$no][5] = $value->phosphorus;
-            $no++;
-        }
+        $feeds = Calculate::generate_feeds($feed);
 
         // generate requirement array
-        $requirements = array();
-        foreach($requirement as $key=>$re)
-        {
-            $requirements[1]=$re->dmi;
-            $requirements[2]=$re->tdn;
-            $requirements[3]=$re->cp;
-            $requirements[4]=$re->ca;
-            $requirements[5]=$re->p;
-        }
+        $requirements = Calculate::generate_requirements($requirement);
 
         $data = array(
             'feed_price'=>$feed_price,
@@ -109,22 +95,7 @@ class HomeController extends Controller
             'feed'=>$this->array_transpose($feeds),
             'numbers'=>count($feeds).",5"
         );
-        // print_r($data);
-        // die();
 
-        //echo count($feeds);
-        //echo count($requirements);
-        // for($i=1;$i<=5;$i++)
-        // {
-        //     for($j=1;$j<=2;$j++)
-        //     {
-        //         echo $i."_".$j." ".$data['feed'][$i][$j];
-        //         echo "&nbsp;   ";
-        //     }
-        //     echo "  > ".$requirements[$i];
-        //     echo "<br>";
-        // }
-        // $this->print_dump($data);
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
         //print_r($initial_tableau);

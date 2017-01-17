@@ -53,7 +53,7 @@
     @for($i=0; $i<=$num[0]; $i++)
         <tr>
         @for($j=0; $j<=$total_number+1; $j++)
-            <td id='each'>{{ $initial_tableau[$i][$j] }}</td>
+            <td id='each'>{{ round($initial_tableau[$i][$j],2) }}</td>
         @endfor
         </tr>
     @endfor
@@ -66,13 +66,13 @@
         @for($i=0; $i<=$total_number; $i++)
             @if(($i+1)<=$num[1])
                 @php $sub=$i+1; @endphp
-                <td id='each'> y{{ $sub }} = {{ $initial_tableau[$num[0]][$i] }}</td>
+                <td id='each'> y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
             @else
                 @php $sub=$i-$num[1]+1; @endphp
                 @if($sub<=$num[0])
-                    <td id='each'> x{{ $sub }} = {{ $initial_tableau[$num[0]][$i] }}</td>
+                    <td id='each'> x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
                 @else
-                    <td id='each'> z = {{ $initial_tableau[$num[0]][$total_number+1] }}</td>
+                    <td id='each'> z = {{ round($initial_tableau[$num[0]][$total_number+1],2) }}</td>
                 @endif
             @endif
         @endfor
@@ -91,7 +91,7 @@
         @for($i=0;$i<=$num[0];$i++)
         <tr>
             @for($j=0;$j<=$total_number+1;$j++)
-                <td>{{ $initial_tableau[$i][$j] }}</td>
+                <td>{{ round($initial_tableau[$i][$j],2) }}</td>
             @endfor
         </tr>
         @endfor
@@ -105,13 +105,13 @@
         @for($i=0;$i<=$total_number;$i++)
             @if(($i+1) <= $num[1])
                 @php $sub = $i+1; @endphp
-                <td>y{{ $sub }} = {{ $initial_tableau[$num[0]][$i] }}</td>
+                <td>y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
             @else
                 @php $sub = $i- $num[1]+1; @endphp
                 @if($sub <= $num[0])
-                    <td>x{{ $sub }} = {{ $initial_tableau[$num[0]][$i] }}</td>
+                    <td>x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
                 @else
-                    <td>z = {{ $initial_tableau[$num[0]][$total_number+1] }}</td>
+                    <td>z = {{ round($initial_tableau[$num[0]][$total_number+1],2) }}</td>
                 @endif
             @endif
         @endfor

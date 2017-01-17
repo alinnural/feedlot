@@ -5,12 +5,12 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Input Parameter</div>
+                <div class="panel-heading">Pilih Requirement (Kebutuhan Sapi Dengan Bobot tertentu)</div>
                     {!! Form::open(['url' => 'input','class'=>'form-horizontal']) !!}
                     <div class="panel-body">    
                         <div class="form-group">
-                            {!! Form::label('var', 'Pilih Requirement', ['class' => 'col-sm-4 control-label']) !!}
-                            <div class="col-md-8">
+                            {{-- Form::label('var', 'Pilih Requirement', ['class' => 'col-sm-4 control-label']) --}}
+                            <div class="col-md-12">
                                 <select id="requirement_list" name="requirement" class="form-control"></select>
                             </div>
                         </div>
