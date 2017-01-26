@@ -24,7 +24,7 @@ class Calculate{
         $no=1;
         foreach($feed as $value)
         {
-            $feeds[$no][1] = $value->dry_matter;
+            $feeds[$no][1] = 1;//$value->dry_matter;
             $feeds[$no][2] = $value->total_digestible_nutrients;
             $feeds[$no][3] = $value->crude_protein;
             $feeds[$no][4] = $value->calcium;
@@ -39,12 +39,24 @@ class Calculate{
         $requirements = array();
         foreach($requirement as $key=>$re)
         {
-            $requirements[1]=$re->dmi;
+            $requirements[1]=1; //$re->dmi;
             $requirements[2]=$re->tdn;
             $requirements[3]=$re->cp;
             $requirements[4]=$re->ca;
             $requirements[5]=$re->p;
         }
         return $requirements;
+    }
+
+    public static function generate_sign()
+    {
+        // <option value='lessThan'><=</option>
+        // <option value='greaterThan'>>=</option>
+        $sign[1] = 'lessThan';
+        $sign[2] = 'greaterThan';
+        $sign[3] = 'greaterThan';
+        $sign[4] = 'greaterThan';
+        $sign[5] = 'greaterThan';
+        return $sign;
     }
 }

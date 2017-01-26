@@ -74,8 +74,11 @@ class HomeController extends Controller
         $feed_id = $request->session()->get('feed_id');
         $requirement_id = $request->session()->get('requirement_id');
 
-        $feed_price = Calculate::generate_feeds_price($feed_price,$request->input('feeds_price_id'));
-        $request->put('feed_price',$feed_price);
+        // print_r($feed_price);
+        // die();
+
+        $feed_prices = Calculate::generate_feeds_price($feed_price,$request->input('feeds_price_id'));
+        $request->session()->put('feed_price',$feed_prices);        
 
         // ambil kandungan tiap pakan
         $feed = Feed::WhereIn('id',$feed_id)->get();
@@ -89,11 +92,15 @@ class HomeController extends Controller
         // generate requirement array
         $requirements = Calculate::generate_requirements($requirement);
 
+        // generate sign greaterthan or lessthan
+        $sign = Calculate::generate_sign();
+
         $data = array(
             'feed_price'=>$feed_price,
             'requirement'=>$requirements,
             'feed'=>$this->array_transpose($feeds),
-            'numbers'=>count($feeds).",5"
+            'numbers'=>count($feeds).",5",
+            'sign'=>$sign
         );
 
         $minimization = new MinimizationFeedlot;
@@ -101,7 +108,8 @@ class HomeController extends Controller
         //print_r($initial_tableau);
         return view('formula.result',[
                 'minimization'=> $minimization 
-                ])->with('initial_tableau',$initial_tableau);
+                ])->with('initial_tableau',$initial_tableau)
+                ->with(compact('requirement'));
     }
 
     /* Sample Optimization using Simplex Method --------------------------------------------*/
@@ -130,7 +138,7 @@ class HomeController extends Controller
         else
         {
             $minimization = new Minimization;
-            print_r();
+            //print_r();
             $initial_tableau = $minimization->optimize($request);
 
             return view('sample.result-minimization',[

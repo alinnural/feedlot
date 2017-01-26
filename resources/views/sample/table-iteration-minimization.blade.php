@@ -1,4 +1,8 @@
-@php $flag = 0; @endphp
+@php 
+$flag = 0; 
+$harga_terakhir = 0;
+@endphp
+
 <!--the maximum number of iterations would be 100, if it excedes the maximum, the problem is infeasible -->
 @for($max=0; $max<100; $max++)
     
@@ -75,6 +79,7 @@
                     <td id='each'> z = {{ round($initial_tableau[$num[0]][$total_number+1],2) }}</td>
                 @endif
             @endif
+            @php $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],2); @endphp
         @endfor
         </tr>
     </table>
@@ -114,6 +119,7 @@
                     <td>z = {{ round($initial_tableau[$num[0]][$total_number+1],2) }}</td>
                 @endif
             @endif
+            @php $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],2); @endphp
         @endfor
         </tr>
     </table>

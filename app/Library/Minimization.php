@@ -102,7 +102,7 @@ class Minimization extends SimplexMethod
             {
                 if($request->input('sign'.$k.'')=='lessThan')
                 {
-                    if($k!=$this->num[1]+1 && $valuesArray[$k-1][$j-1]!=0)
+                    if($k!=$this->num[1]+1 && $this->valuesArray[$k-1][$j-1]!=0)
                         $this->valuesArray[$k-1][$j-1]*=-1;
                     else
                         $this->valuesArray[$k-1][$j-1]*=1;

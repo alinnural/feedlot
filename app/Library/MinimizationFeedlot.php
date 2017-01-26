@@ -49,7 +49,7 @@ class MinimizationFeedlot extends SimplexMethod
         $this->insert_value($request);        
 
         //if the relational operator is <=, negate the entire row - it's like converting <= to >=
-        //$this->check_operator($request);
+        $this->check_operator($request);
 
         //transpose the matrix because we would be forming the dual problem, we are going to convert the minimization problem to a maximization one
         $simplex = new SimplexMethod;
@@ -100,9 +100,9 @@ class MinimizationFeedlot extends SimplexMethod
         {
             for($j=1; $j<=$this->num[0]; $j++)
             {
-                if($request->input('sign'.$k.'')=='lessThan')
+                if($request['sign'][$k]=='lessThan')
                 {
-                    if($k!=$this->num[1]+1 && $valuesArray[$k-1][$j-1]!=0)
+                    if($k!=$this->num[1]+1 && $this->valuesArray[$k-1][$j-1]!=0)
                         $this->valuesArray[$k-1][$j-1]*=-1;
                     else
                         $this->valuesArray[$k-1][$j-1]*=1;
