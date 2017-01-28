@@ -22,11 +22,11 @@
                         <div class="result-btn-add"></div>
                     </div>
                     <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-8">
-                                <a href="#" class="btn btn-default" id="btn-add-more">Tambah Pakan</a>
-                                {!! Form::submit('Lanjut',['class'=>'btn btn-primary']) !!}
+                         <div class="row">
+                            <div class="col-md-5"><a href="/" class="pull-left btn btn-default" id="next">Kembali</a></div>
+                            <div class="col-md-7">
+                                <a href="#" class="btn btn-success" id="btn-add-more">Tambah Pakan</a>
+                                {!! Form::submit('Lanjut',['class'=>'pull-right btn btn-default']) !!}
                             </div>
                         <div>
                     </div>
