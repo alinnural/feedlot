@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Feed;
+use App\Requirement;
+
 class Calculate{
     /*
      * Generate Array price matching to feed_id
@@ -58,5 +61,35 @@ class Calculate{
         $sign[4] = 'greaterThan';
         $sign[5] = 'greaterThan';
         return $sign;
+    }
+
+    public static function mapping_feed_id_result($feeds_id,$feed_price,$result)
+    {
+        $feeds = Feed::whereIn('id',$feeds_id)->get();
+        
+        $percent = array();
+        $no = 1;
+        foreach($feeds as $fee)
+        {
+            $percent[$no]['name'] = $fee->feed_stuff;
+            $percent[$no]['result'] = $result[$no];
+            $percent[$no]['price'] = $feed_price[$no];
+            $no++;
+        }
+        return $percent;
+    }
+
+    public static function mapping_nutrient_id_result($requirement_id,$result)
+    {
+        $data = array('Total Digestible Nutrient(TDN)','Crude Protein (CP)','Calcium (Ca)','Phosphorus (P)');
+        $nutrient = array();
+        $no=0;
+        foreach($data as $r)
+        {
+            $nutrient[$no]['name'] = $data[$no];
+            $nutrient[$no]['result'] = $result[$no+1];
+            $no++;
+        }
+        return $nutrient;
     }
 }

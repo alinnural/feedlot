@@ -50,11 +50,8 @@
                             @php 
                             $flag = 0; 
                             $harga_terakhir = 0;
-                            $tdn = 0;
-                            $dmi = 0;
-                            $crude_protein = 0;
-                            $calcium = 0;
-                            $phosphorus = 0;
+                            $nutrients = array();
+                            $feeds = array();
                             @endphp
 
                             <!--the maximum number of iterations would be 100, if it excedes the maximum, the problem is infeasible -->
@@ -123,17 +120,24 @@
                                     <tr>
                                     @for($i=0; $i<=$total_number; $i++)
                                         @if(($i+1)<=$num[1])
-                                            @php $sub=$i+1; @endphp
+                                            @php 
+                                            $sub=$i+1;
+                                            $nutrients[$sub] = round($initial_tableau[$num[0]][$i],2);
+                                            @endphp
                                             <td id='each'> y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
+                                            
                                         @else
                                             @php $sub=$i-$num[1]+1; @endphp
                                             @if($sub<=$num[0])
                                                 <td id='each'> x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
+                                                @php $feeds[$sub] = round($initial_tableau[$num[0]][$i],2); @endphp
                                             @else
                                                 <td id='each'> z = {{ round($initial_tableau[$num[0]][$total_number+1],2) }}</td>
                                             @endif
                                         @endif
-                                        @php $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],2); @endphp
+                                        @php 
+                                        $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],2);
+                                        @endphp
                                     @endfor
                                     </tr>
                                 </table>
@@ -183,60 +187,70 @@
                     <br>&nbsp;<br>
                     <div class="row">
                         <div class="col-md-6">
-                            <table class="table table-stripped">
-                                <tr>
-                                    <td width="300">{!! Form::label('var', 'Animal Type', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $requirement[0]->animal_type}}</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'Current Weight', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $requirement[0]->current}} Kg</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'Finish Weight', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $requirement[0]->finish}} Kg</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'ADG (Average Daily Gain)', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $requirement[0]->adg}}</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'DMI (Dry Matter Intake)', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $requirement[0]->tdn}}</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'TDN (Total Digestible Nutrient)', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $requirement[0]->dmi}}</td>
-                                </tr>
-                            </table>
+                            <div class="panel panel-default">
+                                <table class="table table-stripped">
+                                    <tr>
+                                        <td width="300"><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td><strong><h4><span class="pull-left">IDR</span> <span class="pull-right">{{ $harga_terakhir }}</span></h4></strong></td>
+                                    </tr>
+                                    @foreach (Calculate::mapping_feed_id_result(Session::get('feed_id'),Session::get('feed_price'),$feeds) as $feed)
+                                    <tr>
+                                        <td><label class="control-label">{{ $feed['name'] }}</label></td>
+                                        <td><strong class="pull-right">{{ $feed['result'] }}</strong></td>
+                                        <td><strong class="pull-left">%</strong></td>
+                                        <td><span class="pull-left">IDR</span> <span class="pull-right">{{ $feed['price'] }}</span></td>
+                                    </tr>
+                                    @endforeach
+                                </table>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <table class="table table-stripped">
-                                <tr>
-                                    <td width="300">{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</td>
-                                    <td>IDR {{ $harga_terakhir }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'DMI (Dry Matter Intake)', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $tdn }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'TDN (Total Digestible Nutrient)', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $dmi }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'Current Weight', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $crude_protein }} Kg</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'Finish Weight', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $calcium }} Kg</td>
-                                </tr>
-                                <tr>
-                                    <td>{!! Form::label('var', 'ADG (Average Daily Gain)', ['class' => 'control-label']) !!}</td>
-                                    <td>{{ $phosphorus }}</td>
-                                </tr>
-                            </table>
+                            <div class="panel panel-default">
+                                <table class="table table-stripped">
+                                    @foreach (Calculate::mapping_nutrient_id_result(Session::get('requirement_id'),$nutrients) as $nu)
+                                    <tr>
+                                        <td><label class="control-label">{{ $nu['name'] }}</label></td>
+                                        <td><strong class="pull-right">{{ $nu['result'] }}</strong></td>
+                                        <td><strong class="pull-left">%</strong></td>
+                                    </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Kebutuhan Nutrisi Sapi Pedaging</div>
+                                <table class="table table-stripped">
+                                    <tr>
+                                        <td width="300">{!! Form::label('var', 'Animal Type', ['class' => 'control-label']) !!}</td>
+                                        <td>{{ $requirement[0]->animal_type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{!! Form::label('var', 'Current Weight', ['class' => 'control-label']) !!}</td>
+                                        <td>{{ $requirement[0]->current}} Kg</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{!! Form::label('var', 'Finish Weight', ['class' => 'control-label']) !!}</td>
+                                        <td>{{ $requirement[0]->finish}} Kg</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{!! Form::label('var', 'ADG (Average Daily Gain)', ['class' => 'control-label']) !!}</td>
+                                        <td>{{ $requirement[0]->adg}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{!! Form::label('var', 'DMI (Dry Matter Intake)', ['class' => 'control-label']) !!}</td>
+                                        <td>{{ $requirement[0]->tdn}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{!! Form::label('var', 'TDN (Total Digestible Nutrient)', ['class' => 'control-label']) !!}</td>
+                                        <td>{{ $requirement[0]->dmi}}</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>         
                 </div>
