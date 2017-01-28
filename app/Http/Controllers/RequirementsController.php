@@ -309,8 +309,16 @@ class RequirementsController extends Controller
 
     public function AjaxFind(Request $request)
     {
-        $requirements = Requirement::find($request->id);
-        $request->session()->put('requirement_id',$request->id);
+        if(empty($request->current_weight) and empty($request->average_daily_gain))
+        {
+            $data = array();
+            return \Response::json($data);
+        }
+        $this->session()->put('current_weight',$request->current_weight);
+        $this->session()->put('average_daily_gain', $request->average_daily_gain);
+        
+        $requirements = Requirement::SearchByCurrentWeightAndADG($request->current_weight,$request->average_daily_gain)->get()->first();
+        $request->session()->put('requirement_id',$requirements->id);
         return \Response::json($requirements);
     }
 }

@@ -36,4 +36,21 @@ class Requirement extends Model
         }
         return $query;
     }
+
+    public function scopeSearchByCurrentWeightAndADG($query,$current,$adg)
+    {
+        if($adg != '' and $current != '')
+        {
+            $query->where(function ($query) use ($current,$adg) {
+                $query->where("current","LIKE","$current%")
+                    ->where("adg","LIKE","$adg%");
+            });
+            return $query;
+        }
+        else
+        {
+            return $query;
+        }
+    }
+
 }
