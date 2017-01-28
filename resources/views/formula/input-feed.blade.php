@@ -8,8 +8,8 @@
                 <div class="panel-heading">Pilih takan ternak yang akan diformulasikan</div>
                     {!! Form::open(['url' => 'price','class'=>'form-horizontal','method'=>'GET']) !!}
                     <div class="panel-body">    
-                        <div class="form-group feeds-container">
-                            {{--} Form::label('var', 'Pilih Pakan', ['class' => 'col-sm-4 control-label']) --}}
+                            <div class="form-group feeds-container">
+                                {{--} Form::label('var', 'Pilih Pakan', ['class' => 'col-sm-4 control-label']) --}}
                             <div>
                             <div class="col-md-10">
                                 {!! Form::select('feeds[]',$feeds,null,['class'=>'input-sm feed_list','placeholder' => '- Pilih Pakan -']) !!}

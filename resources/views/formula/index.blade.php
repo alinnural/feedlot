@@ -6,20 +6,29 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Pilih Requirement (Kebutuhan Sapi Dengan Bobot tertentu)</div>
-                    {!! Form::open(['url' => 'input','class'=>'form-horizontal']) !!}
-                    <div class="panel-body">    
+                    <div class="panel-body">
+                    {!! Form::open(['url' => 'input','class'=>'form-horizontal','id'=>'input']) !!}
                         <div class="form-group">
-                            {{-- Form::label('var', 'Pilih Requirement', ['class' => 'col-sm-4 control-label']) --}}
-                            <div class="col-md-12">
-                                <select id="requirement_list" name="requirement" class="form-control"></select>
+                            {{ Form::label('var', 'Berat Badan (Kg)', ['class' => 'col-sm-5 control-label']) }}
+                            <div class="col-md-7">
+                                {{--<select id="requirement_list" name="requirement" class="form-control"></select>--}}
+                                {{ Form::number('current', '',['class' => 'form-control'])}} 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('var', 'Average Daily Gain (ADG)', ['class' => 'col-sm-5 control-label','id'=>'average_daily_gain']) }}
+                            <div class="col-md-7">
+                                {{--<select id="requirement_list" name="requirement" class="form-control"></select>--}}
+                                {{ Form::number('average_daily_gain', '',['class' => 'form-control'])}} 
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <div class="row">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-8">
-                                <a href="/input" class="pull-right btn btn-primary">Langkah Selanjutnya</a>
+                            <div class="col-md-5"></div>
+                            <div class="col-md-7">
+                                <a href="/input" class="pull-right btn btn-primary" id="next">Selanjutnya</a>
+                                <a href="#" type="submit" class="pull-left btn btn-success" id="lihat_requirement">Lihat Kebutuhan</a>
                             </div>
                         <div>
                     </div>
@@ -29,6 +38,11 @@
     </div>
     <div class="panel text-center text-gray" id="loading" style="display: none;">
         <h3><i class="fa fa-spinner fa-spin"></i> Loading Data</h3>
+    </div>
+    <div class="row" id="alert" style="display:none;">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert"><h4><i><center>Data kebutuhan sapi potong tidak ditemukan.</center></i></h4></div>
+        </div>
     </div>
     <div class="row" id="result" style="display:none;">
         <div class="col-md-12">
@@ -141,67 +155,73 @@
 @endsection
 
 @section('scripts')
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function(){
         $("#result").hide();
+        $("#next").attr("disabled","disabled");
+        $('#input').validate({ // initialize the plugin
+            rules: {
+                current: {
+                    required: true,
+                    number:true,
+                },
+                average_daily_gain: {
+                    required: true,
+                    number:true,
+                    range: [0, 1]
+                }
+            },
+            messages: {
+                current: {
+                    required : "Berat badan (kg) harus diisi",
+                    number: "Berat badan (kg) harus angka",
+                },
+                average_daily_gain: {
+                    required: "Average Daily Gain (ADG) harus diisi",
+                    number: "Average Daily Gain (ADG) harus angka",
+                    range: "Average Daily Gain (ADG) tidak boleh lebih dari 1",
+                },
+            }
+        });
     });
 
-    $('#requirement_list').select2({
-        placeholder: "Choose Requirement...",
-        minimumInputLength: 2,
-        ajax: {
-            url: '/ajax/requirements/search',
-            dataType: 'json',
-            data: function (params) {
-                return {
-                    q: $.trim(params.term)
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: data,
-                };
-            },
-            cache: true
+    $('#lihat_requirement').click(function(){
+        var current_weight =  $('input[name=current]').val();
+        var average_daily_gain = $('input[name=average_daily_gain]').val();
+        
+        if(!$("#input").valid())
+        {
+            return false;
         }
-    })
-    .on("change", function(e) {
-        //console.log($(this).select2('data'));
-        var data = $(this).select2('data');
-        //Then I take the values like if I work with an array
-        var value = data[0].id;
-        //alert(value);
+
         $('#loading').show();
         $("#result").hide();
+        $('#alert').hide();
+        $("#next").attr("disabled","disabled");
 
         $.ajax({
             type: "GET",
             url : "/ajax/requirements/find",
-            data : { id: value },
+            data : { current_weight: current_weight, average_daily_gain: average_daily_gain },
             dataType : "json",
             success : function(data){
-                $("#result").show();
-                $('#loading').hide();
-
                 clear_data();
-
-                if(JSON.stringify(data)=='{}') 
+                $('#loading').hide();
+                if(JSON.stringify(data) === JSON.stringify({}) || JSON.stringify(data) === JSON.stringify([])) 
                 {
-                    //console.log(data);
-                    document.getElementById("#result").innerHTML="<p> Your article was successfully added!</p>";
+                    $("#alert").show();
                 } 
                 else 
                 {
+                    $("#result").show();
+                    $("#next").removeAttr('disabled');
                     show_data(data);
                 }
             }
         }, "json")
-        .fail(function(data){
-            // on an error show us a warning and write errors to console
-            var errors = data.responseJSON;
-            alert('an error occured, check the console (f12)');
-            console.log(errors);
-        });;
     });
 
     function clear_data()
