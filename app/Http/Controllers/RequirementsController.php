@@ -314,11 +314,23 @@ class RequirementsController extends Controller
             $data = array();
             return \Response::json($data);
         }
-        $request->session()->put('current_weight',$request->current_weight);
-        $request->session()->put('average_daily_gain', $request->average_daily_gain);
+        else
+        {
+             $request->session()->put('current_weight',$request->current_weight);
+            $request->session()->put('average_daily_gain', $request->average_daily_gain);
 
-        $requirements = Requirement::SearchByCurrentWeightAndADG($request->current_weight,$request->average_daily_gain)->get()->first();
-        $request->session()->put('requirement_id',$requirements->id);
-        return \Response::json($requirements);
+            $requirements = Requirement::SearchByCurrentWeightAndADG($request->current_weight,$request->average_daily_gain)->get()->first();
+            
+            if(empty($requirements))
+            {
+                $request->session()->put('requirement_id',0);
+            }
+            else
+            {
+                $request->session()->put('requirement_id',$requirements->id);
+            }
+
+            return \Response::json($requirements);
+        }
     }
 }
