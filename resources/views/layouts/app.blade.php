@@ -41,10 +41,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
@@ -106,8 +105,10 @@
                 </div>
             </div>
         </nav>
+        <div style="padding-top:70px;">
         @include('layouts._flash')
         @yield('content')
+        </div>
         <div class="loader"></div>
     </div>
 
