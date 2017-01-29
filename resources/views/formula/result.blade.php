@@ -9,11 +9,11 @@
                     <div class="btn-group pull-right">
                         <a href="/" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
                     </div>
-                    <h4> Hasil Optimasi </h4>
+                    <h4><i class="fa fa-breafcase"></i> Hasil Optimasi </h4>
                 </div>
                 <div class="panel-body">
-                    <a class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Lihat Hasil Perhitungan Matriks
+                    <a class="btn btn-warning" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fa fa-list-alt"></i> Lihat Hasil Perhitungan Matriks
                     </a>
                     <div class="collapse" id="collapseExample">
                         <div class="well">

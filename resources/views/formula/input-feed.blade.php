@@ -20,13 +20,15 @@
                             </div>
                         </div>
                         <div class="result-btn-add"></div>
+                        <a href="#" class="btn btn-success" id="btn-add-more"><i class="fa fa-plus-square-o"></i> Tambah Pakan</a>
                     </div>
                     <div class="panel-footer">
                          <div class="row">
-                            <div class="col-md-5"><a href="/" class="pull-left btn btn-default" id="next">Kembali</a></div>
-                            <div class="col-md-7">
-                                <a href="#" class="btn btn-success" id="btn-add-more">Tambah Pakan</a>
-                                {!! Form::submit('Lanjut',['class'=>'pull-right btn btn-default']) !!}
+                            <div class="col-md-4">
+                                <a href="/" class="pull-left btn btn-lg btn-default" id="next"><i class="fa fa-lg fa-arrow-circle-o-left"></i> Kembali</a>
+                            </div>
+                            <div class="col-md-8">
+                                {{ Form::button('<span class="fa fa-lg fa-arrow-circle-o-right"></span> Lanjut', array('class'=>'btn btn-default btn-lg pull-right', 'type'=>'submit')) }}
                             </div>
                         <div>
                     </div>

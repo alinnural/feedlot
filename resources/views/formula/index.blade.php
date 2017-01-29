@@ -27,8 +27,8 @@
                         <div class="row">
                             <div class="col-md-5"></div>
                             <div class="col-md-7">
-                                <a href="/input" class="pull-right btn btn-default" id="next">Lanjut</a>
-                                <a href="#" type="submit" class="pull-left btn btn-success" id="lihat_requirement">Lihat Kebutuhan</a>
+                                <a href="/input" class="pull-right btn btn-lg btn-default" id="next"><i class="fa fa-lg fa-arrow-circle-o-right"></i> Lanjut</a>
+                                <a href="#" type="submit" class="pull-left btn btn-lg btn-success" id="lihat_requirement"><i class="fa fa-lg fa-eye"></i> Lihat Kebutuhan</a>
                             </div>
                         <div>
                     </div>

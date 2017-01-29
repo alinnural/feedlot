@@ -20,9 +20,9 @@
                     </div>
                     <div class="panel-footer">
                         <div class="row">
-                            <div class="col-md-5"><a href="/input" class="pull-left btn btn-default" id="next">Kembali</a></div>
+                            <div class="col-md-5"><a href="/" class="pull-left btn btn-lg btn-default" id="next"><i class="fa fa-lg fa-arrow-circle-o-left"></i> Kembali</a></div>
                             <div class="col-md-7">
-                                <input type="submit" class="btn btn-success" id="calculate" value="Hitung Optimasi">
+                                {{ Form::button('<span class="fa fa-lg fa-calculator"></span> Hitung Optimasi', array('class'=>'btn btn-success btn-lg pull-right', 'type'=>'submit')) }}
                             </div>
                         <div>
                     </div>
