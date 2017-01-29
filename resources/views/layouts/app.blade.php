@@ -12,7 +12,8 @@
 
     <!-- Styles -->
     <link href="/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
+    <!-- <link href="/css/app.css" rel="stylesheet"> -->
+    <link href="/css/bootstrap.ubuntu.min.css" rel="stylesheet">
     <link href="/css/jquery.dataTables.css" rel="stylesheet"> 
     <link href="/css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="/css/selectize.css" rel="stylesheet">

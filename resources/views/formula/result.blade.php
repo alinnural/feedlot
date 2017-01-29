@@ -108,7 +108,7 @@
                                 @for($i=0; $i<=$num[0]; $i++)
                                     <tr>
                                     @for($j=0; $j<=$total_number+1; $j++)
-                                        <td id='each'>{{ round($initial_tableau[$i][$j],2) }}</td>
+                                        <td id='each'>{{ round($initial_tableau[$i][$j],3) }}</td>
                                     @endfor
                                     </tr>
                                 @endfor
@@ -122,21 +122,21 @@
                                         @if(($i+1)<=$num[1])
                                             @php 
                                             $sub=$i+1;
-                                            $nutrients[$sub] = round($initial_tableau[$num[0]][$i],2);
+                                            $nutrients[$sub] = round($initial_tableau[$num[0]][$i],3);
                                             @endphp
-                                            <td id='each'> y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
+                                            <td id='each'> y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
                                             
                                         @else
                                             @php $sub=$i-$num[1]+1; @endphp
                                             @if($sub<=$num[0])
-                                                <td id='each'> x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
+                                                <td id='each'> x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
                                                 @php $feeds[$sub] = round($initial_tableau[$num[0]][$i],2); @endphp
                                             @else
-                                                <td id='each'> z = {{ round($initial_tableau[$num[0]][$total_number+1],2) }}</td>
+                                                <td id='each'> z = {{ round($initial_tableau[$num[0]][$total_number+1],3) }}</td>
                                             @endif
                                         @endif
                                         @php 
-                                        $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],2);
+                                        $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],3);
                                         @endphp
                                     @endfor
                                     </tr>
@@ -154,7 +154,7 @@
                                     @for($i=0;$i<=$num[0];$i++)
                                     <tr>
                                         @for($j=0;$j<=$total_number+1;$j++)
-                                            <td>{{ round($initial_tableau[$i][$j],2) }}</td>
+                                            <td>{{ round($initial_tableau[$i][$j],3) }}</td>
                                         @endfor
                                     </tr>
                                     @endfor
@@ -168,16 +168,16 @@
                                     @for($i=0;$i<=$total_number;$i++)
                                         @if(($i+1) <= $num[1])
                                             @php $sub = $i+1; @endphp
-                                            <td>y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
+                                            <td>y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
                                         @else
                                             @php $sub = $i- $num[1]+1; @endphp
                                             @if($sub <= $num[0])
-                                                <td>x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],2) }}</td>
+                                                <td>x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
                                             @else
-                                                <td>z = {{ round($initial_tableau[$num[0]][$total_number+1],2) }}</td>
+                                                <td>z = {{ round($initial_tableau[$num[0]][$total_number+1],3) }}</td>
                                             @endif
                                         @endif
-                                        @php $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],2); @endphp
+                                        @php $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],3); @endphp
                                     @endfor
                                     </tr>
                                 </table>

@@ -81,7 +81,7 @@ class Calculate{
 
     public static function mapping_nutrient_id_result($requirement_id,$result)
     {
-        $data = array('Total Digestible Nutrient(TDN)','Crude Protein (CP)','Calcium (Ca)','Phosphorus (P)');
+        $data = array('Satuan','Total Digestible Nutrient(TDN)','Crude Protein (CP)','Calcium (Ca)','Phosphorus (P)');
         $nutrient = array();
         $no=0;
         foreach($data as $r)
