@@ -40,6 +40,7 @@
 @section('scripts')
 <script type="text/javascript">
     $(document).ready(function(){
+        $(".loader").fadeOut("slow");
         $('.feed_list').select2({
             minimumInputLength: 2,
             width:600,

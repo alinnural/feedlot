@@ -20,6 +20,18 @@
     <link href="/css/selectize.bootstrap3.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
+    <style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+    }
+    </style>
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -96,6 +108,7 @@
         </nav>
         @include('layouts._flash')
         @yield('content')
+        <div class="loader"></div>
     </div>
 
     <!-- Scripts -->

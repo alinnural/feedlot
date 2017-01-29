@@ -160,6 +160,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        $(".loader").fadeOut("slow");
         $("#result").hide();
         $("#next").attr("disabled","disabled");
         $('#input').validate({ // initialize the plugin
@@ -185,7 +186,7 @@
                     range: "Average Daily Gain (ADG) tidak boleh lebih dari 1",
                 },
             }
-        });
+        });    
     });
 
     $('#lihat_requirement').click(function(){

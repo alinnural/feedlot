@@ -38,6 +38,10 @@
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 
 <script type="text/javascript">
+    $(document).ready(function(){
+        $(".loader").fadeOut("slow");
+    });
+    
     $(document).on('click','.btn-remove',function(e){
         e.preventDefault();
         $(this).parents('.feeds-container').remove();

@@ -259,3 +259,11 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".loader").fadeOut("slow");
+    });
+</scripts>
+@endsection
