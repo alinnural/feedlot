@@ -130,7 +130,7 @@
                                             @php $sub=$i-$num[1]+1; @endphp
                                             @if($sub<=$num[0])
                                                 <td id='each'> x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
-                                                @php $feeds[$sub] = round($initial_tableau[$num[0]][$i],2); @endphp
+                                                @php $feeds[$sub] = round($initial_tableau[$num[0]][$i],3); @endphp
                                             @else
                                                 <td id='each'> z = {{ round($initial_tableau[$num[0]][$total_number+1],3) }}</td>
                                             @endif
@@ -167,12 +167,16 @@
                                     <tr>
                                     @for($i=0;$i<=$total_number;$i++)
                                         @if(($i+1) <= $num[1])
-                                            @php $sub = $i+1; @endphp
+                                            @php 
+                                            $sub = $i+1; 
+                                            $nutrients[$sub] = round($initial_tableau[$num[0]][$i],3);
+                                            @endphp
                                             <td>y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
                                         @else
                                             @php $sub = $i- $num[1]+1; @endphp
                                             @if($sub <= $num[0])
                                                 <td>x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
+                                                @php $feeds[$sub] = round($initial_tableau[$num[0]][$i],3); @endphp
                                             @else
                                                 <td>z = {{ round($initial_tableau[$num[0]][$total_number+1],3) }}</td>
                                             @endif
@@ -265,5 +269,5 @@
     $(document).ready(function(){
         $(".loader").fadeOut("slow");
     });
-</scripts>
+</script>
 @endsection
