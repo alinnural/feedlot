@@ -73,7 +73,7 @@ class Calculate{
         {
             $percent[$no]['name'] = $fee->feed_stuff;
             $percent[$no]['result'] = $result[$no];
-            $percent[$no]['price'] = $feed_price[$no];
+            $percent[$no]['price'] = $feed_price[$fee->id];
             $no++;
         }
         return $percent;
