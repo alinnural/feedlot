@@ -262,6 +262,7 @@
         </div>
     </div>
 </div>
+<div class="loader"></div>
 @endsection
 
 @section('scripts')

@@ -109,9 +109,9 @@
         @include('layouts._flash')
         @yield('content')
         </div>
-        <div class="loader"></div>
     </div>
 
+    
     <!-- Scripts -->
     <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
