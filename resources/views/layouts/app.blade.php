@@ -11,13 +11,13 @@
     <title>{{ config('app.name', 'FeedLot') }}</title>
 
     <!-- Styles -->
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ URL::asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" >
     <!-- <link href="/css/app.css" rel="stylesheet"> -->
-    <link href="/css/bootstrap.ubuntu.min.css" rel="stylesheet">
-    <link href="/css/jquery.dataTables.css" rel="stylesheet"> 
-    <link href="/css/dataTables.bootstrap.css" rel="stylesheet">
-    <link href="/css/selectize.css" rel="stylesheet">
-    <link href="/css/selectize.bootstrap3.css" rel="stylesheet">
+    <link href="{{ URL::asset('css/bootstrap.ubuntu.min.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('css/jquery.dataTables.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('css/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('css/selectize.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" >
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
     <style>
@@ -113,12 +113,12 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
-    <script src="/js/jquery.dataTables.min.js"></script> 
-    <script src="/js/dataTables.bootstrap.min.js"></script>
-    <script src="/js/selectize.min.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/selectize.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="/js/custom.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/custom.js') }}"></script>
     @yield('scripts')
 </body>
 </html>
