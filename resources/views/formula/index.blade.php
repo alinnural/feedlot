@@ -3,13 +3,15 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        @include('layouts.menu')
+        
+        <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4><i class="fa fa-plus-circle"></i> Pilih Requirement (Kebutuhan Sapi Dengan Bobot tertentu) </h4>
                 </div>
                     <div class="panel-body">
-                    {!! Form::open(['url' => 'input','class'=>'form-horizontal','id'=>'input']) !!}
+                    {!! Form::open(['url' => 'formula/input','class'=>'form-horizontal','id'=>'input']) !!}
                         <div class="form-group">
                             {{ Form::label('var', 'Berat Badan (Kg)', ['class' => 'col-sm-5 control-label']) }}
                             <div class="col-md-7">
@@ -29,7 +31,7 @@
                         <div class="row">
                             <div class="col-md-5"></div>
                             <div class="col-md-7">
-                                <a href="/input" class="pull-right btn btn-lg btn-default" id="next"><i class="fa fa-lg fa-arrow-circle-o-right"></i> Lanjut</a>
+                                <a href="formula/input" class="pull-right btn btn-lg btn-default" id="next"><i class="fa fa-lg fa-arrow-circle-o-right"></i> Lanjut</a>
                                 <a href="#" type="submit" class="pull-left btn btn-lg btn-success" id="lihat_requirement"><i class="fa fa-lg fa-eye"></i> Lihat Kebutuhan</a>
                             </div>
                         <div>
@@ -267,4 +269,3 @@
     }
 </script>
 @endsection
-

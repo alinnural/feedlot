@@ -3,12 +3,13 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        @include('layouts.menu')
+        <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4><i class="fa fa-plus-circle"></i> Masukkan harga per kilogram pakan</h4>
                 </div>
-                    {!! Form::open(['url' => 'calculate','class'=>'form-horizontal','id'=>'input']) !!}
+                    {!! Form::open(['url' => 'formula/calculate','class'=>'form-horizontal','id'=>'input']) !!}
                     <div class="panel-body">
                         @foreach ($feeds as $fee)
                             <div class="form-group">

@@ -3,18 +3,21 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        @include('layouts.menu')
+        <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="btn-group pull-right">
-                        <a href="/" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <a href="/home" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
                     </div>
                     <h4><i class="fa fa-breafcase"></i> Hasil Optimasi </h4>
                 </div>
                 <div class="panel-body">
+                    @if(Auth::check())
                     <a class="btn btn-warning" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class="fa fa-list-alt"></i> Lihat Hasil Perhitungan Matriks
                     </a>
+                    @endif
                     <div class="collapse" id="collapseExample">
                         <div class="well">
                             <h4>Inisialisasi Tableau</h4>

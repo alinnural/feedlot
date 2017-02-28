@@ -43,6 +43,11 @@ class HomeController extends Controller
         return view('formula.index');
     }
 
+    public function beranda()
+    {
+        return view('formula.beranda');
+    }
+
     public function home()
     {
         return view('home');

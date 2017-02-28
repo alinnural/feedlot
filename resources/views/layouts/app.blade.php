@@ -59,28 +59,14 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        @if (Auth::check())
-                            {!! Html::smartNav(url('/home'), 'Dashboard') !!}
-                        @endif
-                        @role('admin')
-                            {!! Html::smartNav(route('groupfeeds.index'), 'Group Feeds') !!}
-                            {!! Html::smartNav(route('feeds.index'), 'Feeds Stuff') !!}
-                            {!! Html::smartNav(route('requirements.index'),'Requirements') !!}
-                        @endrole
-                        @if (auth()->check())
-                            {!! Html::smartNav(url('/settings/profile'), 'Profil') !!}
-                        @endif
-                    </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
+                            <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                            <li><a href="{{ url('/register') }}"><i class="fa fa-user"></i> Register</a></li>
                         @else
+                            <li><a href="{{ url('/setting/profil') }}"><i class="fa fa-user"></i> Profile</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -91,7 +77,7 @@
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            <i class="fa fa-sign-out"></i> Logout
                                         </a>
 
                                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
