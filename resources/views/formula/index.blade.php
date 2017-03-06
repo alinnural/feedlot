@@ -177,7 +177,7 @@
                 average_daily_gain: {
                     required: true,
                     number:true,
-                    range: [0, 1]
+                    range: [0, 5]
                 }
             },
             messages: {
@@ -188,7 +188,7 @@
                 average_daily_gain: {
                     required: "Average Daily Gain (ADG) harus diisi",
                     number: "Average Daily Gain (ADG) harus angka",
-                    range: "Average Daily Gain (ADG) tidak boleh lebih dari 1",
+                    range: "Average Daily Gain (ADG) tidak boleh lebih dari 5",
                 },
             }
         });    
@@ -210,7 +210,7 @@
 
         $.ajax({
             type: "GET",
-            url : "/ajax/requirements/find",
+            url : "/ajax/requirements/regression",
             data : { current_weight: current_weight, average_daily_gain: average_daily_gain },
             dataType : "json",
             success : function(data){

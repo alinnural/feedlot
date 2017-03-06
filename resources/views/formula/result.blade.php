@@ -234,27 +234,35 @@
                                 <table class="table table-stripped">
                                     <tr>
                                         <td width="300">{!! Form::label('var', 'Animal Type', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->animal_type}}</td>
+                                        <td>{{ $requirement['animal_type'] }}</td>
                                     </tr>
                                     <tr>
                                         <td>{!! Form::label('var', 'Current Weight', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->current}} Kg</td>
+                                        <td>{{ $requirement['current'] }} Kg</td>
                                     </tr>
-                                    <tr>
+                                    {{--<tr>
                                         <td>{!! Form::label('var', 'Finish Weight', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->finish}} Kg</td>
-                                    </tr>
+                                        <td>{{ $requirement['finish']}} Kg</td>
+                                    </tr>--}}
                                     <tr>
                                         <td>{!! Form::label('var', 'ADG (Average Daily Gain)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->adg}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{!! Form::label('var', 'DMI (Dry Matter Intake)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->tdn}}</td>
+                                        <td>{{ $requirement['adg'] }}</td>
                                     </tr>
                                     <tr>
                                         <td>{!! Form::label('var', 'TDN (Total Digestible Nutrient)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->dmi}}</td>
+                                        <td>{{ $requirement['tdn'] }}</td>
+                                    </tr>
+                                   <tr>
+                                        <td>{!! Form::label('var', 'CP (Crude Protein)', ['class' => 'control-label']) !!}</td>
+                                        <td>{{ $requirement['cp'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{!! Form::label('var', 'Ca (Calcium)', ['class' => 'control-label']) !!}</td>
+                                        <td>{{ $requirement['ca']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{!! Form::label('var', 'P (Phosphorus)', ['class' => 'control-label']) !!}</td>
+                                        <td>{{ $requirement['p']}}</td>
                                     </tr>
                                 </table>
                             </div>

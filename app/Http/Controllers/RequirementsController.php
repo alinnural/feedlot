@@ -333,4 +333,53 @@ class RequirementsController extends Controller
             return \Response::json($requirements);
         }
     }
+
+    public function AjaxFindRegretion(Request $request)
+    {
+        if(empty($request->current_weight) and empty($request->average_daily_gain))
+        {
+            $data = array();
+            return \Response::json($data);
+        }
+        else
+        {
+            $request->session()->put('current_weight',$request->current_weight);
+            $request->session()->put('average_daily_gain', $request->average_daily_gain);
+
+            $tdn = 49.86 - (0.0255 * $request->current_weight) + (23.64 * $request->average_daily_gain);
+            $cp = 11.13 - (0.0176 * $request->current_weight) + (5.19 * $request->average_daily_gain);
+            $ca = 0.404 - (0.00081 * $request->current_weight) + (0.238 * $request->average_daily_gain);
+            $p = 0.195 - (0.0003 * $request->current_weight) + (0.100 * $request->average_daily_gain);
+
+            $requirements = array(
+                'animal_type' => 'Sapi Potong',
+                'current' => $request->current_weight,
+                'finish' => 0,
+                'adg' => $request->average_daily_gain,
+                'dmi' => 0,
+                'tdn' => $tdn,
+                'nem' => 0,
+                'neg' => 0,
+                'cp' => $cp,
+                'ca' => $ca,
+                'p' => $p,
+                'month_pregnant' => 0,
+                'month_calvin' => 0,
+                'peak_milk' => 0,
+                'current_milk' => 0,
+            );
+
+            if(empty($requirements))
+            {
+                $request->session()->put('requirement_id',0);
+            }
+            else
+            {
+                $request->session()->put('requirements',$requirements);
+                $request->session()->put('requirement_id',0);
+            }
+
+            return \Response::json($requirements);
+        }
+    } 
 }

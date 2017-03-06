@@ -51,6 +51,19 @@ class Calculate{
         return $requirements;
     }
 
+    public static function generate_requirements_using_regression($requirement)
+    {
+        $requirements = array();
+
+        $requirements[1]=1; //$re->dmi;
+        $requirements[2]=$requirement['tdn'];
+        $requirements[3]=$requirement['cp'];
+        $requirements[4]=$requirement['ca'];
+        $requirements[5]=$requirement['p'];
+        
+        return $requirements;
+    }
+
     public static function generate_sign()
     {
         // <option value='lessThan'><=</option>

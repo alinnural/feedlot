@@ -108,13 +108,15 @@ class HomeController extends Controller
         $feed = Feed::WhereIn('id',$feed_id)->get();
 
         // ambil kebutuhan sesuai dengan requirement
-        $requirement = Requirement::Where('id',$requirement_id)->get();
+        //$requirement = Requirement::Where('id',$requirement_id)->get();
 
         // generate feed array
         $feeds = Calculate::generate_feeds($feed);
 
+        // ambil requirements from session
+        $requirement = $request->session()->get('requirements');
         // generate requirement array
-        $requirements = Calculate::generate_requirements($requirement);
+        $requirements = Calculate::generate_requirements_using_regression($requirement);
 
         // generate sign greaterthan or lessthan
         $sign = Calculate::generate_sign();
@@ -126,7 +128,6 @@ class HomeController extends Controller
             'numbers'=>count($feeds).",5",
             'sign'=>$sign
         );
-
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
         //print_r($initial_tableau);

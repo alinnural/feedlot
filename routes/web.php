@@ -40,6 +40,7 @@ Route::group(['prefix'=>'ajax'],function(){
     Route::get('requirements/search', 'RequirementsController@AjaxSearch');
     Route::get('requirements/find','RequirementsController@AjaxFind');
     Route::get('feeds/search','FeedsController@AjaxSearch');
+    Route::get('requirements/regression','RequirementsController@AjaxFindRegretion');
 });
 
 Route::group(['middleware'=>'web'],function(){
