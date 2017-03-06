@@ -8,15 +8,29 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'FeedLot') }}</title>
 
     <!-- Styles -->
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/jquery.dataTables.css" rel="stylesheet"> 
-    <link href="/css/dataTables.bootstrap.css" rel="stylesheet">
-    <link href="/css/selectize.css" rel="stylesheet">
-    <link href="/css/selectize.bootstrap3.css" rel="stylesheet">
+    <link href="{{ URL::asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" >
+    <!-- <link href="/css/app.css" rel="stylesheet"> -->
+    <link href="{{ URL::asset('css/bootstrap.ubuntu.min.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('css/jquery.dataTables.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('css/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('css/selectize.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" >
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+    }
+    </style>
 
     <!-- Scripts -->
     <script>
@@ -27,10 +41,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
@@ -46,27 +59,14 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        @if (Auth::check())
-                            {!! Html::smartNav(url('/home'), 'Dashboard') !!}
-                        @endif
-                        @role('admin')
-                            {!! Html::smartNav(route('groupfeeds.index'), 'Group Feeds') !!}
-                            {!! Html::smartNav(route('feeds.index'), 'Feeds Stuff') !!}
-                        @endrole
-                        @if (auth()->check())
-                            {!! Html::smartNav(url('/settings/profile'), 'Profil') !!}
-                        @endif
-                    </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
+                            <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                            <li><a href="{{ url('/register') }}"><i class="fa fa-user"></i> Register</a></li>
                         @else
+                            <li><a href="{{ url('/setting/profil') }}"><i class="fa fa-user"></i> Profile</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -77,7 +77,7 @@
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            <i class="fa fa-sign-out"></i> Logout
                                         </a>
 
                                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
@@ -91,16 +91,20 @@
                 </div>
             </div>
         </nav>
+        <div style="padding-top:70px;">
         @include('layouts._flash')
         @yield('content')
+        </div>
     </div>
 
+    
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
-    <script src="/js/jquery.dataTables.min.js"></script> 
-    <script src="/js/dataTables.bootstrap.min.js"></script>
-    <script src="/js/selectize.min.js"></script>
-    <script src="/js/custom.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/selectize.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/custom.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

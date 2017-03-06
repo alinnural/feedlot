@@ -17,6 +17,7 @@ class RequirementsTableSeeder extends Seeder
             'finish' => '454',
             'current'=> '282.388',
             'adg'=>	'0.73',
+            'tdn'=> '',
             'dmi'=> '16.7',
             'nem'=> '50.1',
             'neg'=> '46',

@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="btn-group pull-right">
-                        <a href="/welcome" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <a href="/" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
                     </div>
                     <h4> Hasil Optimasi </h4>
                 </div>
@@ -191,7 +191,7 @@
                         </tr>
                     </table>
 
-                    @include('front.table-iteration-maximization')
+                    @include('sample.table-iteration-maximization')
                 </div>
             </div>
         </div>

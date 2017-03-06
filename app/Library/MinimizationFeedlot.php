@@ -4,7 +4,7 @@ namespace App\library;
 use App\Library\SimplexMethod;
 use Illuminate\Http\Request;
 
-class Minimization extends SimplexMethod
+class MinimizationFeedlot extends SimplexMethod
 {
     private $valueArray = array();
     private $num = array();
@@ -27,14 +27,14 @@ class Minimization extends SimplexMethod
         return $this->total_number;
     }
 
-    public function optimize(Request $request)
+    public function optimize($request)
     {
         //solves for the minimization problem
         //get the number of constraints from the hidden form input named numbers and put it into the array named num
         $flag = 0;
         $minRow = 0;
         $i = 0;
-        $token=strtok($request->input('numbers'), ',');
+        $token=strtok($request['numbers'], ',');
         
         while($token)
         {
@@ -46,7 +46,7 @@ class Minimization extends SimplexMethod
         $this->total_number = $this->num[0]+$this->num[1];
 
         //get the values from the form and insert it into the array
-        $this->insert_value($request);
+        $this->insert_value($request);        
 
         //if the relational operator is <=, negate the entire row - it's like converting <= to >=
         $this->check_operator($request);
@@ -80,13 +80,13 @@ class Minimization extends SimplexMethod
             for($j=1; $j<=$this->num[0]; $j++)
             {
                 if($k!=$this->num[1]+1)
-                    $this->valuesArray[$k-1][$j-1]=floatval($request->input('cons'.$k.'_'.$j.''));
+                    $this->valuesArray[$k-1][$j-1]=floatval($request['feed'][$k][$j]);
                 else
-                    $this->valuesArray[$k-1][$j-1]=floatval($request->input('var'.$j.''));
+                    $this->valuesArray[$k-1][$j-1]=floatval($request['feed_price'][$j-1]);
                 if($j==$this->num[0])
                 {
                     if($k!=$this->num[1]+1)
-                        $this->valuesArray[$k-1][$j]=floatval($request->input('answer'.$k.''));
+                        $this->valuesArray[$k-1][$j]=floatval($request['requirement'][$k]);
                     else
                         $this->valuesArray[$k-1][$j]=0;
                 }
@@ -100,7 +100,7 @@ class Minimization extends SimplexMethod
         {
             for($j=1; $j<=$this->num[0]; $j++)
             {
-                if($request->input('sign'.$k.'')=='lessThan')
+                if($request['sign'][$k]=='lessThan')
                 {
                     if($k!=$this->num[1]+1 && $this->valuesArray[$k-1][$j-1]!=0)
                         $this->valuesArray[$k-1][$j-1]*=-1;
@@ -147,7 +147,7 @@ class Minimization extends SimplexMethod
         for($i=1; $i<=$this->num[0]+1; $i++)
         {
             if(($i-1)!=$this->num[0])
-                $this->valuesArray[$i-1][$this->total_number+1]=floatval($request->input('var'.$i.''));
+                $this->valuesArray[$i-1][$this->total_number+1]=floatval($request['feed_price'][$i-1]);
             else
                 $this->valuesArray[$i-1][$this->total_number+1]=0;
         }
