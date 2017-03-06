@@ -193,11 +193,11 @@
                     </div>
                     <br>&nbsp;<br>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-10">
                             <div class="panel panel-default">
                                 <table class="table table-stripped">
                                     <tr>
-                                        <td width="300"><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
+                                        <td width="400"><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td><strong><h4><span class="pull-left">IDR</span> <span class="pull-right">{{ $harga_terakhir }}</span></h4></strong></td>
