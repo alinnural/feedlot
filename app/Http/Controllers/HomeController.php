@@ -11,6 +11,7 @@ use App\Library\Minimization;
 use App\Library\Maximization;
 use App\Library\MinimizationFeedlot;
 use App\Helpers\Calculate;
+use App\Helpers\Curl;
 
 /*
 source : https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
@@ -51,6 +52,26 @@ class HomeController extends Controller
     public function home()
     {
         return view('home');
+    }
+
+    public function about()
+    {
+        return view('formula.about');
+    }
+
+    public function contact()
+    {
+        return view('formula.contact');
+    }
+
+    public function changelog()
+    {
+        // a simple way to get a user's repo
+        $res = Curl::curl_get_contents("https://api.github.com/repos/ihsanarifr/feedlot/releases");
+        $res = json_decode($res);
+        echo "<pre>";
+        print_r($res);
+        //return view('formula.changelog');
     }
 
     public function input(Request $request)
