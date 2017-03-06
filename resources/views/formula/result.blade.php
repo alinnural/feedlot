@@ -193,7 +193,7 @@
                     </div>
                     <br>&nbsp;<br>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                             <div class="panel panel-default">
                                 <table class="table table-stripped">
                                     <tr>
@@ -205,7 +205,7 @@
                                     @foreach (Calculate::mapping_feed_id_result(Session::get('feed_id'),Session::get('feed_price'),$feeds) as $feed)
                                     <tr>
                                         <td><label class="control-label">{{ $feed['name'] }}</label></td>
-                                        <td><strong class="pull-right">{{ $feed['result'] }}</strong></td>
+                                        <td><strong class="pull-right">{{ $feed['result'] * 100 }}</strong></td>
                                         <td><strong class="pull-left">%</strong></td>
                                         <td><span class="pull-left">IDR</span> <span class="pull-right">{{ $feed['price'] }}</span></td>
                                     </tr>
@@ -213,19 +213,19 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{--<div class="col-md-6">
                             <div class="panel panel-default">
                                 <table class="table table-stripped">
                                     @foreach (Calculate::mapping_nutrient_id_result(Session::get('requirement_id'),$nutrients) as $nu)
                                     <tr>
                                         <td><label class="control-label">{{ $nu['name'] }}</label></td>
-                                        <td><strong class="pull-right">{{ $nu['result'] }}</strong></td>
+                                        <td><strong class="pull-right">{{ $nu['result'] * 100 }}</strong></td>
                                         <td><strong class="pull-left">%</strong></td>
                                     </tr>
                                     @endforeach
                                 </table>
                             </div>
-                        </div>
+                        </div>--}}
                     </div>
                     <div class="row">
                         <div class="col-md-12">
