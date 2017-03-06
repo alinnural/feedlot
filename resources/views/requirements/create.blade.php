@@ -2,7 +2,8 @@
 @section('content')
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+        @include('layouts.menu')
+      <div class="col-md-9">
         <ul class="breadcrumb">
           <li><a href="{{ url('/home') }}">Dashboard</a></li>
           <li><a href="{{ url('/admin/groupfeeds') }}"> Requirements</a></li>
