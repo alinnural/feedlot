@@ -69,9 +69,7 @@ class HomeController extends Controller
         // a simple way to get a user's repo
         $res = Curl::curl_get_contents("https://api.github.com/repos/ihsanarifr/feedlot/releases");
         $res = json_decode($res);
-        echo "<pre>";
-        print_r($res);
-        //return view('formula.changelog');
+        return view('formula.changelog')->with(compact('res'));
     }
 
     public function input(Request $request)

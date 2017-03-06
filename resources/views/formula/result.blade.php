@@ -8,7 +8,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="btn-group pull-right">
-                        <a href="/home" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <a href="/formula" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
                     </div>
                     <h4><i class="fa fa-breafcase"></i> Hasil Optimasi </h4>
                 </div>
