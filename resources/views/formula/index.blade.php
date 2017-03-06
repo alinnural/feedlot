@@ -65,12 +65,12 @@
                             <div id="current_weight"></div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{--<div class="form-group">
                         {!! Form::label('var', 'Finish Weight', ['class' => 'col-sm-4 control-label']) !!}
                         <div class="col-md-8">
                             <div id="finish_weight"></div>
                         </div>
-                    </div>
+                    </div>--}}
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
@@ -81,18 +81,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                {!! Form::label('var', 'Dry Matter Intake (DMI)', ['class' => 'col-sm-8 control-label']) !!}
-                                <div class="col-md-4">
-                                    <div id="dmi"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 {!! Form::label('var', 'Total Digestible Nutrient (TDN)', ['class' => 'col-sm-8 control-label']) !!}
                                 <div class="col-md-4">
                                     <div id="tdn"></div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 {!! Form::label('var', 'Net Energy For Maintenance', ['class' => 'col-sm-8 control-label']) !!}
                                 <div class="col-md-4">
                                     <div id="nem"></div>
@@ -103,7 +97,7 @@
                                 <div class="col-md-4">
                                     <div id="neg"></div>
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 {!! Form::label('var', 'Crude Protein', ['class' => 'col-sm-8 control-label']) !!}
                                 <div class="col-md-4">
@@ -122,30 +116,6 @@
                                 {!! Form::label('var', 'Total Dietary of Phosphorus', ['class' => 'col-sm-7 control-label']) !!}
                                 <div class="col-md-4">
                                     <div id="p"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('var', 'Month Pregnant', ['class' => 'col-sm-7 control-label']) !!}
-                                <div class="col-md-4">
-                                    <div id="month_pregnant"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('var', 'Months Since Calving', ['class' => 'col-sm-7 control-label']) !!}
-                                <div class="col-md-4">
-                                    <div id="month_calvin"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('var', 'Peak Milk', ['class' => 'col-sm-7 control-label']) !!}
-                                <div class="col-md-4">
-                                    <div id="peak_milk"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('var', 'Current Milk', ['class' => 'col-sm-7 control-label']) !!}
-                                <div class="col-md-4">
-                                    <div id="current_milk"></div>
                                 </div>
                             </div>
                         </div>
