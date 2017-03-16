@@ -193,19 +193,19 @@
                     </div>
                     <br>&nbsp;<br>
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <div class="panel panel-default">
                                 <table class="table table-stripped">
                                     <tr>
                                         <td width="400"><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
-                                        <td><strong><h4><span class="pull-left">IDR</span> <span class="pull-right">{{ $harga_terakhir }}</span></h4></strong></td>
+                                        <td><strong><h4><span class="pull-left">IDR</span> <span class="pull-right">{{ number_format((float)$harga_terakhir,2,'.','') }}</span></h4></strong></td>
                                     </tr>
                                     @foreach (Calculate::mapping_feed_id_result(Session::get('feed_id'),Session::get('feed_price'),$feeds) as $feed)
                                     <tr>
                                         <td><label class="control-label">{{ $feed['name'] }}</label></td>
-                                        <td><strong class="pull-right">{{ $feed['result'] * 100 }}</strong></td>
+                                        <td><strong class="pull-right">{{ number_format((float)($feed['result'] * 100), 2, '.', '') }}</strong></td>
                                         <td><strong class="pull-left">%</strong></td>
                                         <td><span class="pull-left">IDR</span> <span class="pull-right">{{ $feed['price'] }}</span></td>
                                     </tr>
@@ -238,7 +238,7 @@
                                     </tr>
                                     <tr>
                                         <td>{!! Form::label('var', 'Current Weight', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement['current'] }} Kg</td>
+                                        <td>{{ number_format((float)$requirement['current'],2,'.','') }} Kg</td>
                                     </tr>
                                     {{--<tr>
                                         <td>{!! Form::label('var', 'Finish Weight', ['class' => 'control-label']) !!}</td>
@@ -246,23 +246,23 @@
                                     </tr>--}}
                                     <tr>
                                         <td>{!! Form::label('var', 'ADG (Average Daily Gain)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement['adg'] }}</td>
+                                        <td>{{ number_format((float)$requirement['adg'],2,'.','') }}</td>
                                     </tr>
                                     <tr>
                                         <td>{!! Form::label('var', 'TDN (Total Digestible Nutrient)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement['tdn'] }}</td>
+                                        <td>{{ number_format((float)$requirement['tdn'],2,'.','') }}</td>
                                     </tr>
                                    <tr>
                                         <td>{!! Form::label('var', 'CP (Crude Protein)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement['cp'] }}</td>
+                                        <td>{{ number_format((float)$requirement['cp'],2,'.','') }}</td>
                                     </tr>
                                     <tr>
                                         <td>{!! Form::label('var', 'Ca (Calcium)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement['ca']}}</td>
+                                        <td>{{ number_format((float)$requirement['ca'],2,'.','') }}</td>
                                     </tr>
                                     <tr>
                                         <td>{!! Form::label('var', 'P (Phosphorus)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement['p']}}</td>
+                                        <td>{{ number_format((float)$requirement['p'],2,'.','') }}</td>
                                     </tr>
                                 </table>
                             </div>
