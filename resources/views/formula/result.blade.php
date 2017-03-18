@@ -193,7 +193,7 @@
                     </div>
                     <br>&nbsp;<br>
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-6">
                             <div class="panel panel-default">
                                 <table class="table table-stripped">
                                     <tr>
