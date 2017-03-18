@@ -10,6 +10,7 @@ use App\GroupFeed;
 use Session;
 use Excel;
 use Validator;
+use Calculate;
 
 class FeedsController extends Controller
 {
@@ -386,5 +387,29 @@ class FeedsController extends Controller
     {
         $feed = Feed::findOrFail($id);
         return view('feeds.feed-show')->with(compact('feed'));
+    }
+
+    public function downloadFeedExcel($id) 
+    {
+        $feed = Feed::findOrFail($id);
+        $feeds = Calculate::modified_feed($feed);
+
+        Excel::create('Informasi Jenis Pakan', function($excel) use($feeds) 
+        { // Set the properties
+            $excel->setTitle('Jenis Pakan Ternak Sapi Potong')
+                ->setCreator('Ihsan Arif Rahman')
+                ->setCompany('Feedlot')
+                ->setDescription('Jenis Pakan Ternak Sapi Potong | Feedlot');
+
+            $excel->sheet('Data Pakan Ternak Sapi Potong', function($sheet) use($feeds) {
+                $sheet->fromArray($feeds);
+            });
+        })->export('xlsx');
+    }
+
+    public function feedCompare()
+    {
+        $groupfeed = GroupFeed::all();
+        return view('feeds.feed-compare')->with(compact('groupfeed'));
     }
 }

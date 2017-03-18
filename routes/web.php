@@ -45,6 +45,10 @@ Route::group(['prefix'=>'feed'],function(){
         'as'=> 'feed.show',
         'uses'=>'FeedsController@feedShow'
     ]);
+    Route::get('/compare',[
+        'as'=>'feed.compare',
+        'uses'=>'FeedsController@feedCompare'
+    ]);
 
     Route::group(['prefix'=>'download'],function(){
         Route::get('/pdf/{feed}',[

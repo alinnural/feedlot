@@ -11,7 +11,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="btn-group pull-right">
-                <a class="btn btn-primary btn-sm" href="{{ route('feeds.create') }}"><i class="fa fa-pencil"></i> Bandingkan Nutrisi Pakan</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('feed.compare') }}"><i class="fa fa-pencil"></i> Bandingkan Nutrisi Pakan</a>
             </div>
             <h2 class="panel-title" style="padding-bottom:5px;padding-top:5px;">Jenis Pakan</h2>
           </div>

@@ -92,4 +92,203 @@ class Calculate{
         }
         return $nutrient;
     }
+
+    public static function array_transpose($array, $selectKey = false) 
+    {
+        if (!is_array($array)) return false;
+        $return = array();
+        foreach($array as $key => $value) {
+            if (!is_array($value)) return $array;
+            if ($selectKey) {
+                if (isset($value[$selectKey])) $return[] = $value[$selectKey];
+            } else {
+                foreach ($value as $key2 => $value2) {
+                    $return[$key2][$key] = $value2;
+                }
+            }
+        }
+        return $return;
+    } 
+
+    public static function modified_feed($array)
+    {
+        $feed = [
+            [
+                'name' =>'Total Digestible Nutrient',
+                'singkatan'=>'TDN',
+                'satuan'=>'%DM',
+                'jumlah'=> number_format((float)$array->total_digestible_nutrients,2,'.',''),
+            ],
+            [
+                'name' =>'Crude Protein',
+                'singkatan'=>'CP',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->crude_protein,2,'.',''),
+            ],
+            [
+                'name' =>'Calcium',
+                'singkatan'=>'Ca',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->calcium,2,'.',''),
+            ],
+            [
+                'name' =>'Phosphorus',
+                'singkatan'=>'P',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->phosphorus,2,'.',''),
+            ],
+            [
+                'name' =>'Dry Matter',
+                'singkatan'=>'DM',
+                'satuan'=>'%',
+                'jumlah'=> number_format((float)$array->dry_matter,2,'.',''),
+            ],
+            [
+                'name' =>'Mineral',
+                'singkatan'=>'Ash',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->mineral,2,'.',''),
+            ],
+            [
+                'name' =>'Organic Matter',
+                'singkatan'=>'OM',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->organic_matter,2,'.',''),
+            ],
+            [
+                'name' =>'Lignin',
+                'singkatan'=>'Lig',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->lignin,2,'.',''),
+            ],
+            [
+                'name' =>'Neutral Detergent Fiber',
+                'singkatan'=>'NDF',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->neutral_degergent_fiber,2,'.',''),
+            ],
+            [
+                'name' =>'Ether Extract',
+                'singkatan'=>'EE',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->ether_extract,2,'.',''),
+            ],
+            [
+                'name' =>'Metabolizable Energy',
+                'singkatan'=>'ME',
+                'satuan'=>'Mcal/kg',
+                'jumlah'=> number_format((float)$array->metabolizable_energy,2,'.',''),
+            ],
+            [
+                'name' =>'Rumen Degradable Protein',
+                'singkatan'=>'RDN',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->rumen_degradable_dm,2,'.',''),
+            ],
+            [
+                'name' =>'Rumen Degradable Protein',
+                'singkatan'=>'RDN',
+                'satuan'=>'%CP',
+                'jumlah'=>number_format((float)$array->rumen_degradable_cp,2,'.',''),
+            ],
+            [
+                'name' =>'Rumen Undergradable Protein',
+                'singkatan'=>'RUP',
+                'satuan'=>'%DM',
+                'jumlah'=> number_format((float)$array->rumen_undergradable_dm,2,'.',''),
+            ],
+            [
+                'name' =>'Rumen Undergradable Protein',
+                'singkatan'=>'RUP',
+                'satuan'=>'%DM',
+                'jumlah'=> number_format((float)$array->rumen_undergradable_cp,2,'.',''),
+            ],
+            [
+                'name' =>'Rumen Soluble Protein Fraction A',
+                'singkatan'=>'CP A',
+                'satuan'=>'%CP',
+                'jumlah'=> number_format((float)$array->rumen_soluble,2,'.',''),
+            ],
+            [
+                'name' =>'Rumen Insoluble Protein Fraction B',
+                'singkatan'=>'CP B',
+                'satuan'=>'%CP',
+                'jumlah'=> number_format((float)$array->rumen_insoluble,2,'.',''),
+            ],
+            [
+                'name' =>'Degradation Rate of Fraction B',
+                'singkatan'=>'CP kd',
+                'satuan'=>'%',
+                'jumlah'=> number_format((float)$array->degradation_rate,2,'.',''),
+            ],
+            [
+                'name' =>'Metabolizable Protein',
+                'singkatan'=>'MP',
+                'satuan'=>'%DM',
+                'jumlah'=> number_format((float)$array->metabolizable_protein,2,'.',''),
+            ],
+            [
+                'name' =>'Magnesium',
+                'singkatan'=>'Mg',
+                'satuan'=>'%DM',
+                'jumlah'=> number_format((float)$array->magnesium,2,'.',''),
+            ],
+            [
+                'name' =>'Potassium',
+                'singkatan'=>'K',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->total_digestible_nutrients,2,'.',''),
+            ],
+            [
+                'name' =>'Sodium',
+                'singkatan'=>'Na',
+                'satuan'=>'%DM',
+                'jumlah'=>number_format((float)$array->sodium,2,'.',''),
+            ],
+            [
+                'name' =>'Sulfur',
+                'singkatan'=>'S',
+                'satuan'=>'%DM',
+                'jumlah'=> number_format((float)$array->sulfur,2,'.',''),
+            ],
+            [
+                'name' =>'Cobalt',
+                'singkatan'=>'Co',
+                'satuan'=>'mg/kg',
+                'jumlah'=>number_format((float)$array->cobalt,2,'.',''),
+            ],
+            [
+                'name' =>'Copper',
+                'singkatan'=>'Cu',
+                'satuan'=>'mg/kg',
+                'jumlah'=>number_format((float)$array->copper,2,'.',''),
+            ],
+            [
+                'name' =>'Iodine',
+                'singkatan'=>'I',
+                'satuan'=>'mg/kg',
+                'jumlah'=>number_format((float)$array->iodine,2,'.',''),
+            ],
+            [
+                'name' =>'Manganese',
+                'singkatan'=>'Mn',
+                'satuan'=>'mg/kg',
+                'jumlah'=>number_format((float)$array->manganese,2,'.',''),
+            ],
+            [
+                'name' =>'Selenium',
+                'singkatan'=>'Se',
+                'satuan'=>'mg/kg',
+                'jumlah'=>number_format((float)$array->selenium,2,'.',''),
+            ],
+            [
+                'name' =>'Zinc',
+                'singkatan'=>'Zn',
+                'satuan'=>'mg/kg',
+                'jumlah'=>number_format((float)$array->zinc,2,'.',''),
+            ]
+        ];
+
+        return $feed;
+    }
 }
