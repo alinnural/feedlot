@@ -114,7 +114,7 @@ class FeedsController extends Controller
      */
     public function show($id)
     {
-        //
+        echo 'hai';
     }
 
     /**
@@ -360,5 +360,31 @@ class FeedsController extends Controller
         }
 
         return \Response::json($formatted_feeds);
+    }
+
+    public function feedList(Request $request, Builder $htmlBuilder)
+    {
+        if ($request->ajax()) {
+            $feeds = Feed::with('groupfeed');
+            return Datatables::of($feeds)
+                ->addColumn('group', function($feeds) {
+                    return $feeds->groupfeed->name; })
+                ->addColumn('feed_stuff',function($feeds){
+                    return view('feeds._show',[
+                        'show_url' => route('feed.show',$feeds->id),
+                        'name' => $feeds->feed_stuff
+                     ]);
+                })->make(true);
+        }
+        $html = $htmlBuilder
+        ->addColumn(['data' => 'feed_stuff', 'name'=>'feed_stuff', 'title'=>'Feed Staff'])
+        ->addColumn(['data' => 'groupfeed.name', 'name'=>'groupfeed.name', 'title'=>'Group Feeds']);
+        return view('feeds.feed-list')->with(compact('html'));
+    }
+
+    public function feedShow($id)
+    {
+        $feed = Feed::findOrFail($id);
+        return view('feeds.feed-show')->with(compact('feed'));
     }
 }

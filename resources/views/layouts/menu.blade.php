@@ -7,6 +7,7 @@
             {!! Html::smartNav(route('feeds.index'), 'Bahan Pakan Sapi','fa-cutlery') !!}
             {!! Html::smartNav(route('requirements.index'),'Kebutuhan Nutrien Sapi','fa-cubes') !!}
         @endrole
+        {!! Html::smartNav(route('feed.list'),'Jenis Pakan','fa-cutlery') !!}
         {!! Html::smartNav(url('/about'), 'Tentang Sistem','fa-cog') !!}
         {!! Html::smartNav(url('/contact'), 'Kontak Kami','fa-user') !!}
         {!! Html::smartNav(url('/changelog'),'Perubahan Versi','fa-code-fork') !!}

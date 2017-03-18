@@ -213,7 +213,7 @@
                                 </table>
                             </div>
                         </div>
-                        {{--<div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="panel panel-default">
                                 <table class="table table-stripped">
                                     @foreach (Calculate::mapping_nutrient_id_result(Session::get('requirement_id'),$nutrients) as $nu)
@@ -225,7 +225,7 @@
                                     @endforeach
                                 </table>
                             </div>
-                        </div>--}}
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">

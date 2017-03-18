@@ -36,6 +36,28 @@ Route::group(['prefix'=>'formula'],function(){
     Route::get('/', 'HomeController@index');
 });
 
+Route::group(['prefix'=>'feed'],function(){
+    Route::get('/',[
+        'as'=> 'feed.list',
+        'uses'=>'FeedsController@feedList'
+    ]);
+    Route::get('/show/{feed}',[
+        'as'=> 'feed.show',
+        'uses'=>'FeedsController@feedShow'
+    ]);
+
+    Route::group(['prefix'=>'download'],function(){
+        Route::get('/pdf/{feed}',[
+            'as'=>'feed.download.pdf',
+            'uses'=>'FeedsController@downloadFeedPDF'
+        ]);
+        Route::get('/excel/{feed}',[
+            'as'=>'feed.download.excel',
+            'uses'=>'FeedsController@downloadFeedExcel'
+        ]);
+    });
+});
+
 Route::group(['prefix'=>'ajax'],function(){
     Route::get('requirements/search', 'RequirementsController@AjaxSearch');
     Route::get('requirements/find','RequirementsController@AjaxFind');
