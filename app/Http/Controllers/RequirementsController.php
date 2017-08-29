@@ -22,7 +22,7 @@ class RequirementsController extends Controller
     {
         if($request->ajax())
         {
-            $requirements = Requirement::select(['id','animal_type','finish','current','adg']);
+            $requirements = Requirement::select(['id','animal_type','current_weight','average_daily_gain']);
             return Datatables::of($requirements)
                 ->addColumn('action',function($requirements)
                 {
@@ -36,9 +36,8 @@ class RequirementsController extends Controller
         }
         $html = $htmlBuilder
             ->addColumn(['data'=>'animal_type', 'name'=>'animal_type','title'=>'Animal Type'])
-            ->addColumn(['data'=>'finish', 'name'=>'finish','title'=>'Finish Weight'])
-            ->addColumn(['data'=>'current', 'name'=>'current','title'=>'Current Body'])
-            ->addColumn(['data'=>'adg', 'name'=>'adg','title'=>'Average Daily Gain'])
+            ->addColumn(['data'=>'current_weight', 'name'=>'current_weight','title'=>'Current Body'])
+            ->addColumn(['data'=>'average_daily_gain', 'name'=>'average_daily_gain','title'=>'Average Daily Gain'])
             ->addColumn(['data'=>'action','name'=>'action','title'=>'Action','orderable'=>false,'searchable'=>false]);
         return view('requirements.index')->with(compact('html'));
     }
@@ -63,20 +62,8 @@ class RequirementsController extends Controller
     {
         $this->validate($request,[
                 'animal_type'=>'required|alpha',
-                'finish'=> 'required|numeric',
-                'current'=> 'required|numeric',
-                'adg'=> 'required|numeric',
-                'dmi'=> 'required|numeric',
-                'tdn'=> 'required|numeric',
-                'nem'=> 'required|numeric',
-                'neg'=> 'required|numeric',
-                'cp'=> 'required|numeric',
-                'ca'=> 'required|numeric',
-                'p'=> 'required|numeric',
-                'month_pregnant'=> 'required|numeric',
-                'month_calvin'=> 'required|numeric',
-                'peak_milk'=> 'required|numeric',
-                'current_milk'=> 'required|numeric',
+                'current_weight'=> 'required|numeric',
+                'average_daily_gain'=> 'required|numeric',
             ]);
         $requirements = Requirement::create($request->all());
 
@@ -121,20 +108,8 @@ class RequirementsController extends Controller
     {
         $this->validate($request,[
                 'animal_type'=>'required|alpha',
-                'finish'=> 'required|numeric',
-                'current'=> 'required|numeric',
-                'adg'=> 'required|numeric',
-                'dmi'=> 'required|numeric',
-                'tdn'=> 'required|numeric',
-                'nem'=> 'required|numeric',
-                'neg'=> 'required|numeric',
-                'cp'=> 'required|numeric',
-                'ca'=> 'required|numeric',
-                'p'=> 'required|numeric',
-                'month_pregnant'=> 'required|numeric',
-                'month_calvin'=> 'required|numeric',
-                'peak_milk'=> 'required|numeric',
-                'current_milk'=> 'required|numeric',
+                'current_weight'=> 'required|numeric',
+                'average_daily_gain'=> 'required|numeric',
             ]);
         $requirements = Requirement::find($id);
         $requirements->update($request->all());

@@ -8,20 +8,8 @@ class Requirement extends Model
 {
     protected $fillable = [
         'animal_type',
-        'finish',
-        'current',
-        'adg',
-        'dmi',
-        'tdn',
-        'nem',
-        'neg',
-        'cp',
-        'ca',
-        'p',
-        'month_pregnant',
-        'month_calvin',
-        'peak_milk',
-        'current_milk',
+        'current_weight',
+        'average_daily_gain'
     ];
 
     public function scopeSearchByKeyword($query, $keyword)

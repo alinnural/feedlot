@@ -21,10 +21,10 @@ class GroupFeed extends Model
             // mengecek apakah penulis masih punya buku
             if ($group->feeds->count() > 0) {
                 // menyiapkan pesan error
-                $html = 'Penulis tidak bisa dihapus karena masih memiliki buku : ';
+                $html = 'Group feed tidak bisa dihapus karena masih memiliki : ';
                 $html .= '<ul>';
                 foreach ($group->feeds as $feeds) {
-                    $html .= "<li>$feeds->title</li>";
+                    $html .= "<li>$feeds->name</li>";
                 }
                 $html .= '</ul>';
                 Session::flash("flash_notification", [

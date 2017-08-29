@@ -43,7 +43,7 @@ Route::group(['prefix'=>'ajax'],function(){
 });
 
 Route::group(['middleware'=>'web'],function(){
-    Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
+    Route::group(['middleware'=>['auth','role:admin']],function(){
         Route::resource('groupfeeds','GroupFeedsController');
         Route::resource('feeds','FeedsController');
         Route::resource('requirements','RequirementsController');
