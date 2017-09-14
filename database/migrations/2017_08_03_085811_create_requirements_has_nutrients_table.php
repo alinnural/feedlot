@@ -13,9 +13,10 @@ class CreateRequirementsHasNutrientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('requirement_has_nutrient', function (Blueprint $table) {
-            $table->integer('requirement_id')->unsigned();
-            $table->integer('nutrient_id')->unsigned();
+        Schema::create('requirement_nutrients', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('requirement_id')->unsigned()->index();
+            $table->integer('nutrient_id')->unsigned()->index();
             $table->float('composition',8,2);
             $table->timestamps();
 
@@ -33,6 +34,6 @@ class CreateRequirementsHasNutrientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requirement_has_nutrient');
+        Schema::dropIfExists('requirement_nutrients');
     }
 }

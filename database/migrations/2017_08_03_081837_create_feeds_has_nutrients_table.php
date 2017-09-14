@@ -13,9 +13,10 @@ class CreateFeedsHasNutrientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('feed_has_nutrient', function (Blueprint $table) {
-            $table->integer('feed_id')->unsigned();
-            $table->integer('nutrient_id')->unsigned();
+        Schema::create('feed_nutrients', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('feed_id')->unsigned()->index();
+            $table->integer('nutrient_id')->unsigned()->index();
             $table->float('composition',8,2);
             $table->timestamps();
 
@@ -33,6 +34,6 @@ class CreateFeedsHasNutrientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feed_has_nutrient');
+        Schema::dropIfExists('feed_nutrients');
     }
 }

@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\GroupFeed;
+use App\Unit;
 use Session;
+use Validator;
 use Yajra\Datatables\Html\Builder; 
 use Yajra\Datatables\Datatables;
 
-
-
-class GroupFeedsController extends Controller
+class UnitsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,21 +19,22 @@ class GroupFeedsController extends Controller
     public function index(Request $request, Builder $htmlBuilder)
     {
         if ($request->ajax()) {
-            $group = GroupFeed::select(['id', 'name']);
+            $group = Unit::select(['id', 'name', 'symbol']);
             return Datatables::of($group)
                 ->addColumn('action', function($group){
                     return view('datatable._action',[
                         'model' => $group,
-                        'edit_url' => route('groupfeeds.edit',$group->id),
-                        'delete_url' => route('groupfeeds.destroy', $group->id),
+                        'edit_url' => route('units.edit',$group->id),
+                        'delete_url' => route('units.destroy', $group->id),
                         'confirm_message' => 'Apakah Anda yakin akan menghapus '. $group->name . '?'
                     ]);
                 })->make(true);
         }
         $html = $htmlBuilder
             ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
+            ->addColumn(['data' => 'symbol', 'name'=>'symbol', 'title'=>'Simbol'])
             ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
-        return view('groupfeeds.index')->with(compact('html'));
+        return view('units.index')->with(compact('html'));
     }
 
     /**
@@ -44,7 +44,7 @@ class GroupFeedsController extends Controller
      */
     public function create()
     {
-        return view('groupfeeds.create');
+        return view('units.create');
     }
 
     /**
@@ -55,14 +55,14 @@ class GroupFeedsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required|unique:group_feeds']); 
-        $group = GroupFeed::create($request->all());
+        $this->validate($request, ['name' => 'required|unique:units','symbol' => '']); 
+        $group = Unit::create($request->all());
 
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil menyimpan $group->name"
         ]);
-        return redirect()->route('groupfeeds.index');
+        return redirect()->route('units.index');
     }
 
     /**
@@ -84,8 +84,8 @@ class GroupFeedsController extends Controller
      */
     public function edit($id)
     {
-        $group = GroupFeed::find($id);
-        return view('groupfeeds.edit')->with(compact('group'));
+        $group = Unit::find($id);
+        return view('units.edit')->with(compact('group'));
     }
 
     /**
@@ -97,13 +97,13 @@ class GroupFeedsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['name' => 'required|unique:group_feeds,name,'. $id]);
-        $group = GroupFeed::find($id);
-        $group->update($request->only('name'));
+        $this->validate($request, ['name' => 'required|unique:units,name,'. $id]);
+        $group = Unit::find($id);
+        $group->update($request->all());
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil menyimpan $group->name" ]);
-        return redirect()->route('groupfeeds.index');
+        return redirect()->route('units.index');
     }
 
     /**
@@ -114,11 +114,11 @@ class GroupFeedsController extends Controller
      */
     public function destroy($id)
     {
-        if(!GroupFeed::destroy($id)) return redirect()->back();
+        if(!Unit::destroy($id)) return redirect()->back();
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Kelompok pakan sapi berhasil dihapus"
+            "message"=>"Units berhasil dihapus"
         ]);
-        return redirect()->route('groupfeeds.index');
+        return redirect()->route('units.index');
     }
 }

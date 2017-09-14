@@ -47,6 +47,9 @@ Route::group(['middleware'=>'web'],function(){
         Route::resource('groupfeeds','GroupFeedsController');
         Route::resource('feeds','FeedsController');
         Route::resource('requirements','RequirementsController');
+        Route::resource('units','UnitsController');
+        Route::resource('nutrients','NutrientsController');
+        Route::resource('feednutrients','FeedNutrientsController');
 
         Route::get('template/feeds', [
             'as'   => 'template.feeds',

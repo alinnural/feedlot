@@ -30,7 +30,7 @@ class RequirementsController extends Controller
                         'model' => $requirements,
                         'edit_url' => route('requirements.edit',$requirements->id),
                         'delete_url' => route('requirements.destroy', $requirements->id),
-                        'confirm_message' => 'Are you sure to delete' . $requirements->animal_type . '?'
+                        'confirm_message' => 'Apakah Anda yakin akan menghapus ' . $requirements->animal_type . '?'
                     ]);
                 })->make(true);
         }
@@ -61,12 +61,12 @@ class RequirementsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-                'animal_type'=>'required|alpha',
+                'animal_type'=>'required',
                 'current_weight'=> 'required|numeric',
                 'average_daily_gain'=> 'required|numeric',
             ]);
         $requirements = Requirement::create($request->all());
-
+        
         $request->session()->flash('flash_notification', [
             'level'=>'success',
             'message' => "Berhasil menyimpan $requirements->animal_type"
@@ -107,7 +107,7 @@ class RequirementsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-                'animal_type'=>'required|alpha',
+                'animal_type'=>'required',
                 'current_weight'=> 'required|numeric',
                 'average_daily_gain'=> 'required|numeric',
             ]);

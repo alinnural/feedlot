@@ -13,7 +13,7 @@ class CreateForsumTable extends Migration
      */
     public function up()
     {
-        Schema::create('forsum', function (Blueprint $table) {
+        Schema::create('forsums', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('explanation');
@@ -35,6 +35,6 @@ class CreateForsumTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('forsum');
+        Schema::dropIfExists('forsums');
     }
 }
