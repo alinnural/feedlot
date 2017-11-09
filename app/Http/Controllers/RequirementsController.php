@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use App\Requirement;
+use App\RequirementNutrient;
 use Session;
 use Excel;
 use Validator;
@@ -22,7 +23,7 @@ class RequirementsController extends Controller
     {
         if($request->ajax())
         {
-            $requirements = Requirement::select(['id','animal_type','finish','current','adg']);
+            $requirements = Requirement::select(['id','animal_type','current_weight','average_daily_gain']);
             return Datatables::of($requirements)
                 ->addColumn('action',function($requirements)
                 {
@@ -30,15 +31,14 @@ class RequirementsController extends Controller
                         'model' => $requirements,
                         'edit_url' => route('requirements.edit',$requirements->id),
                         'delete_url' => route('requirements.destroy', $requirements->id),
-                        'confirm_message' => 'Are you sure to delete' . $requirements->animal_type . '?'
+                        'confirm_message' => 'Apakah Anda yakin akan menghapus ' . $requirements->animal_type . '?'
                     ]);
                 })->make(true);
         }
         $html = $htmlBuilder
             ->addColumn(['data'=>'animal_type', 'name'=>'animal_type','title'=>'Animal Type'])
-            ->addColumn(['data'=>'finish', 'name'=>'finish','title'=>'Finish Weight'])
-            ->addColumn(['data'=>'current', 'name'=>'current','title'=>'Current Body'])
-            ->addColumn(['data'=>'adg', 'name'=>'adg','title'=>'Average Daily Gain'])
+            ->addColumn(['data'=>'current_weight', 'name'=>'current_weight','title'=>'Current Body'])
+            ->addColumn(['data'=>'average_daily_gain', 'name'=>'average_daily_gain','title'=>'Average Daily Gain'])
             ->addColumn(['data'=>'action','name'=>'action','title'=>'Action','orderable'=>false,'searchable'=>false]);
         return view('requirements.index')->with(compact('html'));
     }
@@ -62,24 +62,12 @@ class RequirementsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-                'animal_type'=>'required|alpha',
-                'finish'=> 'required|numeric',
-                'current'=> 'required|numeric',
-                'adg'=> 'required|numeric',
-                'dmi'=> 'required|numeric',
-                'tdn'=> 'required|numeric',
-                'nem'=> 'required|numeric',
-                'neg'=> 'required|numeric',
-                'cp'=> 'required|numeric',
-                'ca'=> 'required|numeric',
-                'p'=> 'required|numeric',
-                'month_pregnant'=> 'required|numeric',
-                'month_calvin'=> 'required|numeric',
-                'peak_milk'=> 'required|numeric',
-                'current_milk'=> 'required|numeric',
+                'animal_type'=>'required',
+                'current_weight'=> 'required|numeric',
+                'average_daily_gain'=> 'required|numeric',
             ]);
         $requirements = Requirement::create($request->all());
-
+        
         $request->session()->flash('flash_notification', [
             'level'=>'success',
             'message' => "Berhasil menyimpan $requirements->animal_type"
@@ -120,21 +108,9 @@ class RequirementsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-                'animal_type'=>'required|alpha',
-                'finish'=> 'required|numeric',
-                'current'=> 'required|numeric',
-                'adg'=> 'required|numeric',
-                'dmi'=> 'required|numeric',
-                'tdn'=> 'required|numeric',
-                'nem'=> 'required|numeric',
-                'neg'=> 'required|numeric',
-                'cp'=> 'required|numeric',
-                'ca'=> 'required|numeric',
-                'p'=> 'required|numeric',
-                'month_pregnant'=> 'required|numeric',
-                'month_calvin'=> 'required|numeric',
-                'peak_milk'=> 'required|numeric',
-                'current_milk'=> 'required|numeric',
+                'animal_type'=>'required',
+                'current_weight'=> 'required|numeric',
+                'average_daily_gain'=> 'required|numeric',
             ]);
         $requirements = Requirement::find($id);
         $requirements->update($request->all());
@@ -309,28 +285,31 @@ class RequirementsController extends Controller
 
     public function AjaxFind(Request $request)
     {
-        if(empty($request->current_weight) and empty($request->average_daily_gain))
+        if(empty($request->req_id))
         {
             $data = array();
             return \Response::json($data);
         }
         else
         {
-             $request->session()->put('current_weight',$request->current_weight);
-            $request->session()->put('average_daily_gain', $request->average_daily_gain);
+            $request->session()->put('req_id', $request->req_id);
 
-            $requirements = Requirement::SearchByCurrentWeightAndADG($request->current_weight,$request->average_daily_gain)->get()->first();
+            $reqnuts = RequirementNutrient::SearchNutrient(1)->get();
             
-            if(empty($requirements))
+            if(empty($reqnuts))
             {
                 $request->session()->put('requirement_id',0);
             }
             else
             {
-                $request->session()->put('requirement_id',$requirements->id);
+                $request->session()->put('requirement_id',$request->req_id);
             }
-
-            return \Response::json($requirements);
+            
+            foreach($reqnuts as $rn){
+                $result[] = ['name' => $rn->nutrient->name, 'min' => $rn->min_composition, 'max' => $rn->max_composition];
+            }
+            print_r($result);exit;
+            return \Response::json($result);
         }
     }
 }
