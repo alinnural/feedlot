@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Feeds;
 
 class FeedsTableSeeder extends Seeder
 {
@@ -11,30 +12,115 @@ class FeedsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('feeds')->insert(
+        DB::table('feeds')->insert([
         [
-            'feed_stuff'    =>'Alfalfa Cubes',	
-            'energy_dm'     =>'91',
-            'energy_tdn'	=>'57',
-            'energy_nem'	=>'57',
-            'energy_neg'    =>'25',
-            'energy_nel'	=>'57',
-            'protein_cp'	=>'18',
-            'protein_uip'	=>'30',
-            'protein_npn'	=>'0',
-            'fiber_cf'	    =>'29',
-            'fiber_adf'	    =>'36',
-            'fiber_ndf'	    =>'46',
-            'fiber_endf'	=>'40',
-            'ee'	        =>'2',
-            'ash'	        =>'11',
-            'ca'	        =>'1.30',
-            'p'	            =>'0.23',
-            'k'	            =>'1.9',
-            'cl'	        =>'0.37',
-            's'	            =>'0.33',
-            'zn'            =>'20',
+            'name'              =>'Jerami Padi',	
+            'min'               =>'0',
+            'max'               =>'30',
+            'group_feed_id'     =>'1'
+        ],
+        [
+            'name'              =>'Rumput Lapang',	
+            'min'               =>'0',
+            'max'               =>'50',	
+            'group_feed_id'     =>'1'
+        ],
+        [
+            'name'              =>'Rumput Gajah',		
+            'min'               =>'0',
+            'max'               =>'50',
+            'group_feed_id'     =>'1'
+        ],
+        [
+            'name'              =>'Daun Jagung',		
+            'min'               =>'0',
+            'max'               =>'40',
+            'group_feed_id'     =>'1'
+        ],
+        [
+            'name'              =>'Daun Singkong',	
+            'min'               =>'0',
+            'max'               =>'30',	
+            'group_feed_id'     =>'1'
+        ],
+        [
+            'name'              =>'Daun Lamtoro',		
+            'min'               =>'0',
+            'max'               =>'30',
+            'group_feed_id'     =>'1'
+        ],
+        [
+            'name'              =>'Jagung',		
+            'min'               =>'10',
+            'max'               =>'50',
+            'group_feed_id'     =>'2'
+        ],
+        [
+            'name'              =>'Onggok',		
+            'min'               =>'0',
+            'max'               =>'40',
+            'group_feed_id'     =>'2'
+        ],
+        [
+            'name'              =>'Molases',		
+            'min'               =>'5',
+            'max'               =>'7',
+            'group_feed_id'     =>'2'
+        ],
+        [
+            'name'              =>'Dedak Padi Halus',		
+            'min'               =>'0',
+            'max'               =>'40',
+            'group_feed_id'     =>'2'
+        ],
+        [
+            'name'              =>'Singkong',		
+            'min'               =>'0',
+            'max'               =>'30',
+            'group_feed_id'     =>'3'
+        ],
+        [
+            'name'              =>'Biji Kedelai',	
+            'min'               =>'0',
+            'max'               =>'20',	
+            'group_feed_id'     =>'3'
+        ],
+        [
+            'name'              =>'Bungkil Kelapa Sawit',	
+            'min'               =>'0',
+            'max'               =>'30',	
+            'group_feed_id'     =>'3'
+        ],
+        [
+            'name'              =>'Bungkil Kelapa',	
+            'min'               =>'0',
+            'max'               =>'30',	
+            'group_feed_id'     =>'3'
+        ],
+        [
+            'name'              =>'Ampas Kecap',	
+            'min'               =>'0',
+            'max'               =>'20',	
+            'group_feed_id'     =>'3'
+        ],
+        [
+            'name'              =>'Kapur',		
+            'min'               =>'0',
+            'max'               =>'2',
+            'group_feed_id'     =>'4'
+        ],
+        [
+            'name'              =>'Kalsium Karbonat',	
+            'min'               =>'0',
+            'max'               =>'2',	
+            'group_feed_id'     =>'4'
+        ],
+        [
+            'name'              =>'Garam',		
+            'min'               =>'0.25',
+            'max'               =>'1',
+            'group_feed_id'     =>'4'
         ]
-        );
+        ]);
     }
 }

@@ -7,11 +7,12 @@ use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use App\Feed;
 use App\GroupFeed;
+use App\FeedNutrient;
 use Session;
 use Excel;
 use Validator;
 
-class FeedsController extends Controller
+class FeedNutrientsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,24 +23,23 @@ class FeedsController extends Controller
     public function index(Request $request, Builder $htmlBuilder)
     {
         if ($request->ajax()) {
-            $feeds = Feed::with('groupfeed');
-            return Datatables::of($feeds)
-                ->addColumn('group', function($feeds) {
-                    return $feeds->groupfeed->name; })
-                ->addColumn('action', function($feeds){
+            $feednutrients = FeedNutrient::with('feed','nutrient');
+            return Datatables::of($feednutrients)
+                ->addColumn('action', function($feednutrient){
                     return view('datatable._action',[
-                        'model' => $feeds,
-                        'edit_url' => route('feeds.edit',$feeds->id),
-                        'delete_url' => route('feeds.destroy', $feeds->id),
-                        'confirm_message' => 'Apakah Anda yakin akan menghapus '. $feeds->name . '?'
+                        'model' => $feednutrient,
+                        'edit_url' => route('feednutrients.edit',$feednutrient->id),
+                        'delete_url' => route('feednutrients.destroy', $feednutrient->id),
+                        'confirm_message' => 'Apakah Anda yakin akan menghapus pakan '. $feednutrient->feed->name .' dengan nutrien '. $feednutrient->nutrient->name .' ?'
                     ]);
             })->make(true);
         }
         $html = $htmlBuilder
-        ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
-        ->addColumn(['data' => 'groupfeed.name', 'name'=>'groupfeed.name', 'title'=>'Group Feeds'])
+        ->addColumn(['data' => 'feed.name', 'name'=>'feed.name', 'title'=>'Feeds'])
+        ->addColumn(['data' => 'nutrient.name', 'name'=>'nutrient.name', 'title'=>'Nutrien'])
+        ->addColumn(['data' => 'composition', 'name'=>'composition', 'title'=>'Komposisi'])
         ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
-        return view('feeds.index')->with(compact('html'));
+        return view('feednutrients.index')->with(compact('html'));
     }
 
     /**
@@ -49,7 +49,7 @@ class FeedsController extends Controller
      */
     public function create()
     {
-        return view('feeds.create');
+        return view('feednutrients.create');
     }
 
     /**
@@ -60,19 +60,18 @@ class FeedsController extends Controller
      */
     public function store(Request $request)
     {
-        // print_r($request->all());
-        // die();
         $this->validate($request, [
-            'name'=> 'required|unique:feeds',
-            'group_feed_id' => 'required'
+            'nutrient_id'=> 'required',
+            'feed_id' => 'required',
+            'composition' => 'required'
         ]);
-        $feeds = Feed::create($request->all());
+        $feednutrients = FeedNutrient::create($request->all());
 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil menyimpan $feeds->name"
+            "message"=>"Berhasil menyimpan nutrien pakan"
         ]);
-        return redirect()->route('feeds.index');
+        return redirect()->route('feednutrients.index');
     }
 
     /**
@@ -94,8 +93,8 @@ class FeedsController extends Controller
      */
     public function edit($id)
     {
-        $feeds = Feed::find($id);
-        return view('feeds.edit')->with(compact('feeds'));
+        $feednutrients = FeedNutrient::find($id);
+        return view('feednutrients.edit')->with(compact('feednutrients'));
     }
 
     /**
@@ -108,16 +107,17 @@ class FeedsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'name'=> 'required|unique:feeds',
-            'group_feed_id' => 'required'
+            'nutrient_id'=> 'required',
+            'feed_id' => 'required',
+            'composition' => 'required'
         ]);
-        $feeds = Feed::find($id);
-        $feeds->update($request->all());
+        $feednutrients = FeedNutrient::find($id);
+        $feednutrients->update($request->all());
 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil mengubah $feeds->name" ]);
-        return redirect()->route('feeds.index');
+            "message"=>"Berhasil mengubah nutrien pakan" ]);
+        return redirect()->route('feednutrients.index');
     }
 
     /**
@@ -128,20 +128,12 @@ class FeedsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $feeds = Feed::find($id);
-    
-        if(!$feeds->delete()) 
-            return redirect()->back();
-        
-        // handle hapus feeds via ajax
-        if ($request->ajax()) 
-            return response()->json(['id' => $id]);
-        
+        if(!FeedNutrient::destroy($id)) return redirect()->back();
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Feeds berhasil dihapus"
+            "message"=>"Nutrien Pakan berhasil dihapus"
         ]);
-        return redirect()->route('feeds.index');
+        return redirect()->route('feednutrients.index');
     }
 
     public function generateExcelTemplate() 
@@ -299,21 +291,5 @@ class FeedsController extends Controller
         }
 
         return \Response::json($formatted_feeds);
-    }
-
-    public function AjaxFind(Request $request)
-    {
-        if(empty($request->feed_id))
-        {
-            $data = array();
-            return \Response::json($data);
-        }
-        else
-        {
-            $feed = Feed::find($request->feed_id);
-                        
-            $result = ['min' => $feed->min, 'max' => $feed->max];
-            return \Response::json($result);
-        }
     }
 }

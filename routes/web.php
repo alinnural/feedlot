@@ -30,23 +30,33 @@ Route::group(['prefix'=>'sample'],function(){
 });
 
 Route::group(['prefix'=>'formula'],function(){
-    Route::get('/input','HomeController@input');
+    Route::post('/input','HomeController@input');
     Route::get('/price','HomeController@price');
-    Route::post('/calculate','HomeController@calculate_using_minimization_class');
+    Route::post('/calculate','HomeController@calculate');
     Route::get('/', 'HomeController@index');
 });
 
 Route::group(['prefix'=>'ajax'],function(){
     Route::get('requirements/search', 'RequirementsController@AjaxSearch');
-    Route::get('requirements/find','RequirementsController@AjaxFind');
+    Route::get('requirements/find', [
+            'as'   => 'ajax.find',
+            'uses' => 'RequirementsController@AjaxFind'
+        ]);
+    Route::get('feeds/find', [
+            'as'   => 'ajax.feed_find',
+            'uses' => 'FeedsController@AjaxFind'
+        ]);
     Route::get('feeds/search','FeedsController@AjaxSearch');
 });
 
 Route::group(['middleware'=>'web'],function(){
-    Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
+    Route::group(['middleware'=>['auth','role:admin']],function(){
         Route::resource('groupfeeds','GroupFeedsController');
         Route::resource('feeds','FeedsController');
         Route::resource('requirements','RequirementsController');
+        Route::resource('units','UnitsController');
+        Route::resource('nutrients','NutrientsController');
+        Route::resource('feednutrients','FeedNutrientsController');
 
         Route::get('template/feeds', [
             'as'   => 'template.feeds',

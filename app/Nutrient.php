@@ -4,16 +4,17 @@ namespace App;
  
 use Illuminate\Database\Eloquent\Model;
  
-class Feed extends Model 
+class Nutrient extends Model 
 {
     protected $fillable = [
         'name',
-        'group_feed_id'
+        'abbreviation',
+        'unit_id'
         ];
 
-    public function groupfeed()
+    public function unit()
     {
-        return $this->belongsTo('App\GroupFeed','group_feed_id','id');
+        return $this->belongsTo('App\Unit','unit_id','id');
     }
 
     public function feednutrients()
