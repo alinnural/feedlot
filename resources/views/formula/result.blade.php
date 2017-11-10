@@ -13,11 +13,9 @@
                     <h4><i class="fa fa-breafcase"></i> Hasil Optimasi </h4>
                 </div>
                 <div class="panel-body">
-                    @if(Auth::check())
                     <a class="btn btn-warning" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class="fa fa-list-alt"></i> Lihat Hasil Perhitungan Matriks
                     </a>
-                    @endif
                     <div class="collapse" id="collapseExample">
                         <div class="well">
                             <h4>Inisialisasi Tableau</h4>
@@ -147,6 +145,7 @@
                             @endfor
                             <!-- if the number of iterations reaches 100, the problem is infeasible -->
                             @if($max==100)
+                                @php $flag=1; @endphp
                                 <p class='final'>Tidak Mungkin (Problem is infeasible). </p>
                             @endif
 
@@ -192,74 +191,68 @@
                         </div>              
                     </div>
                     <br>&nbsp;<br>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="panel panel-default">
-                                <table class="table table-stripped">
-                                    <tr>
-                                        <td width="300"><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td><strong><h4><span class="pull-left">IDR</span> <span class="pull-right">{{ $harga_terakhir }}</span></h4></strong></td>
-                                    </tr>
-                                    @foreach (Calculate::mapping_feed_id_result(Session::get('feed_id'),Session::get('feed_price'),$feeds) as $feed)
-                                    <tr>
-                                        <td><label class="control-label">{{ $feed['name'] }}</label></td>
-                                        <td><strong class="pull-right">{{ $feed['result'] }}</strong></td>
-                                        <td><strong class="pull-left">%</strong></td>
-                                        <td><span class="pull-left">IDR</span> <span class="pull-right">{{ $feed['price'] }}</span></td>
-                                    </tr>
-                                    @endforeach
-                                </table>
+                    @if($flag==1)
+                        <p class='final'>Tidak mungkin (Problem is infeasible). </p>
+                    @else
+                        <div class="row" id="result">
+                            <div class="col-md-10">
+                                <div class="panel panel-default">
+                                    <table class="table table-stripped">
+                                        <tr>
+                                            <th>Pakan</th>
+                                            <th>Kuantitas</th>
+                                            <th width="100">&nbsp;</th>
+                                            <th width="200">Harga</th>
+                                            <th>Persentase</th>
+                                        </tr>
+                                        @php $persen=0; @endphp
+                                        @foreach (Calculate::mapping_feed_id_result(Session::get('feeds'),Session::get('harga'),$feeds,$harga_terakhir) as $feed)
+                                        <tr>
+                                            <td>{{ $feed['name'] }}</td>
+                                            <td><span class="pull-right">{{ $feed['result'] }} kg</span></td>
+                                            <th>&nbsp;</th>
+                                            <td><span class="pull-left">IDR</span> <span class="pull-right">{{ $feed['price'] }} / kg</span></td>
+                                            <td><span class="pull-right">({{ $feed['kuantitas'] }} %)@php $persen+=$feed['kuantitas']; @endphp</span></td>
+                                        </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td width="300"><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
+                                            <td>&nbsp;</td>
+                                            <th>&nbsp;</th>
+                                            <td><strong><h4><span class="pull-left">IDR</span> <span class="pull-right">{{ $harga_terakhir }}</span></h4></strong></td>
+                                            <td><span class="pull-right"><h4>({{ $persen }}%)</h4></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>                        
+                        </div>      
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <table class="table table-stripped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nutrisi</th>
+                                                <th>Minimum</th>
+                                                <th>Maksimum</th>
+                                                <th>Hasil Formulasi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (Calculate::mapping_nutrient_id_result(Session::get('feeds'),$requirement,$feeds) as $nu)
+                                            <tr>
+                                                <td><label class="control-label">{{ $nu['name'] }}</label></td>
+                                                <td>{{ $nu['min_composition'] }}</td>
+                                                <td>{{ $nu['max_composition'] }}</td>
+                                                <td>{{ $nu['result'] }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="panel panel-default">
-                                <table class="table table-stripped">
-                                    @foreach (Calculate::mapping_nutrient_id_result(Session::get('requirement_id'),$nutrients) as $nu)
-                                    <tr>
-                                        <td><label class="control-label">{{ $nu['name'] }}</label></td>
-                                        <td><strong class="pull-right">{{ $nu['result'] }}</strong></td>
-                                        <td><strong class="pull-left">%</strong></td>
-                                    </tr>
-                                    @endforeach
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Kebutuhan Nutrisi Sapi Pedaging</div>
-                                <table class="table table-stripped">
-                                    <tr>
-                                        <td width="300">{!! Form::label('var', 'Animal Type', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->animal_type}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{!! Form::label('var', 'Current Weight', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->current}} Kg</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{!! Form::label('var', 'Finish Weight', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->finish}} Kg</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{!! Form::label('var', 'ADG (Average Daily Gain)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->adg}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{!! Form::label('var', 'DMI (Dry Matter Intake)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->tdn}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{!! Form::label('var', 'TDN (Total Digestible Nutrient)', ['class' => 'control-label']) !!}</td>
-                                        <td>{{ $requirement[0]->dmi}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>         
+                    @endif
                 </div>
             </div>
         </div>

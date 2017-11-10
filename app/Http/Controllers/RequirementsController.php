@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use App\Requirement;
+use App\RequirementNutrient;
 use Session;
 use Excel;
 use Validator;
@@ -284,28 +285,31 @@ class RequirementsController extends Controller
 
     public function AjaxFind(Request $request)
     {
-        if(empty($request->current_weight) and empty($request->average_daily_gain))
+        if(empty($request->req_id))
         {
             $data = array();
             return \Response::json($data);
         }
         else
         {
-             $request->session()->put('current_weight',$request->current_weight);
-            $request->session()->put('average_daily_gain', $request->average_daily_gain);
+            $request->session()->put('req_id', $request->req_id);
 
-            $requirements = Requirement::SearchByCurrentWeightAndADG($request->current_weight,$request->average_daily_gain)->get()->first();
+            $reqnuts = RequirementNutrient::SearchNutrient(1)->get();
             
-            if(empty($requirements))
+            if(empty($reqnuts))
             {
                 $request->session()->put('requirement_id',0);
             }
             else
             {
-                $request->session()->put('requirement_id',$requirements->id);
+                $request->session()->put('requirement_id',$request->req_id);
             }
-
-            return \Response::json($requirements);
+            
+            foreach($reqnuts as $rn){
+                $result[] = ['name' => $rn->nutrient->name, 'min' => $rn->min_composition, 'max' => $rn->max_composition];
+            }
+            print_r($result);exit;
+            return \Response::json($result);
         }
     }
 }

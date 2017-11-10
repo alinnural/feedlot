@@ -300,4 +300,20 @@ class FeedsController extends Controller
 
         return \Response::json($formatted_feeds);
     }
+
+    public function AjaxFind(Request $request)
+    {
+        if(empty($request->feed_id))
+        {
+            $data = array();
+            return \Response::json($data);
+        }
+        else
+        {
+            $feed = Feed::find($request->feed_id);
+                        
+            $result = ['min' => $feed->min, 'max' => $feed->max];
+            return \Response::json($result);
+        }
+    }
 }

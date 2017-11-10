@@ -12,6 +12,11 @@ class Requirement extends Model
         'average_daily_gain'
     ];
 
+    public function requirementnutrients()
+    {
+        return $this->hasMany('App\RequirementNutrient');
+    }
+
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {
@@ -39,6 +44,5 @@ class Requirement extends Model
         {
             return $query;
         }
-    }
-
+    }  
 }

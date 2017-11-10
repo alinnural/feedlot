@@ -16,6 +16,11 @@ class Feed extends Model
         return $this->belongsTo('App\GroupFeed','group_feed_id','id');
     }
 
+    public function feednutrients()
+    {
+        return $this->hasMany('App\FeedNutrient');
+    }
+
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {

@@ -30,15 +30,22 @@ Route::group(['prefix'=>'sample'],function(){
 });
 
 Route::group(['prefix'=>'formula'],function(){
-    Route::get('/input','HomeController@input');
+    Route::post('/input','HomeController@input');
     Route::get('/price','HomeController@price');
-    Route::post('/calculate','HomeController@calculate_using_minimization_class');
+    Route::post('/calculate','HomeController@calculate');
     Route::get('/', 'HomeController@index');
 });
 
 Route::group(['prefix'=>'ajax'],function(){
     Route::get('requirements/search', 'RequirementsController@AjaxSearch');
-    Route::get('requirements/find','RequirementsController@AjaxFind');
+    Route::get('requirements/find', [
+            'as'   => 'ajax.find',
+            'uses' => 'RequirementsController@AjaxFind'
+        ]);
+    Route::get('feeds/find', [
+            'as'   => 'ajax.feed_find',
+            'uses' => 'FeedsController@AjaxFind'
+        ]);
     Route::get('feeds/search','FeedsController@AjaxSearch');
 });
 

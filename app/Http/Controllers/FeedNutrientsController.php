@@ -25,12 +25,12 @@ class FeedNutrientsController extends Controller
         if ($request->ajax()) {
             $feednutrients = FeedNutrient::with('feed','nutrient');
             return Datatables::of($feednutrients)
-                ->addColumn('action', function($feednutrients){
+                ->addColumn('action', function($feednutrient){
                     return view('datatable._action',[
-                        'model' => $feednutrients,
-                        'edit_url' => route('feednutrients.edit',$feednutrients->id),
-                        'delete_url' => route('feednutrients.destroy', $feednutrients->id),
-                        'confirm_message' => 'Apakah Anda yakin akan menghapus pakan '. $feednutrients->feed->name .' dengan nutrien '. $feednutrients->nutrient->name .' ?'
+                        'model' => $feednutrient,
+                        'edit_url' => route('feednutrients.edit',$feednutrient->id),
+                        'delete_url' => route('feednutrients.destroy', $feednutrient->id),
+                        'confirm_message' => 'Apakah Anda yakin akan menghapus pakan '. $feednutrient->feed->name .' dengan nutrien '. $feednutrient->nutrient->name .' ?'
                     ]);
             })->make(true);
         }

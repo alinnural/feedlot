@@ -50,6 +50,8 @@ class UpdateFeedsTable extends Migration
             );
 
             $table->string('name')->after('id');
+            $table->float('min',8,2)->nullable();;
+            $table->float('max',8,2)->nullable();;
             $table->foreign('group_feed_id')->references('id')->on('group_feeds')
                 ->onUpdate('cascade')->onDelete('cascade');  
         });

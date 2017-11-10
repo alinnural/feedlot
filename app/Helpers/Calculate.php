@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Feed;
 use App\Requirement;
+use App\FeedNutrient;
 
 class Calculate{
     /*
@@ -63,33 +64,43 @@ class Calculate{
         return $sign;
     }
 
-    public static function mapping_feed_id_result($feeds_id,$feed_price,$result)
+    public static function mapping_feed_id_result($feeds_id,$feed_price,$result,$harga_terakhir)
     {
-        $feeds = Feed::whereIn('id',$feeds_id)->get();
-        
         $percent = array();
         $no = 1;
-        foreach($feeds as $fee)
+        foreach($feeds_id as $key => $value)
         {
-            $percent[$no]['name'] = $fee->feed_stuff;
+            $feeds = Feed::find($value);
+            $percent[$no]['name'] = $feeds->name;
             $percent[$no]['result'] = $result[$no];
-            $percent[$no]['price'] = $feed_price[$fee->id];
+            $percent[$no]['price'] = $feed_price[$key];
+            $percent[$no]['kuantitas'] = round($result[$no]*$feed_price[$key]/$harga_terakhir*100);
             $no++;
         }
         return $percent;
     }
 
-    public static function mapping_nutrient_id_result($requirement_id,$result)
+    public static function mapping_nutrient_id_result($feeds,$requirement,$result)
     {
-        $data = array('Satuan','Total Digestible Nutrient(TDN)','Crude Protein (CP)','Calcium (Ca)','Phosphorus (P)');
-        $nutrient = array();
         $no=0;
-        foreach($data as $r)
+        foreach($requirement as $req)
         {
-            $nutrient[$no]['name'] = $data[$no];
-            $nutrient[$no]['result'] = $result[$no+1];
+            $nutrient[$no]['name'] = $req['name'];
+            $nutrient[$no]['min_composition'] = $req['min_composition'];
+            $nutrient[$no]['max_composition'] = $req['max_composition'];
+            $sum_comp = 0;
+            if($req['min_composition'] != 0 || $req['max_composition'] != 0){
+                foreach($feeds as $key => $value)
+                {
+                    $feednuts = FeedNutrient::SearchByNutrientAndFeed($req['id'],$value)->first(); 
+                    $temp = $result[$key+1]*$feednuts->composition;
+                    $sum_comp += $temp;
+                }
+            }           
+            $nutrient[$no]['result'] = round($sum_comp);
             $no++;
         }
+        //print_r($nutrient); exit;
         return $nutrient;
     }
 }

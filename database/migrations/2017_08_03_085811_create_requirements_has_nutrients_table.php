@@ -17,7 +17,8 @@ class CreateRequirementsHasNutrientsTable extends Migration
             $table->increments('id');
             $table->integer('requirement_id')->unsigned()->index();
             $table->integer('nutrient_id')->unsigned()->index();
-            $table->float('composition',8,2);
+            $table->float('min_composition',8,2)->nullable();;
+            $table->float('max_composition',8,2)->nullable();;
             $table->timestamps();
 
             $table->foreign('requirement_id')->references('id')->on('requirements')

@@ -11,21 +11,19 @@ class RequirementsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('requirements')->insert(
-        [
-            'animal_type' => 'Breeding Heifers',
-            'finish' => '454',
-            'current'=> '282.388',
-            'adg'=>	'0.73',
-            'tdn'=> '',
-            'dmi'=> '16.7',
-            'nem'=> '50.1',
-            'neg'=> '46',
-            'cp' => '21',
-            'ca' => '7.18',
-            'p' => '0.22',
-        ]
-        );
+        DB::table('requirements')->insert([
+        ['animal_type'      =>'Sapi Potong Konsentrat Penggemukan','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Potong Konsentrat Induk','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Potong Konsentrat Pejantan','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Potong Konsentrat Pertumbuhan','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Perah Starter-1','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Perah Starter-2','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Perah Dara','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Perah Laktasi','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Perah Laktasi Prod Tinggi','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Perah Kering Bunting','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'Sapi Perah Jantan','current_weight'=>'0','average_daily_gain'=>'0']
+        ]);
         	
     }
 }

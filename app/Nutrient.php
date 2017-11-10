@@ -17,6 +17,11 @@ class Nutrient extends Model
         return $this->belongsTo('App\Unit','unit_id','id');
     }
 
+    public function feednutrients()
+    {
+        return $this->hasMany('App\FeedNutrient');
+    }
+
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {
