@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row">      
         @include('layouts.menu')  
-        
         {!! Form::open(['url' => 'formula/calculate','class'=>'form-horizontal','method'=>'POST','target'=>'_blank']) !!}
         <input type="hidden" class="x">
         <div class="col-md-9">

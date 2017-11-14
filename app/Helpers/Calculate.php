@@ -69,11 +69,10 @@ class Calculate{
         $percent = array();
         $no = 1;
         foreach($feeds_id as $key => $value)
-        {
-            $feeds = Feed::find($value);
+        {            $feeds = Feed::find($value);
             $percent[$no]['name'] = $feeds->name;
             $percent[$no]['result'] = round($result[$no]*100,2);
-            $percent[$no]['price'] = $feed_price[$key];
+            $percent[$no]['price'] = $feed_price[$key];            
             $no++;
         }
         return $percent;
