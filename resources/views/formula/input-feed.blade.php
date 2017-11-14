@@ -4,8 +4,7 @@
 <div class="container">
     <div class="row">      
         @include('layouts.menu')  
-        
-        {!! Form::open(['url' => 'formula/calculate','class'=>'form-horizontal','method'=>'POST']) !!}
+        {!! Form::open(['url' => 'formula/calculate','class'=>'form-horizontal','method'=>'POST','target'=>'_blank']) !!}
         <input type="hidden" class="x">
         <div class="col-md-9">
             <div class="panel panel-default">
@@ -46,10 +45,10 @@
                                 {!! Form::select('feeds[]',$feeds,null,['class'=>'form-control feed_list','placeholder' => '- Pilih Pakan -','onchange'=>'getFeed(this)']) !!}
                             </div>
                             <div class='col-md-2'>
-                                {{ Form::number('min_feed[]', '',['class' => 'form-control min_feed_0','placeholder' => 'Nilai min'])}} 
+                                {{ Form::text('min_feed[]', '',['class' => 'form-control min_feed_0','placeholder' => 'Nilai min'])}} 
                             </div>
                             <div class='col-md-2'>
-                                {{ Form::number('max_feed[]', '',['class' => 'form-control max_feed_0','placeholder' => 'Nilai maks'])}} 
+                                {{ Form::text('max_feed[]', '',['class' => 'form-control max_feed_0','placeholder' => 'Nilai maks'])}} 
                             </div>
                             <div class='col-md-2'>
                                 {{ Form::number('harga[]', '',['class' => 'form-control harga','placeholder' => 'Harga'])}} 
@@ -102,10 +101,10 @@
                                 "<div id='"+x+"'>"+
                                     feed_list+
                                     "<div class='col-md-2'>"+
-                                        "<input class='form-control min_feed_"+x+"' placeholder='Nilai min' name='min_feed[]' type='number' value=''> "+
+                                        "<input class='form-control min_feed_"+x+"' placeholder='Nilai min' name='min_feed[]' type='text' value=''> "+
                                     "</div>"+
                                     "<div class='col-md-2'>"+
-                                        "<input class='form-control max_feed_"+x+"' placeholder='Nilai maks' name='max_feed[]' type='number' value=''> "+
+                                        "<input class='form-control max_feed_"+x+"' placeholder='Nilai maks' name='max_feed[]' type='text' value=''> "+
                                     "</div>"+
                                     "<div class='col-md-2'>"+
                                         "<input class='form-control harga' placeholder='Harga' name='harga[]' type='number' value=''> "+

@@ -13,7 +13,7 @@
                     <h4><i class="fa fa-breafcase"></i> Hasil Optimasi </h4>
                 </div>
                 <div class="panel-body">
-                    <a class="btn btn-warning" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-success" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class="fa fa-list-alt"></i> Lihat Hasil Perhitungan Matriks
                     </a>
                     <div class="collapse" id="collapseExample">
@@ -109,7 +109,7 @@
                                 @for($i=0; $i<=$num[0]; $i++)
                                     <tr>
                                     @for($j=0; $j<=$total_number+1; $j++)
-                                        <td id='each'>{{ round($initial_tableau[$i][$j],3) }}</td>
+                                        <td id='each'>{{ round($initial_tableau[$i][$j],5) }}</td>
                                     @endfor
                                     </tr>
                                 @endfor
@@ -123,21 +123,21 @@
                                         @if(($i+1)<=$num[1])
                                             @php 
                                             $sub=$i+1;
-                                            $nutrients[$sub] = round($initial_tableau[$num[0]][$i],3);
+                                            $nutrients[$sub] = round($initial_tableau[$num[0]][$i],5);
                                             @endphp
-                                            <td id='each'> y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
+                                            <td id='each'> y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],5) }}</td>
                                             
                                         @else
                                             @php $sub=$i-$num[1]+1; @endphp
                                             @if($sub<=$num[0])
-                                                <td id='each'> x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
-                                                @php $feeds[$sub] = round($initial_tableau[$num[0]][$i],3); @endphp
+                                                <td id='each'> x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],5) }}</td>
+                                                @php $feeds[$sub] = round($initial_tableau[$num[0]][$i],5); @endphp
                                             @else
-                                                <td id='each'> z = {{ round($initial_tableau[$num[0]][$total_number+1],3) }}</td>
+                                                <td id='each'> z = {{ round($initial_tableau[$num[0]][$total_number+1],5) }}</td>
                                             @endif
                                         @endif
                                         @php 
-                                        $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],3);
+                                        $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],5);
                                         @endphp
                                     @endfor
                                     </tr>
@@ -145,6 +145,7 @@
                             @endfor
                             <!-- if the number of iterations reaches 100, the problem is infeasible -->
                             @if($max==100)
+                                @php $flag=1; @endphp
                                 <p class='final'>Tidak Mungkin (Problem is infeasible). </p>
                             @endif
 
@@ -155,7 +156,7 @@
                                     @for($i=0;$i<=$num[0];$i++)
                                     <tr>
                                         @for($j=0;$j<=$total_number+1;$j++)
-                                            <td>{{ round($initial_tableau[$i][$j],3) }}</td>
+                                            <td>{{ round($initial_tableau[$i][$j],5) }}</td>
                                         @endfor
                                     </tr>
                                     @endfor
@@ -170,19 +171,19 @@
                                         @if(($i+1) <= $num[1])
                                             @php 
                                             $sub = $i+1; 
-                                            $nutrients[$sub] = round($initial_tableau[$num[0]][$i],3);
+                                            $nutrients[$sub] = round($initial_tableau[$num[0]][$i],5);
                                             @endphp
-                                            <td>y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
+                                            <td>y{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],5) }}</td>
                                         @else
                                             @php $sub = $i- $num[1]+1; @endphp
                                             @if($sub <= $num[0])
-                                                <td>x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],3) }}</td>
-                                                @php $feeds[$sub] = round($initial_tableau[$num[0]][$i],3); @endphp
+                                                <td>x{{ $sub }} = {{ round($initial_tableau[$num[0]][$i],5) }}</td>
+                                                @php $feeds[$sub] = round($initial_tableau[$num[0]][$i],5); @endphp
                                             @else
-                                                <td>z = {{ round($initial_tableau[$num[0]][$total_number+1],3) }}</td>
+                                                <td>z = {{ round($initial_tableau[$num[0]][$total_number+1],5) }}</td>
                                             @endif
                                         @endif
-                                        @php $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],3); @endphp
+                                        @php $harga_terakhir = round($initial_tableau[$num[0]][$total_number+1],5); @endphp
                                     @endfor
                                     </tr>
                                 </table>
@@ -190,54 +191,75 @@
                         </div>              
                     </div>
                     <br>&nbsp;<br>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="panel panel-default">
-                                <table class="table table-stripped">
-                                    @foreach (Calculate::mapping_feed_id_result(Session::get('feeds'),Session::get('harga'),$feeds) as $feed)
-                                    <tr>
-                                        <td><label class="control-label">{{ $feed['name'] }}</label></td>
-                                        <td><strong class="pull-right">{{ $feed['result'] }}</strong></td>
-                                        <td><strong class="pull-left">%</strong></td>
-                                        <td><span class="pull-left">IDR</span> <span class="pull-right">{{ $feed['price'] }}</span></td>
-                                    </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td width="300"><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td><strong><h4><span class="pull-left">IDR</span> <span class="pull-right">{{ $harga_terakhir }}</span></h4></strong></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>                        
-                    </div>      
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <table class="table table-stripped">
-                                    <thead>
+                    @if($flag==1)
+                        <p class='final'>Tidak mungkin (Problem is infeasible).</p>
+                    @else
+                        <div class="row" id="result">
+                            <div class="col-md-10">
+                                <div class="panel panel-default">
+                                    <table class="table table-stripped">
                                         <tr>
-                                            <th>Nutrisi</th>
-                                            <th>Minimum</th>
-                                            <th>Maksimum</th>
-                                            <th>Hasil Formulasi</th>
+                                            <th>Pakan</th>
+                                            <th class="text-right">Persentase</th>
+                                            <th width="100">&nbsp;</th>
+                                            <th class="text-center" width="200">Harga</th>
+                                            <th class="text-right" width="200">Kuantitas</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (Calculate::mapping_nutrient_id_result(Session::get('feeds'),$requirement,$feeds) as $nu)
+                                        @php $kuantitas=0; @endphp
+                                        @foreach (Calculate::mapping_feed_id_result(Session::get('feeds'),Session::get('harga'),$feeds,$harga_terakhir) as $feed)
                                         <tr>
-                                            <td><label class="control-label">{{ $nu['name'] }}</label></td>
-                                            <td>{{ $nu['min_composition'] }}</td>
-                                            <td>{{ $nu['max_composition'] }}</td>
-                                            <td>{{ $nu['result'] }}</td>
+                                            <td>{{ $feed['name'] }}</td>
+                                            <td><span class="pull-right">{{ $feed['result'] }} %</span></td>
+                                            <th>&nbsp;</th>
+                                            <td><span class="pull-left">IDR</span> <span class="pull-right">{{ $feed['price'] }} / kg</span></td>
+                                            <td><span class="pull-right">@php $kuant = $feed['result']*Session::get('kuantitas')/100; $kuantitas+=$kuant; @endphp {{ $kuant }} kg</span></td>
                                         </tr>
                                         @endforeach
-                                    </tbody>
-                                </table>
+                                        <tr>
+                                            <td width="300"><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
+                                            <td>&nbsp;</td>
+                                            <th>&nbsp;</th>
+                                            <td><strong><h4><span class="pull-left">IDR</span> <span class="pull-right">{{ round($harga_terakhir) }},00</span></h4></strong></td>
+                                            <td><span class="pull-right"><h4>{{ $kuantitas }} kg</h4></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>                        
+                        </div>      
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <table class="table table-stripped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nutrisi</th>
+                                                <th>Minimum</th>
+                                                <th>Maksimum</th>
+                                                <th>Hasil Formulasi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (Calculate::mapping_nutrient_id_result(Session::get('feeds'),$requirement,$feeds) as $nu)
+                                            <tr>
+                                                <td><label class="control-label">{{ $nu['name'] }}</label></td>
+                                                <td>{{ $nu['min_composition'] }}</td>
+                                                <td>{{ $nu['max_composition'] }}</td>
+                                                <td>{{ $nu['result'] }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
+                </div>
+                <div class="panel-footer">
+                        <div class="row">
+                        <div class="col-md-12 pull-right">
+                            {{ Form::button('<span class="fa fa-lg fa-save"></span> Simpan', array('class'=>'btn btn-success btn-lg', 'type'=>'submit')) }}
+                        </div>
+                    <div>
                 </div>
             </div>
         </div>
