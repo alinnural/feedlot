@@ -64,17 +64,15 @@ class Calculate{
         return $sign;
     }
 
-    public static function mapping_feed_id_result($feeds_id,$feed_price,$result)
+    public static function mapping_feed_id_result($feeds_id,$feed_price,$result,$harga_terakhir)
     {
-        $feeds = Feed::whereIn('id',$feeds_id)->get();
-        //print_r($feed_price); exit;
         $percent = array();
         $no = 1;
-        foreach($feeds as $fee)
-        {
-            $percent[$no]['name'] = $fee->name;
-            $percent[$no]['result'] = $result[$no];
-            $percent[$no]['price'] = $feed_price[$no-1];
+        foreach($feeds_id as $key => $value)
+        {            $feeds = Feed::find($value);
+            $percent[$no]['name'] = $feeds->name;
+            $percent[$no]['result'] = round($result[$no]*100,2);
+            $percent[$no]['price'] = $feed_price[$key];            
             $no++;
         }
         return $percent;
@@ -97,7 +95,7 @@ class Calculate{
                     $sum_comp += $temp;
                 }
             }           
-            $nutrient[$no]['result'] = $sum_comp;
+            $nutrient[$no]['result'] = round($sum_comp);
             $no++;
         }
         //print_r($nutrient); exit;
