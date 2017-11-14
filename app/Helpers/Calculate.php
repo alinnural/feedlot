@@ -72,9 +72,8 @@ class Calculate{
         {
             $feeds = Feed::find($value);
             $percent[$no]['name'] = $feeds->name;
-            $percent[$no]['result'] = $result[$no];
+            $percent[$no]['result'] = round($result[$no],2)*100;
             $percent[$no]['price'] = $feed_price[$key];
-            $percent[$no]['kuantitas'] = round($result[$no]*$feed_price[$key]/$harga_terakhir*100);
             $no++;
         }
         return $percent;

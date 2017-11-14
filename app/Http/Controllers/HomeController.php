@@ -81,6 +81,7 @@ class HomeController extends Controller
         ]);
         $req_id = $request->requirement_id; 
         $request->session()->put('requirement_id',$req_id);
+        $request->session()->put('kuantitas',$request->kuantitas);
         $reqnuts = RequirementNutrient::SearchNutrient($req_id)->get();
         $feeds = Feed::pluck('name','id')->all();
 
@@ -150,16 +151,33 @@ class HomeController extends Controller
                 }
                 if($x == 1){
                     $data["sign".$i_cons] = "greaterThan";
-                    $data["answer".$i_cons] = $request->min_feed[$key];
+                    $data["answer".$i_cons] = $request->min_feed[$key]/100;
                 }else{
                     $data["sign".$i_cons] = "lessThan";
-                    $data["answer".$i_cons] = $request->max_feed[$key];
+                    $data["answer".$i_cons] = $request->max_feed[$key]/100;
                 }
             }
         }
+
+        //constraint untuk total
+        $i_cons++;
+        $i = 1;
+        foreach($feeds as $feed){
+            $data["cons".$i_cons."_".$i++] = 1;
+        }
+        $data["sign".$i_cons] = "lessThan";
+        $data["answer".$i_cons] = 1;
+        $i_cons++;
+        $i = 1;
+        foreach($feeds as $feed){
+            $data["cons".$i_cons."_".$i++] = 1;
+        }
+        $data["sign".$i_cons] = "greaterThan";
+        $data["answer".$i_cons] = 1;
+
         $constraint = $i_cons;
         $data["numbers"] = count($feeds).",".$constraint;
-
+        //print_r($data); exit();
         $requirement = array();
         $no=0;
         foreach($request->reqnuts_name as $key => $value)
@@ -170,7 +188,7 @@ class HomeController extends Controller
             $requirement[$no]['max_composition'] = $request->max_composition[$key];
             $no++;
         }
-        //print_r($requirement); exit();
+        //print_r($request->max_composition); exit();
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
 
