@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RequirementsTableSeeder::class);
         $this->call(RequirementNutrientsTableSeeder::class);
         $this->call(FeedNutrientsTableSeeder::class);
-        // $this->call(PostTableSeeder::class);
+        $this->call(PostTableSeeder::class);
+        $this->call(SliderTableSeeder::class);
     }
 }
