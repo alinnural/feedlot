@@ -19,6 +19,7 @@
     <link href="{{ URL::asset('css/selectize.css') }}" rel="stylesheet" type="text/css" >
     <link href="{{ URL::asset('css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" >
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    
     @yield('styles')
     <style>
     .loader {
@@ -62,6 +63,9 @@
                     <!-- Right Side Of Navbar -->
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
+                        @if(Auth::guest())
+                            {!! $MenuUtama->asUl(['class' => 'nav navbar-nav'],['class'=>'dropdown-menu']) !!}
+                        @endif
                         @role('admin')
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
