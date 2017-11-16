@@ -11,29 +11,31 @@
 |
 */
 
-Route::get('/', [
-    'uses'=> 'HomeController@beranda'
-]);
+Route::group(['middleware' => ['web','menu']],function(){
+    Route::get('/', [
+        'uses'=> 'HomeController@beranda'
+    ]);
+    Route::get('/welcome', 'HomeController@home');
+    Route::get('/about','HomeController@about');
+    Route::get('/contact','HomeController@contact');
+    Route::get('/changelog','HomeController@changelog');
+
+    Route::group(['prefix'=>'formula'],function(){
+        Route::post('/input','HomeController@input');
+        Route::get('/price','HomeController@price');
+        Route::post('/calculate','HomeController@calculate');
+        Route::get('/', 'HomeController@index');
+    });
+
+});
 
 Auth::routes();
-
-Route::get('/welcome', 'HomeController@home');
-Route::get('/about','HomeController@about');
-Route::get('/contact','HomeController@contact');
-Route::get('/changelog','HomeController@changelog');
 
 Route::group(['prefix'=>'sample'],function(){
     Route::get('/','HomeController@SampleIndex');
     Route::post('/input','HomeController@sampleInput');
     Route::post('/calculate','HomeController@sampleCalculate');
     Route::get('/simplex','HomeController@sampleSimplexMethod');
-});
-
-Route::group(['prefix'=>'formula'],function(){
-    Route::post('/input','HomeController@input');
-    Route::get('/price','HomeController@price');
-    Route::post('/calculate','HomeController@calculate');
-    Route::get('/', 'HomeController@index');
 });
 
 Route::group(['prefix'=>'ajax'],function(){

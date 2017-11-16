@@ -183,6 +183,8 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
+        
+        Lavary\Menu\ServiceProvider::class,
     ],
 
     /*
@@ -235,6 +237,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Calculate' => App\Helpers\Calculate::class,
+        'Menu'      => Lavary\Menu\Facade::class,
     ],
 
 ];
