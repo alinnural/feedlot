@@ -66,7 +66,6 @@ class MenuController extends Controller
      */
     public function store(menuCreateRequest $request)
     {
-        print_r($request->postFillData());die();
         $menu = Menu::create($request->postFillData());
         // print_r($request->postFillData());
         // die();
