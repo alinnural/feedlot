@@ -19,7 +19,7 @@
     <link href="{{ URL::asset('css/selectize.css') }}" rel="stylesheet" type="text/css" >
     <link href="{{ URL::asset('css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" >
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-
+    @yield('styles')
     <style>
     .loader {
         position: fixed;
@@ -86,7 +86,7 @@
                             <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
                             <li><a href="{{ url('/register') }}"><i class="fa fa-user"></i> Register</a></li>
                         @else
-                            <li><a href="{{ url('/setting/profil') }}"><i class="fa fa-user"></i> Profile</a></li>
+                            <li><a href="{{ url('/settings/profile') }}"><i class="fa fa-user"></i> Profile</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
