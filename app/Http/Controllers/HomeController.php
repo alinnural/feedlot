@@ -50,8 +50,8 @@ class HomeController extends Controller
 
     public function beranda()
     {
-        $sliders = Slider::where('is_active',1)->get();
-        $posts = Post::where('is_draft',0)->take(4)->get();
+        $sliders = Slider::where('is_active',1)->orderBy('id','desc')->get();
+        $posts = Post::where('is_draft',0)->orderBy('id','desc')->take(4)->get();
 
         return view('formula.beranda')
                     ->with('posts',$posts)
