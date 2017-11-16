@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6e5bdb044358fad918f458f1d1f4e894",
-    "content-hash": "ec41a2a4691984d96784e61b9b8f5f99",
+    "hash": "8422ec5c11cbbf3f1c274359c1a943ff",
+    "content-hash": "474d8f2de1c5ded4cd34ec5cba237145",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -581,6 +581,58 @@
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "http://laravelcollective.com",
             "time": "2017-05-21 22:00:10"
+        },
+        {
+            "name": "lavary/laravel-menu",
+            "version": "v1.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lavary/laravel-menu.git",
+                "reference": "772800ab87d4496f16891758b8c303e5f75faf1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lavary/laravel-menu/zipball/772800ab87d4496f16891758b8c303e5f75faf1d",
+                "reference": "772800ab87d4496f16891758b8c303e5f75faf1d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5.0",
+                "illuminate/view": ">=5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lavary\\Menu\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Menu": "Lavary\\Menu\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Lavary\\Menu\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lavary",
+                    "email": "mrl.8081@gmail.com"
+                }
+            ],
+            "description": "A quick way to create menus in Laravel 5",
+            "homepage": "https://github.com/lavary/laravel-menu",
+            "keywords": [
+                "laravel"
+            ],
+            "time": "2017-10-30 16:48:59"
         },
         {
             "name": "league/flysystem",
