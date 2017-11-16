@@ -50,7 +50,30 @@ Route::group(['prefix'=>'ajax'],function(){
 });
 
 Route::group(['middleware'=>'web'],function(){
+    Route::get('/settings/profile','Admin\MemberController@Profile');
     Route::group(['middleware'=>['auth','role:admin']],function(){
+        Route::group(['prefix'=>'admin'],function(){
+            Route::get('/','Admin\HomeController@index');
+            Route::get('changelog','Admin\HomeController@changelog');
+            Route::resource('post', 'Admin\PostController');
+            Route::resource('tag', 'Admin\TagController');
+            Route::resource('page','Admin\PageController');
+            Route::resource('menu','Admin\MenuController');
+            Route::resource('social','Admin\SocialController');
+            Route::resource('member','Admin\MemberController');
+            Route::resource('slider','Admin\SliderController');
+            Route::resource('setting','Admin\SettingController');
+            Route::resource('album','Admin\AlbumController');
+            Route::get('upload', 'Admin\UploadController@index');
+    
+            Route::resource('image','Admin\ImageController');
+            Route::put('/image/{image}/move', array('as' => 'image.move', 'uses' => 'Admin\ImageController@move'));
+    
+            Route::group(['prefix'=>'ajax'],function(){
+                // Route::get('getVisitorAndViews','Admin\HomeController@AjaxGetVisitorAndViews');
+            });
+        });
+
         Route::resource('groupfeeds','GroupFeedsController');
         Route::resource('feeds','FeedsController');
         Route::resource('requirements','RequirementsController');
@@ -75,30 +98,5 @@ Route::group(['middleware'=>'web'],function(){
             'as' => 'import.requirements',
             'uses' =>'RequirementsController@importExcel'
         ]);
-    });
-});
-
-Route::group(['middleware'=>'web'],function(){
-    Route::get('/settings/profile','Admin\MemberController@Profile');
-    Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
-        Route::get('/','Admin\HomeController@index');
-        Route::get('changelog','Admin\HomeController@changelog');
-        Route::resource('post', 'Admin\PostController');
-        Route::resource('tag', 'Admin\TagController');
-        Route::resource('page','Admin\PageController');
-        Route::resource('menu','Admin\MenuController');
-        Route::resource('social','Admin\SocialController');
-        Route::resource('member','Admin\MemberController');
-        Route::resource('slider','Admin\SliderController');
-        Route::resource('setting','Admin\SettingController');
-        Route::resource('album','Admin\AlbumController');
-        Route::get('upload', 'Admin\UploadController@index');
-
-        Route::resource('image','Admin\ImageController');
-        Route::put('/image/{image}/move', array('as' => 'image.move', 'uses' => 'Admin\ImageController@move'));
-
-        Route::group(['prefix'=>'ajax'],function(){
-            Route::get('getVisitorAndViews','Admin\HomeController@AjaxGetVisitorAndViews');
-        });
     });
 });
