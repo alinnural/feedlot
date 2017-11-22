@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'FeedLot') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Styles -->
     <link href="{{ URL::asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" >

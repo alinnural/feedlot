@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Feed;
 use App\Requirement;
 use App\RequirementNutrient;
 use App\FeedNutrient;
 use App\Slider;
 use App\Post;
+use App\Setting;
 
 use App\Library\SimplexMethod;
 use App\Library\Minimization;
@@ -50,12 +52,18 @@ class HomeController extends Controller
 
     public function beranda()
     {
-        $sliders = Slider::where('is_active',1)->orderBy('id','desc')->get();
-        $posts = Post::where('is_draft',0)->orderBy('id','desc')->take(4)->get();
+        $sliders = Slider::where('is_active',1)->orderBy('id','desc')
+                        ->take(config('configuration.paging_slider'))
+                        ->get();
+
+        $posts = Post::where('is_draft',0)->where('published_at', '<=', Carbon::now())
+                    ->orderBy('published_at', 'desc')
+                    ->paginate(config('configuration.paging_news'))
+                    ->setPath('post');
 
         return view('formula.beranda')
-                    ->with('posts',$posts)
-                    ->with('sliders',$sliders);
+                    ->with(compact('posts'))
+                    ->with(compact('sliders'));
     }
 
     public function home()
