@@ -13,13 +13,8 @@ class PostController extends Controller
             ->orderBy('published_at', 'desc')
             ->paginate(config('configuration.paging_news'));
 
-        $popularpost = Post::where('published_at','<=',Carbon::now())
-                ->orderBy('published_at','desc')
-                ->paginate(config('configuration.paging_popular_news'));
-                
         return view('post.index')
-            ->with(compact('posts'))
-            ->with(compact('popularpost'));
+            ->with(compact('posts'));
     }
 
     public function showPost($slug)
@@ -27,7 +22,8 @@ class PostController extends Controller
         $post = Post::whereSlug($slug)->firstOrFail();
         $popularpost = Post::where('published_at','<=',Carbon::now())
                 ->orderBy('published_at','desc')
-                ->paginate(config('configuration.paging_popular_news'));
+                ->paginate(config('configuration.paging_news'));
+        
         return view('post.post')
                 ->withPost($post)
                 ->with(compact('popularpost'));
