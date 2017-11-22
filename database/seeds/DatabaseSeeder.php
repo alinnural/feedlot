@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FeedNutrientsTableSeeder::class);
         $this->call(PostTableSeeder::class);
         $this->call(SliderTableSeeder::class);
+        $this->call(SettingTableSeeder::class);
     }
 }
