@@ -22,5 +22,16 @@ class PostTableSeeder extends Seeder
         $post->is_draft = false;
         $post->published_at = new Carbon();
         $post->save();
+
+        $post2 = new Post();
+        $post2->title = "Kepemilikan Sapi Perah di Indonesia";
+        $post2->subtitle = "Kepemilikan Sapi Perah di Indonesia";
+        $post2->page_image = "populasi.png";
+        $post2->content_raw = "Berdasarkan hasil survey, secara nasional tingkat kepemilikan ternak baru mencapai 7 ekor atau 6 ST. Sedangkan kepemilikan sapi laktasi rata-rata 4,27 ekor. Tingkat kepemilikan tersebut sudah dapat memberikan income untuk memenuhi kebutuhan pokok peternak, namun belum dapat memberikan kesejahteraan bagi peternak karena belum terpenuhinya kebutuhan sekunder apalagi kebutuhan tertier.
+                                Dengan tingkat kepemilikan demikian, peternak dapat bertahan tanpa kehilangan asetnya, namun sulit untuk berkembang dan memupuk modal. Diperlukan peningkatan skala usaha sapi perah mendekati 8 ST atau > 5 ekor sapi laktasi dimana peternak dapat memenuhi kebutuhan pokok dan sekundernya serta dapat menumpuk modal bagi perkembangan usahanya. Skala ekonomi 10 ST dengan 7 ekor sapi laktasi tentu sangat ideal. Namun pencapaian peningkatan secara bertahap perlu dilakukan dengan penyesuaian-penyesuaian kemampuan peternak dalam mengelola usahanya.";
+        $post2->meta_description = "Kepemilikan sapi perah di indonesia";
+        $post2->is_draft = false;
+        $post2->published_at = new Carbon();
+        $post2->save();
     }
 }
