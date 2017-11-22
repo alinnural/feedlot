@@ -185,6 +185,7 @@ return [
         App\Providers\HelperServiceProvider::class,
         
         Lavary\Menu\ServiceProvider::class,
+        App\Providers\ConfigurationServiceProvider::class,
     ],
 
     /*

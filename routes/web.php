@@ -27,6 +27,13 @@ Route::group(['middleware' => ['web','menu']],function(){
         Route::get('/', 'HomeController@index');
     });
 
+    Route::get('post', 'PostController@index');
+    Route::get('post/{slug}', 'PostController@showPost');
+    Route::get('page/{slug}','PageController@showPage');
+    Route::group(['prefix'=>'gallery'],function(){
+        Route::get('/','GalleryController@showAlbum');
+        Route::get('detail/{id}','GalleryController@showImage');
+    });
 });
 
 Auth::routes();
