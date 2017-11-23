@@ -10,8 +10,6 @@
             {!! Html::smartNav(route('feednutrients.index'),'Nutrien Pakan','fa fa-home') !!}
             {!! Html::smartNav(route('requirements.index'),'Kebutuhan Ternak','fa fa-home') !!}
         @endrole
-        {!! Html::smartNav(url('/about'), 'Tentang Sistem','fa-cog') !!}
-        {!! Html::smartNav(url('/contact'), 'Kontak Kami','fa-user') !!}
         {!! Html::smartNav(url('/changelog'),'Perubahan Versi','fa-code-fork') !!}
     </div>
 </div>

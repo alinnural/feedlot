@@ -12,3 +12,8 @@
     //return "<li class=\"$class\"><a href=\"$url\">$title</a></li>";
     return "<a href=\"$url\" class=\"list-group-item $class\"><i class=\"fa fa-lg $icon\"></i>&nbsp;&nbsp; $title</a>";
 });
+
+\Html::macro('smartNavBackend', function($url, $title, $icon) {
+    $class = $url == request()->url() ? 'active' : '';
+    return "<li class=\"$class\"><a href=\"$url\"><i class=\"$icon\"></i>&nbsp;&nbsp;$title</a></li>";
+});

@@ -1,0 +1,1 @@
+{!! $MenuUtama->asUl(['class' => 'nav navbar-nav'],['class'=>'dropdown-menu']) !!}

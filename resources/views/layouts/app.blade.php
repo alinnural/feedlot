@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'FeedLot') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Styles -->
     <link href="{{ URL::asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" >
@@ -19,7 +19,8 @@
     <link href="{{ URL::asset('css/selectize.css') }}" rel="stylesheet" type="text/css" >
     <link href="{{ URL::asset('css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" >
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-
+    
+    @yield('styles')
     <style>
     .loader {
         position: fixed;
@@ -60,13 +61,36 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Right Side Of Navbar -->
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav">
+                        @if(Auth::guest())
+                            {!! $MenuUtama->asUl(['class' => 'nav navbar-nav'],['class'=>'dropdown-menu']) !!}
+                        @endif
+                        @role('admin')
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-pencil"></i> Editor <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    {!! Html::smartNavBackend(url('/admin/post'), 'Berita','fa fa-pencil') !!}
+                                    {!! Html::smartNavBackend(url('/admin/page'), 'Halaman','fa fa-book') !!}
+                                    {!! Html::smartNavBackend(url('/admin/menu'), 'Menu','fa fa-book') !!}
+                                    {!! Html::smartNavBackend(url('/admin/slider'), 'Slider','fa fa-image') !!}
+                                    {!! Html::smartNavBackend(url('/admin/social'), 'Social','fa fa-facebook') !!}
+                                    {!! Html::smartNavBackend(url('/admin/album'), 'Album Foto','fa fa-camera-retro') !!}
+                                </ul>
+                            </li>
+                            {!! Html::smartNavBackend(url('/admin/setting'), 'Setting','fa fa-cog') !!}
+                            {!! Html::smartNavBackend(url('/admin/member'), 'Member','fa fa-users') !!}
+                        @endrole
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
                             <li><a href="{{ url('/register') }}"><i class="fa fa-user"></i> Register</a></li>
                         @else
-                            <li><a href="{{ url('/setting/profil') }}"><i class="fa fa-user"></i> Profile</a></li>
+                            <li><a href="{{ url('/settings/profile') }}"><i class="fa fa-user"></i> Profile</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
