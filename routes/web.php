@@ -47,6 +47,10 @@ Route::group(['prefix'=>'ajax'],function(){
             'uses' => 'FeedsController@AjaxFind'
         ]);
     Route::get('feeds/search','FeedsController@AjaxSearch');
+    Route::get('home/calcquantity', [
+        'as'   => 'ajax.calcquantity',
+        'uses' => 'HomeController@AjaxCalcQ'
+    ]);
 });
 
 Route::group(['middleware'=>'web'],function(){

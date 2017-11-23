@@ -10,7 +10,7 @@
                     <div class="btn-group pull-right">
                         <a href="/formula" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
                     </div>
-                    <h4><i class="fa fa-breafcase"></i> Hasil Optimasi </h4>
+                    <h4><i class="fa fa-breafcase"></i> Hasil Optimasi</h4>
                 </div>
                 <div class="panel-body">
                     <a class="btn btn-success" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -194,33 +194,47 @@
                     @if($flag==1)
                         <p class='final'>Tidak mungkin (Problem is infeasible).</p>
                     @else
-                        <div class="row" id="result">
-                            <div class="col-md-10">
-                                <div class="panel panel-default">
-                                    <table class="table table-stripped">
+                    {!! Form::open(['url' => 'formula/store', 'method' => 'post', 'class'=>'form-horizontal']) !!}          
+                        <div class="row">
+                            <div class="form-group">
+                                {{ Form::label('var', 'Kuantitas Ransum (kg)', ['class' => 'col-sm-3 control-label']) }}
+                                <div class="col-md-3">
+                                    {{ Form::number('kuantitas', '1000',['class' => 'form-control', 'id'=>'kuantitas'])}}
+                                    {!! $errors->first('kuantitas', '<p class="help-block">:message</p>') !!}
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="button" class="btn btn-success" value="Submit" onclick="calc()">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class='row' id='results'>
+                            <div class='col-md-10'>
+                                <div class='panel panel-default'>
+                                    <table class='table table-stripped'>
                                         <tr>
                                             <th>Pakan</th>
-                                            <th class="text-right">Persentase</th>
-                                            <th width="100">&nbsp;</th>
-                                            <th class="text-center" width="200">Harga</th>
-                                            <th class="text-right" width="200">Kuantitas</th>
+                                            <th class='text-right'>Persentase</th>
+                                            <th width='100'>&nbsp;</th>
+                                            <th class='text-center' width='200'>Harga</th>
+                                            <th class='text-right' width='200'>Kuantitas</th>
                                         </tr>
                                         @php $kuantitas=0; @endphp
                                         @foreach (Calculate::mapping_feed_id_result(Session::get('feeds'),Session::get('harga'),$feeds,$harga_terakhir) as $feed)
                                         <tr>
                                             <td>{{ $feed['name'] }}</td>
-                                            <td><span class="pull-right">{{ $feed['result'] }} %</span></td>
+                                            <td><span class='pull-right'>{{ $feed['result'] }} %</span></td>
                                             <th>&nbsp;</th>
-                                            <td><span class="pull-left">IDR</span> <span class="pull-right">{{ $feed['price'] }} / kg</span></td>
-                                            <td><span class="pull-right">@php $kuant = $feed['result']*Session::get('kuantitas')/100; $kuantitas+=$kuant; @endphp {{ $kuant }} kg</span></td>
+                                            <td><span class='pull-left'>IDR</span> <span class='pull-right'>{{ $feed['price'] }} / kg</span></td>
+                                            <td><span class='pull-right'>@php $kuant = $feed['result']*Session::get('quantity')/100; $kuantitas+=$kuant; @endphp {{ $kuant }}</span></td>
                                         </tr>
                                         @endforeach
                                         <tr>
-                                            <td width="300"><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
+                                            <td width='300'><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
                                             <td>&nbsp;</td>
                                             <th>&nbsp;</th>
-                                            <td><strong><h4><span class="pull-left">IDR</span> <span class="pull-right">{{ round($harga_terakhir) }},00</span></h4></strong></td>
-                                            <td><span class="pull-right"><h4>{{ $kuantitas }} kg</h4></span></td>
+                                            <td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>{{ round($harga_terakhir) }},00</span></h4></strong></td>
+                                            <td><span class='pull-right'><h4>{{ $kuantitas }} kg</h4></span></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -255,12 +269,8 @@
                     @endif
                 </div>
                 <div class="panel-footer">
-                        <div class="row">
-                        <div class="col-md-12 pull-right">
-                            {{ Form::button('<span class="fa fa-lg fa-save"></span> Simpan', array('class'=>'btn btn-success btn-lg', 'type'=>'submit')) }}
-                        </div>
-                    <div>
                 </div>
+                {!! Form::close() !!}                
             </div>
         </div>
     </div>
@@ -273,5 +283,32 @@
     $(document).ready(function(){
         $(".loader").fadeOut("slow");
     });
+
+    function calc(){
+        var quantity = parseInt($('#kuantitas').val());
+        var harga_terakhir = @php echo $harga_terakhir; @endphp ;
+        @php Session::put('feed_result',$feeds); @endphp ;
+
+        $.ajax({
+            type: "GET",
+            url : "{{ route('ajax.calcquantity') }}",
+            data : { qty: quantity, harga_terakhir:harga_terakhir },
+            dataType : "json",
+            success : function(data){
+                $("#results").empty();
+                $('#loading').hide();
+                
+                if(JSON.stringify(data) === JSON.stringify({}) || JSON.stringify(data) === JSON.stringify([])) 
+                {
+                    $("#alert").show();
+                } 
+                else 
+                {                 
+
+                    document.getElementById("results").innerHTML = data;
+                }
+            }
+        }, "json")        
+    }
 </script>
 @endsection
