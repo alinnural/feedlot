@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class ConfigurationServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,12 @@ class ConfigurationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        config()->set('configuration', \App\Setting::pluck('value', 'code')->all());
+        /*
+        information : https://stackoverflow.com/questions/40794966/laravel-settings-service-provider-database-migration
+        */
+        if (Schema::hasTable('settings')) {
+            config()->set('configuration', \App\Setting::pluck('value', 'code')->all());
+        }
     }
 
     /**
