@@ -207,6 +207,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group">
+                                {{ Form::label('var', 'Nama Ransum', ['class' => 'col-sm-3 control-label']) }}
+                                <div class="col-md-3">
+                                    {{ Form::text('name', '',['class' => 'form-control', 'placeholder'=>'Nama Ransum', 'required'=>'true'])}}
+                                    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="hidden" name="total_price" value="@php echo $harga_terakhir @endphp">
+                                    {{ Form::button('<span class="fa fa-save"></span> Simpan', array('class'=>'btn btn-success', 'type'=>'submit')) }}
+                                </div>
+                            </div>
+                        </div>
                         <br>
                         <div class='row' id='results'>
                             <div class='col-md-10'>

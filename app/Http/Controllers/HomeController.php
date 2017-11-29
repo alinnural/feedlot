@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Ransum;
 use App\Feed;
 use App\Requirement;
 use App\RequirementNutrient;
@@ -11,7 +12,7 @@ use App\FeedNutrient;
 use App\Slider;
 use App\Post;
 use App\Setting;
-
+use Auth;
 use App\Library\SimplexMethod;
 use App\Library\Minimization;
 use App\Library\Maximization;
@@ -208,12 +209,35 @@ class HomeController extends Controller
         //print_r($request->max_composition); exit();
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
-
+        
         return view('formula.result',[
             'minimization'=> $minimization,
              'requirement' => $requirement
             ])->with('initial_tableau',$initial_tableau);
     } 
+
+    public function store(Request $request)
+    {
+        if (Auth::check())
+        {            
+            $this->validate($request, [
+                'name'=> 'required',
+                'total_price' => 'required'
+            ]);
+            $request->user_id = Auth::user()->id;
+            $ransums = Ransum::create($request->all());
+    
+            Session::flash("flash_notification", [
+                "level"=>"success",
+                "message"=>"Berhasil menyimpan $ransums->name"
+            ]);
+            return redirect()->route('feeds.index');
+
+        }else{
+            $request->session()->put('store_ransum',$request);
+            return redirect()->route('ransums.index');
+        }        
+    }
     
     public function price(Request $request)
     {
