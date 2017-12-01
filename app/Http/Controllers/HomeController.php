@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Ransum;
+use App\Forsum;
+use App\ForsumFeed;
+use App\ForsumNutrient;
 use App\Feed;
 use App\Requirement;
 use App\RequirementNutrient;
@@ -13,6 +15,7 @@ use App\Slider;
 use App\Post;
 use App\Setting;
 use Auth;
+use Session;
 use App\Library\SimplexMethod;
 use App\Library\Minimization;
 use App\Library\Maximization;
@@ -115,8 +118,8 @@ class HomeController extends Controller
         $feeds = $request->feeds;  
         $request->session()->put('feeds',$feeds);
         $request->session()->put('max_composition',$request->max_composition);
-        $request->session()->put('min_composition',$request->min_composition);   
-        $request->session()->put('quantity','1000');  
+        $request->session()->put('min_composition',$request->min_composition); 
+        
         $req_id = $request->session()->get('requirement_id');
         $reqnuts = $request->reqnuts;
         $harga = $request->harga;
@@ -206,35 +209,56 @@ class HomeController extends Controller
             $requirement[$no]['max_composition'] = $request->max_composition[$key];
             $no++;
         }
+        $request->session()->put('requirement',$requirement);  
         //print_r($request->max_composition); exit();
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
         
         return view('formula.result',[
-            'minimization'=> $minimization,
-             'requirement' => $requirement
+            'minimization'=> $minimization
             ])->with('initial_tableau',$initial_tableau);
     } 
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name'=> 'required',
+            'total_price' => 'required',
+            'explanation' => 'required'
+        ]);
+
         if (Auth::check())
-        {            
-            $this->validate($request, [
-                'name'=> 'required',
-                'total_price' => 'required'
-            ]);
-            $request->user_id = Auth::user()->id;
-            $ransums = Ransum::create($request->all());
-    
+        {                        
+            $request['user_id'] = Auth::user()->id;
+            $forsum = Forsum::create($request->all());
+
+            foreach(Calculate::mapping_feed_id_result($forsum->total_price) as $feed){
+                $forsumfeed['forsum_id'] = $forsum->id;
+                $forsumfeed['feed_id'] = $feed->id;
+                $forsumfeed['min'] = $feed->min_composition;
+                $forsumfeed['max'] = $feed->max_composition;
+                $forsumfeed['price'] = $feed->price;
+                $forsumfeed['result'] = $feed->result;
+                ForsumFeed::create($forsumfeed);
+            }
+
+            foreach($request->session()->get('requirement') as $nut)
+            {
+                $forsumnut['forsum_id'] = $forsum->id;
+                $forsumnut['nutrient_id'] = $nut->id;
+                $forsumnut['min'] = $nut->min_composition;
+                $forsumnut['max'] = $nut->max_composition;
+                ForsumNutrient::create($forsumnut);
+            }
+            
             Session::flash("flash_notification", [
                 "level"=>"success",
-                "message"=>"Berhasil menyimpan $ransums->name"
+                "message"=>"Berhasil menyimpan $forsum->name"
             ]);
-            return redirect()->route('feeds.index');
+            return redirect()->route('ransums.index');
 
         }else{
-            $request->session()->put('store_ransum',$request);
+            $request->session()->put('store_ransum',$request->all());
             return redirect()->route('ransums.index');
         }        
     }
@@ -382,7 +406,7 @@ class HomeController extends Controller
                                     "<th class='text-right' width='200'>Kuantitas</th>".
                                 "</tr>";
                                     
-                foreach(Calculate::mapping_feed_id_result($request->session()->get('feeds'),$request->session()->get('harga'),$request->session()->get('feed_result'),$request->harga_terakhir) as $feed){
+                foreach(Calculate::mapping_feed_id_result($request->harga_terakhir) as $feed){
                     $kuant = $feed['result']*$request->qty/100; $kuantitas+=$kuant;
                     $text.= "<tr>".
                                 "<td>".$feed['name']."</td>".

@@ -4,7 +4,7 @@ namespace App;
  
 use Illuminate\Database\Eloquent\Model;
  
-class Ransum extends Model 
+class Forsum extends Model 
 {
     protected $fillable = [
         'name',
@@ -15,6 +15,16 @@ class Ransum extends Model
     public function user()
     {
         return $this->belongsTo('App\User','user_id','id');
+    }
+
+    public function forsumfeed()
+    {
+        return $this->hasMany('App\ForsumFeed');
+    }
+
+    public function forsumnutrient()
+    {
+        return $this->hasMany('App\ForsumNutrient');
     }
 }
  

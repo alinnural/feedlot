@@ -210,10 +210,24 @@
                         <div class="row">
                             <div class="form-group">
                                 {{ Form::label('var', 'Nama Ransum', ['class' => 'col-sm-3 control-label']) }}
-                                <div class="col-md-3">
+                                <div class="col-md-8">
                                     {{ Form::text('name', '',['class' => 'form-control', 'placeholder'=>'Nama Ransum', 'required'=>'true'])}}
                                     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                {{ Form::label('var', 'Keterangan', ['class' => 'col-sm-3 control-label']) }}
+                                <div class="col-md-8">
+                                    {{ Form::textarea('explanation', '',['class' => 'form-control', 'placeholder'=>'Keterangan Ransum', 'rows'=>'5', 'required'=>'true'])}}
+                                    {!! $errors->first('explanation', '<p class="help-block">:message</p>') !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-3"></div>
                                 <div class="col-md-3">
                                     <input type="hidden" name="total_price" value="@php echo $harga_terakhir @endphp">
                                     {{ Form::button('<span class="fa fa-save"></span> Simpan', array('class'=>'btn btn-success', 'type'=>'submit')) }}
@@ -232,14 +246,14 @@
                                             <th class='text-center' width='200'>Harga</th>
                                             <th class='text-right' width='200'>Kuantitas</th>
                                         </tr>
-                                        @php $kuantitas=0; @endphp
-                                        @foreach (Calculate::mapping_feed_id_result(Session::get('feeds'),Session::get('harga'),$feeds,$harga_terakhir) as $feed)
+                                        @php $kuantitas=0; Session::put('results',$feeds) @endphp
+                                        @foreach (Calculate::mapping_feed_id_result($harga_terakhir) as $feed)
                                         <tr>
                                             <td>{{ $feed['name'] }}</td>
                                             <td><span class='pull-right'>{{ $feed['result'] }} %</span></td>
                                             <th>&nbsp;</th>
                                             <td><span class='pull-left'>IDR</span> <span class='pull-right'>{{ $feed['price'] }} / kg</span></td>
-                                            <td><span class='pull-right'>@php $kuant = $feed['result']*Session::get('quantity')/100; $kuantitas+=$kuant; @endphp {{ $kuant }}</span></td>
+                                            <td><span class='pull-right'>@php $kuant = $feed['result']*1000/100; $kuantitas+=$kuant; @endphp {{ $kuant }}</span></td>
                                         </tr>
                                         @endforeach
                                         <tr>
@@ -266,7 +280,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (Calculate::mapping_nutrient_id_result(Session::get('feeds'),$requirement,$feeds) as $nu)
+                                            @foreach (Calculate::mapping_nutrient_id_result() as $nu)
                                             <tr>
                                                 <td><label class="control-label">{{ $nu['name'] }}</label></td>
                                                 <td>{{ $nu['min_composition'] }}</td>
@@ -300,7 +314,6 @@
     function calc(){
         var quantity = parseInt($('#kuantitas').val());
         var harga_terakhir = @php echo $harga_terakhir; @endphp ;
-        @php Session::put('feed_result',$feeds); @endphp ;
 
         $.ajax({
             type: "GET",

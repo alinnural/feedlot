@@ -21,6 +21,11 @@ class Feed extends Model
         return $this->hasMany('App\FeedNutrient');
     }
 
+    public function forsumfeed()
+    {
+        return $this->hasMany('App\ForsumFeed');
+    }
+
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {
