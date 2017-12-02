@@ -436,48 +436,51 @@ class HomeController extends Controller
             'ps'=> 'required',
             'bl'=> 'required'
         ]);
+
+        $data = $request->all();
         
         #  Kebutuhan
         $kebutuhan = array();
-        $kebutuhan["bk"]["persen"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
-        $kebutuhan["bk"]["satuan"] = $kebutuhan["bk"]["persen"]*$request->bb/100;
+        $kebutuhan["Bahan Kering"]["persen"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+        $kebutuhan["Bahan Kering"]["satuan"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;
         
         if($request->bl < 7){
-            $kebutuhan["tdn"]["satuan"] = (0.46 + (7.743 * $request->bb/1000) + (2.053 * $request->bb/pow(1000,2)) + (0.326 * $request->ps));
-            $kebutuhan["tdn"]["persen"] = $kebutuhan["tdn"]["satuan"]/$kebutuhan["bk"]["satuan"]*100;
-            $kebutuhan["protein"]["satuan"] = 0.040 + (0.8 * $request->bb/1000) - (0.2 * pow(($request->bb/1000),2)) - 0.003 + (0.0872 * $request->ps) ;
-            $kebutuhan["protein"]["persen"] = $kebutuhan["protein"]["satuan"]/$kebutuhan["bk"]["satuan"]*100;
-            $kebutuhan["calcium"]["satuan"] = 2.9343 + (32.9714 * $request->bb/1000) - (5.7143 * $request->bb/pow(1000,2)) + (2.7 * $request->ps);
-            $kebutuhan["calcium"]["persen"] = $kebutuhan["calcium"]["satuan"]/$kebutuhan["bk"]["satuan"]*100;
-            $kebutuhan["pospor"]["satuan"] = 1.7914 + (30.6571 * $request->bb/1000) - (8.5714 * $request->bb/pow(1000,2)) + (1.8 * $request->ps);
-            $kebutuhan["pospor"]["persen"] = $kebutuhan["pospor"]["satuan"]/$kebutuhan["bk"]["satuan"]*100;   
+            $kebutuhan["TDN"]["satuan"] = (0.46 + (7.743 * $request->bb/1000) + (2.053 * $request->bb/pow(1000,2)) + (0.326 * $request->ps));
+            $kebutuhan["TDN"]["persen"] = $kebutuhan["TDN"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+            $kebutuhan["Protein"]["satuan"] = 0.040 + (0.8 * $request->bb/1000) - (0.2 * pow(($request->bb/1000),2)) - 0.003 + (0.0872 * $request->ps) ;
+            $kebutuhan["Protein"]["persen"] = $kebutuhan["Protein"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+            $kebutuhan["Kalsium"]["satuan"] = 2.9343 + (32.9714 * $request->bb/1000) - 5.7143 * pow(($request->bb/1000),2) + (2.7 * $request->ps);
+            $kebutuhan["Kalsium"]["persen"] = $kebutuhan["Kalsium"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+            $kebutuhan["Posfor"]["satuan"] = 1.7914 + (30.6571 * $request->bb/1000) - 8.5714 * pow(($request->bb/1000),2) + (1.8 * $request->ps);
+            $kebutuhan["Posfor"]["persen"] = $kebutuhan["Posfor"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;   
         }
         else
         {
-            $kebutuhan["tdn"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
-            $kebutuhan["tdn"]["persen"] = $kebutuhan["bk"]["persen"]*$request->bb/100;
-            $kebutuhan["protein"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
-            $kebutuhan["protein"]["persen"] = $kebutuhan["bk"]["persen"]*$request->bb/100;
-            $kebutuhan["calcium"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
-            $kebutuhan["calcium"]["persen"] = $kebutuhan["bk"]["persen"]*$request->bb/100;
-            $kebutuhan["pospor"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
-            $kebutuhan["pospor"]["persen"] = $kebutuhan["bk"]["persen"]*$request->bb/100;   
+            $kebutuhan["TDN"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+            $kebutuhan["TDN"]["persen"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;
+            $kebutuhan["Protein"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+            $kebutuhan["Protein"]["persen"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;
+            $kebutuhan["Kalsium"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+            $kebutuhan["Kalsium"]["persen"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;
+            $kebutuhan["Posfor"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+            $kebutuhan["Posfor"]["persen"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;   
         }
 
         #  Pemberian
         $pemberian = array();            
-        $pemberian["bk"] = 0;
-        $pemberian["tdn"] = 0;
-        $pemberian["protein"] = 0;
-        $pemberian["calcium"] = 0;
-        $pemberian["pospor"] = 0;
+        $pemberian["Bahan Kering"] = 0;
+        $pemberian["TDN"] = 0;
+        $pemberian["Protein"] = 0;
+        $pemberian["Kalsium"] = 0;
+        $pemberian["Posfor"] = 0;
         
-        foreach($request->feeds as $key => $value){            
-            $pemberian["bk"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(1,$value)->first()->composition)/100;
-            $pemberian["tdn"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(7,$value)->first()->composition)/100;
-            $pemberian["protein"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(3,$value)->first()->composition)/100;
-            $pemberian["calcium"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(8,$value)->first()->composition)/100;
-            $pemberian["pospor"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(9,$value)->first()->composition)/100;
+        foreach($request->feeds as $key => $value){
+            $bk = $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(1,$value)->first()->composition)/100;            
+            $pemberian["Bahan Kering"] += $bk;
+            $pemberian["TDN"] += $bk*(FeedNutrient::SearchByNutrientAndFeed(7,$value)->first()->composition)/100;
+            $pemberian["Protein"] += $bk*(FeedNutrient::SearchByNutrientAndFeed(3,$value)->first()->composition)/100;
+            $pemberian["Kalsium"] += $bk*(FeedNutrient::SearchByNutrientAndFeed(8,$value)->first()->composition)/100*1000;
+            $pemberian["Posfor"] += $bk*(FeedNutrient::SearchByNutrientAndFeed(9,$value)->first()->composition)/100*1000;
         }
 
         #  Hasil
@@ -485,13 +488,14 @@ class HomeController extends Controller
         foreach($pemberian as $key => $value){
             $hasil[$key] = $value - $kebutuhan[$key]["satuan"];
         }
-
+        /*
         echo "<pre>";
-        print_r($pemberian);print_r($kebutuhan);print_r($hasil); echo "</pre>"; exit();
+        print_r($kebutuhan);print_r($pemberian);print_r($hasil); echo "</pre>"; exit();
         $data["category"] = "minimization ";
         $feeds = $request->feeds;  
-
-        return view('formula.laktasi')
-                ->with(compact('feeds'));
+        */
+        
+        return view('formula.result-laktasi')
+                ->with(compact('data','kebutuhan','pemberian','hasil'));
     }
 }
