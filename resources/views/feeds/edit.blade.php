@@ -18,7 +18,7 @@
             <h2 class="panel-title">Edit Feeds Stuff</h2>
             </div>
             <div class="panel-body">
-            {!! Form::model($feeds, ['url' => route('feeds.update', $feeds->id),
+            {!! Form::model($feeds, ['url' => route('feeds.update', $feeds->id),'files'=>'true',
             'method'=>'put', 'class'=>'form-horizontal']) !!} 
             @include('feeds._form')
             {!! Form::close() !!}

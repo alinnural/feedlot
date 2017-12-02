@@ -23,12 +23,14 @@ class FeedsController extends Controller
     {
         if ($request->ajax()) {
             $feeds = Feed::with('groupfeed');
+
             return Datatables::of($feeds)
                 ->addColumn('group', function($feeds) {
                     return $feeds->groupfeed->name; })
                 ->addColumn('action', function($feeds){
-                    return view('datatable._action',[
+                    return view('feeds._action',[
                         'model' => $feeds,
+                        'show_url' => route('feeds.show',$feeds->id),
                         'edit_url' => route('feeds.edit',$feeds->id),
                         'delete_url' => route('feeds.destroy', $feeds->id),
                         'confirm_message' => 'Apakah Anda yakin akan menghapus '. $feeds->name . '?'
@@ -37,8 +39,9 @@ class FeedsController extends Controller
         }
         $html = $htmlBuilder
         ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
+        ->addColumn(['data' => 'latin_name', 'name'=>'latin_name', 'title'=>'Nama Latin'])
         ->addColumn(['data' => 'groupfeed.name', 'name'=>'groupfeed.name', 'title'=>'Group Feeds'])
-        ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false,'width'=>100]);
+        ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false,'width'=>150]);
         return view('feeds.index')->with(compact('html'));
     }
 
@@ -60,13 +63,28 @@ class FeedsController extends Controller
      */
     public function store(Request $request)
     {
-        // print_r($request->all());
-        // die();
         $this->validate($request, [
             'name'=> 'required|unique:feeds',
-            'group_feed_id' => 'required'
+            'group_feed_id' => 'required',
+            'image' => 'required|image|max:2048'
         ]);
+        
         $feeds = Feed::create($request->all());
+        
+        if($request->hasFile('image')){
+            // Mengambil file yang diupload
+            $uploaded_photo = $request->file('image');
+            // mengambil extension file
+            $extension = $uploaded_photo->getClientOriginalExtension();
+            // membuat nama file random berikut extension
+            $filename = md5(time()) . '.' . $extension;
+            // menyimpan cover ke folder public/img
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img/feeds/';
+            $uploaded_photo->move($destinationPath, $filename);
+            // mengisi field cover di book dengan filename yang baru dibuat
+            $feeds->image = $filename;
+            $feeds->save();
+        }
 
         Session::flash("flash_notification", [
             "level"=>"success",
@@ -81,9 +99,13 @@ class FeedsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request, Builder $htmlBuilder)
     {
-        //
+        $feed = Feed::find($id);
+        $nutrients = $feed->feednutrients()->with('nutrient')->get();
+        return view('feeds.show')
+                ->with(compact('feed'))
+                ->with(compact('nutrients'));
     }
 
     /**
@@ -111,8 +133,24 @@ class FeedsController extends Controller
             'name'=> 'required|unique:feeds',
             'group_feed_id' => 'required'
         ]);
+
         $feeds = Feed::find($id);
         $feeds->update($request->all());
+
+        if($request->hasFile('image')){
+            // Mengambil file yang diupload
+            $uploaded_photo = $request->file('image');
+            // mengambil extension file
+            $extension = $uploaded_photo->getClientOriginalExtension();
+            // membuat nama file random berikut extension
+            $filename = md5(time()) . '.' . $extension;
+            // menyimpan cover ke folder public/img
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img/feeds/';
+            $uploaded_photo->move($destinationPath, $filename);
+            // mengisi field cover di book dengan filename yang baru dibuat
+            $feeds->image = $filename;
+            $feeds->save();
+        }
 
         Session::flash("flash_notification", [
             "level"=>"success",

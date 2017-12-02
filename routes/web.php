@@ -34,10 +34,6 @@ Route::group(['middleware' => ['web','menu']],function(){
     Route::get('post', 'PostController@index');
     Route::get('post/{slug}', 'PostController@showPost');
     Route::get('page/{slug}','PageController@showPage');
-    Route::group(['prefix'=>'gallery'],function(){
-        Route::get('/','GalleryController@showAlbum');
-        Route::get('detail/{id}','GalleryController@showImage');
-    });
 });
 
 Auth::routes();
@@ -73,7 +69,6 @@ Route::group(['middleware'=>'web'],function(){
             Route::get('/','Admin\HomeController@index');
             Route::get('changelog','Admin\HomeController@changelog');
             Route::resource('post', 'Admin\PostController');
-            Route::resource('tag', 'Admin\TagController');
             Route::resource('page','Admin\PageController');
             Route::resource('menu','Admin\MenuController');
             Route::resource('social','Admin\SocialController');
@@ -81,7 +76,6 @@ Route::group(['middleware'=>'web'],function(){
             Route::resource('slider','Admin\SliderController');
             Route::resource('setting','Admin\SettingController');
             Route::resource('album','Admin\AlbumController');
-            Route::get('upload', 'Admin\UploadController@index');
     
             Route::resource('image','Admin\ImageController');
             Route::put('/image/{image}/move', array('as' => 'image.move', 'uses' => 'Admin\ImageController@move'));
@@ -97,6 +91,10 @@ Route::group(['middleware'=>'web'],function(){
         Route::resource('units','UnitsController');
         Route::resource('nutrients','NutrientsController');
         Route::resource('feednutrients','FeedNutrientsController');
+        Route::get('/feednutriets/{id}/create',[
+            'as' => 'feednutrients.create_id',
+            'uses' => 'FeedNutrientsController@create'
+        ]);
         Route::resource('ransums','RansumsController');
         
         Route::get('template/feeds', [

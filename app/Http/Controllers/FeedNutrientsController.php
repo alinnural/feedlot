@@ -47,9 +47,11 @@ class FeedNutrientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('feednutrients.create');
+        $feed = Feed::find($id);
+        return view('feednutrients.create')
+                    ->with(compact('feed'));
     }
 
     /**
@@ -71,7 +73,7 @@ class FeedNutrientsController extends Controller
             "level"=>"success",
             "message"=>"Berhasil menyimpan nutrien pakan"
         ]);
-        return redirect()->route('feednutrients.index');
+        return redirect()->route('feeds.show',$request->feed_id);
     }
 
     /**
@@ -94,7 +96,10 @@ class FeedNutrientsController extends Controller
     public function edit($id)
     {
         $feednutrients = FeedNutrient::find($id);
-        return view('feednutrients.edit')->with(compact('feednutrients'));
+        $feed = Feed::find($feednutrients->feed_id);
+        return view('feednutrients.edit')
+                    ->with(compact('feednutrients'))
+                    ->with(compact('feed'));
     }
 
     /**
@@ -117,7 +122,7 @@ class FeedNutrientsController extends Controller
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil mengubah nutrien pakan" ]);
-        return redirect()->route('feednutrients.index');
+        return redirect()->route('feeds.show',$request->feed_id);
     }
 
     /**

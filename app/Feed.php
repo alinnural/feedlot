@@ -8,7 +8,10 @@ class Feed extends Model
 {
     protected $fillable = [
         'name',
-        'group_feed_id'
+        'latin_name',
+        'description',
+        'image',
+        'group_feed_id',
         ];
 
     public function groupfeed()

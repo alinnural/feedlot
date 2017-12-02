@@ -17,4 +17,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::resource('api/feed','FeedController');
+// Route::resource('api/feed','FeedController');

@@ -19,7 +19,10 @@
             <h2 class="panel-title">Tambah Nutrien Pakan</h2>
         </div>
         <div class="panel-body">
-            <ul class="nav nav-tabs" role="tablist">
+            {!! Form::open(['url' => route('feednutrients.store'), 'method' => 'post', 'class'=>'form-horizontal']) !!} 
+              @include('feednutrients._form')
+            {!! Form::close() !!}
+            {{--  <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                   <a href="#form" aria-controls="form" role="tab" data-toggle="tab">
                     <i class="fa fa-pencil-square-o"></i> Isi Form
@@ -33,11 +36,8 @@
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="form">
                 <br><br>
-                {!! Form::open(['url' => route('feednutrients.store'), 'method' => 'post', 'class'=>'form-horizontal']) !!} 
-                  @include('feednutrients._form')
-                {!! Form::close() !!}
               </div>             
-            </div>
+            </div>  --}}
         </div>
       </div>
     </div>
