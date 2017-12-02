@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,        
 
         /*
          * Package Service Providers...
@@ -239,6 +240,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Calculate' => App\Helpers\Calculate::class,
         'Menu'      => Lavary\Menu\Facade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

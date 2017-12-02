@@ -9,7 +9,8 @@ class Forsum extends Model
     protected $fillable = [
         'name',
         'total_price',
-        'user_id'
+        'user_id',
+        'explanation'
         ];
 
     public function user()
@@ -17,12 +18,12 @@ class Forsum extends Model
         return $this->belongsTo('App\User','user_id','id');
     }
 
-    public function forsumfeed()
+    public function forsumfeeds()
     {
         return $this->hasMany('App\ForsumFeed');
     }
 
-    public function forsumnutrient()
+    public function forsumnutrients()
     {
         return $this->hasMany('App\ForsumNutrient');
     }

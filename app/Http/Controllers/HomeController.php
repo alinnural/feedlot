@@ -22,6 +22,7 @@ use App\Library\Maximization;
 use App\Library\MinimizationFeedlot;
 use App\Helpers\Calculate;
 use App\Helpers\Curl;
+use PDF;
 
 /*
 source : https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
@@ -227,40 +228,8 @@ class HomeController extends Controller
             'explanation' => 'required'
         ]);
 
-        if (Auth::check())
-        {                        
-            $request['user_id'] = Auth::user()->id;
-            $forsum = Forsum::create($request->all());
-
-            foreach(Calculate::mapping_feed_id_result($forsum->total_price) as $feed){
-                $forsumfeed['forsum_id'] = $forsum->id;
-                $forsumfeed['feed_id'] = $feed->id;
-                $forsumfeed['min'] = $feed->min_composition;
-                $forsumfeed['max'] = $feed->max_composition;
-                $forsumfeed['price'] = $feed->price;
-                $forsumfeed['result'] = $feed->result;
-                ForsumFeed::create($forsumfeed);
-            }
-
-            foreach($request->session()->get('requirement') as $nut)
-            {
-                $forsumnut['forsum_id'] = $forsum->id;
-                $forsumnut['nutrient_id'] = $nut->id;
-                $forsumnut['min'] = $nut->min_composition;
-                $forsumnut['max'] = $nut->max_composition;
-                ForsumNutrient::create($forsumnut);
-            }
-            
-            Session::flash("flash_notification", [
-                "level"=>"success",
-                "message"=>"Berhasil menyimpan $forsum->name"
-            ]);
-            return redirect()->route('ransums.index');
-
-        }else{
-            $request->session()->put('store_ransum',$request->all());
-            return redirect()->route('ransums.index');
-        }        
+        $request->session()->put('store_ransum',$request->all());
+        return redirect()->route('ransums.index');      
     }
     
     public function price(Request $request)
@@ -395,25 +364,31 @@ class HomeController extends Controller
         else
         {            
             $kuantitas=0;
-            $text = "<div class='col-md-10'>".
+            $total_price_kuant=0;
+            $text = "<div class='col-md-12'>".
                         "<div class='panel panel-default'>".
                             "<table class='table table-stripped'>".
                                 "<tr>".
-                                    "<th>Pakan</th>".
-                                    "<th class='text-right'>Persentase</th>".
-                                    "<th width='100'>&nbsp;</th>".
-                                        "<th class='text-center' width='200'>Harga</th>".
-                                    "<th class='text-right' width='200'>Kuantitas</th>".
+                                "<th>Pakan</th>".
+                                "<th class='text-center'>Persentase</th>".
+                                "<th width='10'>&nbsp;</th>".
+                                "<th class='text-center' width='250'>Harga</th>".
+                                "<th class='text-right' width='150'>Kuantitas</th>".
+                                "<th width='50'>&nbsp;</th>".
+                                "<th class='text-right' width='250'>Total Harga</th>".
                                 "</tr>";
                                     
                 foreach(Calculate::mapping_feed_id_result($request->harga_terakhir) as $feed){
                     $kuant = $feed['result']*$request->qty/100; $kuantitas+=$kuant;
+                    $price_kuant = $feed['price']*$kuant; $total_price_kuant+=$price_kuant;
                     $text.= "<tr>".
                                 "<td>".$feed['name']."</td>".
-                                "<td><span class='pull-right'>".$feed['result']."%</span></td>".
+                                "<td><span class='align-center'>".$feed['result']." %</span></td>".
                                 "<th>&nbsp;</th>".
                                 "<td><span class='pull-left'>IDR</span> <span class='pull-right'>".$feed['price']." / kg</span></td>".
-                                "<td><span class='pull-right'>".$kuant."</span></td>".
+                                "<td><span class='pull-right'>".$kuant." kg</span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($price_kuant, 2, ',', '.')."</span></td>".
                             "</tr>";
                 }
 
@@ -421,8 +396,10 @@ class HomeController extends Controller
                                 "<td width='300'><strong><h4>Harga Terakhir</strong></h4></td>".
                                 "<td>&nbsp;</td>".
                                 "<th>&nbsp;</th>".
-                                "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".round($request->harga_terakhir).",00</span></h4></strong></td>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".round($request->harga_terakhir)." /kg</span></h4></strong></td>".
                                 "<td><span class='pull-right'><h4>".$kuantitas." kg</h4></span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($total_price_kuant, 2, ',', '.')."</h4></span></td>".
                             "</tr>".
                         "</table>".
                     "</div>".
@@ -430,5 +407,17 @@ class HomeController extends Controller
 
             return \Response::json($text);
         }
+    }
+    
+    public function print($id)
+    {
+        $data = array();
+        $data["forsum"] = Forsum::findOrFail($id);;
+        $data["forfeeds"] = ForsumFeed::SearchByForsum($id)->get();
+        $data["fornuts"] = ForsumNutrient::SearchByForsum($id)->get();
+
+        return view('formula.print')->with(compact('data'));
+        $pdf = PDF::loadView('formula.print', $forsum);
+        return $pdf->download('invoice.pdf');
     }
 }

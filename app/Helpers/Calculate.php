@@ -97,6 +97,7 @@ class Calculate{
         $no=0;
         foreach($requirement as $req)
         {
+            $nutrient[$no]['id'] = $req['id'];
             $nutrient[$no]['name'] = $req['name'];
             $nutrient[$no]['min_composition'] = $req['min_composition'];
             $nutrient[$no]['max_composition'] = $req['max_composition'];
@@ -113,6 +114,7 @@ class Calculate{
             $no++;
         }
         //print_r($nutrient); exit;
+        Session::put('nutrientresult',$nutrient);  
         return $nutrient;
     }
 }
