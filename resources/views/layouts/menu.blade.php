@@ -2,6 +2,7 @@
     <div class="list-group">
         {!! Html::smartNav(url('/'), 'Beranda','fa-home') !!}
         {!! Html::smartNav(url('/formula'), 'Formulasi Ransum','fa-calculator') !!}
+        {!! Html::smartNav(url('/laktasi'), 'Kebutuhan Nutrien Laktasi','fa-calculator') !!}
         @role('admin')
             {!! Html::smartNav(route('ransums.index'),'Ransum','fa fa-home') !!}
         @endrole

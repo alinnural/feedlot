@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">      
         @include('layouts.menu')  
-        {!! Form::open(['url' => 'formula/calc_laktasi','class'=>'form-horizontal','method'=>'POST','target'=>'_blank']) !!}
+        {!! Form::open(['url' => 'laktasi/calculate','class'=>'form-horizontal','method'=>'POST','target'=>'_blank']) !!}
         <input type="hidden" class="x">
         <div class="col-md-9">
             <div class="panel panel-default">
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-offset-3 col-md-9">
+        <div class="col-md-offset-3 col-md-9" style="margin-top:-150px;">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4> Pilih pakan ternak yang akan diformulasikan</h4>
