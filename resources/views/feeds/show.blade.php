@@ -8,17 +8,23 @@
 <div class="container">
     <div class="row">
         @include('layouts.menu')
-        <div class="col-md-9">
+        <div class="col-md-9 ">
             <ul class="breadcrumb">
             <li><a href="{{ url('/home') }}">Dashboard</a></li>
             <li class="active">Pakan</li>
             </ul>
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    @role('admin')
                     <div class="btn-group pull-right">
                         <a class="btn btn-default btn-sm" href="{{ route('feeds.edit',$feed->id) }}"><i class="fa fa-pencil"></i> Ubah Pakan</a>
                         <a class="btn btn-primary btn-sm" href="{{ route('feeds.index') }}"><i class="fa fa-arrow-left"></i> Kembali</a>
                     </div>
+                    @else
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-primary btn-sm" href="{{ route('feeds.explore') }}"><i class="fa fa-arrow-left"></i> Kembali</a>
+                    </div>
+                    @endrole
                     <h2 class="panel-title" style="padding-bottom:5px;padding-top:5px;">Informasi Detail Pakan</h2>
                 </div>
                 <div class="panel-body">
@@ -50,41 +56,45 @@
                         </div>
                     </div>
                     <hr>
+                    @role('admin')
                     <div class="btn-group pull-right">
                         <a class="btn btn-primary btn-sm" href="{{ route('feednutrients.create_id',$feed->id) }}"><i class="fa fa-plus"></i> Tambah Nutrient</a>
                     </div>
                     &nbsp;
                     <hr>
-                    <div class="row">
-                        <table class="table table-responsive table-hover">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Simbol</th>
-                                    <th>Komposisi</th>
+                    @endrole
+                    <table class="table table-responsive table-hover table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Simbol</th>
+                                <th>Komposisi</th>
+                                @role('admin')
                                     <th>Action</th>
+                                @endrole
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php $no=1; @endphp
+                            @foreach ($nutrients as $nu)
+                                <tr>
+                                    <td>{{$no++}}</td>
+                                    <td>{{$nu->nutrient->name}}</td>
+                                    <td>{{$nu->nutrient->abbreviation}}</td>
+                                    <td>{{$nu->composition}}</td>
+                                    @role('admin')
+                                    <td width="150">
+                                        {!! Form::model($nutrients, ['url' => route('feednutrients.destroy',$nu->id), 'method' => 'delete', 'class' => 'form-inline js-confirm', 'data-confirm' => 'Apakah Anda yakin akan menghapus '. $nu->nutrient->name . '?' ]) !!}
+                                            <a href="{{ route('feednutrients.edit',$nu->id) }}" class="btn btn-xs btn-warning">Ubah</a>
+                                            {!! Form::submit('Hapus', ['class'=>'btn btn-xs btn-danger']) !!}
+                                        {!! Form::close()!!}
+                                    </td>
+                                    @endrole
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @php $no=1; @endphp
-                                @foreach ($nutrients as $nu)
-                                    <tr>
-                                        <td>{{$no++}}</td>
-                                        <td>{{$nu->nutrient->name}}</td>
-                                        <td>{{$nu->nutrient->abbreviation}}</td>
-                                        <td>{{$nu->composition}}</td>
-                                        <td width="150">
-                                            {!! Form::model($nutrients, ['url' => route('feednutrients.destroy',$nu->id), 'method' => 'delete', 'class' => 'form-inline js-confirm', 'data-confirm' => 'Apakah Anda yakin akan menghapus '. $nu->nutrient->name . '?' ]) !!}
-                                                <a href="{{ route('feednutrients.edit',$nu->id) }}" class="btn btn-xs btn-warning">Ubah</a>
-                                                {!! Form::submit('Hapus', ['class'=>'btn btn-xs btn-danger']) !!}
-                                            {!! Form::close()!!}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

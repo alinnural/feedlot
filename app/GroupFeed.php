@@ -36,4 +36,9 @@ class GroupFeed extends Model
             }
         }); 
     }
+
+    public function getTotalFeedAttribute()
+    {
+       return $this->hasMany('App\Feed')->whereGroupFeedId($this->id)->count();   
+    }
 }

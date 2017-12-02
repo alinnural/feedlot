@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         @include('layouts.menu')
-        <div class="col-md-9">
+        <div class="col-md-9 panel panel-default">
             <div class="post">
                 <div class="post-content image-caption">
                     <h1 class="post-title">{!! $post->title !!}</h1>

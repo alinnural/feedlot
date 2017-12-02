@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use App\Forsum;
-use App\ForsumFeed;
-use App\ForsumNutrient;
-use App\Feed;
-use App\Requirement;
-use App\RequirementNutrient;
-use App\FeedNutrient;
-use App\Slider;
-use App\Post;
-use App\Setting;
+use PDF;
 use Auth;
 use Session;
-use App\Library\SimplexMethod;
+use App\Feed;
+use App\Post;
+use App\Forsum;
+use App\Slider;
+use App\Setting;
+use App\GroupFeed;
+use Carbon\Carbon;
+use App\ForsumFeed;
+use App\Requirement;
+use App\FeedNutrient;
+use App\Helpers\Curl;
+use App\ForsumNutrient;
+use App\Helpers\Calculate;
+use App\RequirementNutrient;
+use Illuminate\Http\Request;
 use App\Library\Minimization;
 use App\Library\Maximization;
+use App\Library\SimplexMethod;
 use App\Library\MinimizationFeedlot;
-use App\Helpers\Calculate;
-use App\Helpers\Curl;
-use PDF;
 
 /*
 source : https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
@@ -497,5 +498,36 @@ class HomeController extends Controller
         
         return view('formula.result-laktasi')
                 ->with(compact('data','kebutuhan','pemberian','hasil'));
+    }
+
+    //====================================================================================
+    /*
+        using nutrient group show
+    */
+    public function groupFeeds($id)
+    {
+        $groupfeed = GroupFeed::find($id);
+        $feeds = $groupfeed->feeds()->paginate(5);
+        
+        return view('feeds.group-feeds')
+            ->with(compact('feeds'))
+            ->with(compact('groupfeed'));
+    }
+
+    public function explore()
+    {
+        $feeds = Feed::paginate(5);
+        return view('feeds.explore')
+                ->with(compact('feeds'));
+    }
+
+    public function showFeed($id)
+    {
+        $feed = Feed::find($id)->firstOrFail();
+        $nutrients = $feed->feednutrients()->with('nutrient')->get();
+
+        return view('feeds.show')
+                ->with(compact('feed'))
+                ->with(compact('nutrients'));
     }
 }

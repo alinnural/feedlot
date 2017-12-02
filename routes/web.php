@@ -34,6 +34,17 @@ Route::group(['middleware' => ['web','menu']],function(){
     Route::get('post', 'PostController@index');
     Route::get('post/{slug}', 'PostController@showPost');
     Route::get('page/{slug}','PageController@showPage');
+    
+    
+    Route::get('/feeds/group/{id}',[
+        'as' =>'feeds.group_by_id',
+        'uses' =>'HomeController@groupFeeds'
+    ]);
+    Route::get('/feeds/explore/all',[
+        'as' => 'feeds.explore',
+        'uses' => 'HomeController@explore'
+    ]);
+    Route::get('feeds/detail/{id}','HomeController@showFeed');
 });
 
 Auth::routes();
