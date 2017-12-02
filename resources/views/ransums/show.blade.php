@@ -9,7 +9,7 @@
             <div class="panel-heading">
                 <div class="btn-group pull-right">
                     {!! Form::open(['url' => 'formula/print', 'method' => 'post', 'class'=>'form-horizontal']) !!}  
-                    <input type="submit" class="btn btn-primary" value="Print Ransum">
+                    {{ Form::button('<span class="fa fa-print"></span> Print Ransum', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
                     <input type="hidden" name="id" value="@php echo $forsum->id @endphp">
                 </div>
                 <h4><i class="fa fa-breafcase"></i> Ransum</h4>
