@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Forsum;
+use App\ForsumFeed;
+use App\ForsumNutrient;
 use App\Feed;
 use App\Requirement;
 use App\RequirementNutrient;
@@ -11,13 +14,15 @@ use App\FeedNutrient;
 use App\Slider;
 use App\Post;
 use App\Setting;
-
+use Auth;
+use Session;
 use App\Library\SimplexMethod;
 use App\Library\Minimization;
 use App\Library\Maximization;
 use App\Library\MinimizationFeedlot;
 use App\Helpers\Calculate;
 use App\Helpers\Curl;
+use PDF;
 
 /*
 source : https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
@@ -96,7 +101,6 @@ class HomeController extends Controller
         ]);
         $req_id = $request->requirement_id; 
         $request->session()->put('requirement_id',$req_id);
-        $request->session()->put('kuantitas',$request->kuantitas);
         $reqnuts = RequirementNutrient::SearchNutrient($req_id)->get();
         $feeds = Feed::pluck('name','id')->all();
 
@@ -113,7 +117,10 @@ class HomeController extends Controller
 
         $data["category"] = "minimization ";
         $feeds = $request->feeds;  
-        $request->session()->put('feeds',$feeds);   
+        $request->session()->put('feeds',$feeds);
+        $request->session()->put('max_composition',$request->max_composition);
+        $request->session()->put('min_composition',$request->min_composition); 
+        
         $req_id = $request->session()->get('requirement_id');
         $reqnuts = $request->reqnuts;
         $harga = $request->harga;
@@ -203,16 +210,28 @@ class HomeController extends Controller
             $requirement[$no]['max_composition'] = $request->max_composition[$key];
             $no++;
         }
+        $request->session()->put('requirement',$requirement);  
         //print_r($request->max_composition); exit();
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
-
+        
         return view('formula.result',[
-            'minimization'=> $minimization,
-             'requirement' => $requirement
+            'minimization'=> $minimization
             ])->with('initial_tableau',$initial_tableau);
     } 
 
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name'=> 'required',
+            'total_price' => 'required',
+            'explanation' => 'required'
+        ]);
+
+        $request->session()->put('store_ransum',$request->all());
+        return redirect()->route('ransums.index');      
+    }
+    
     public function price(Request $request)
     {
         //print_r($request->input('feeds'));
@@ -334,4 +353,71 @@ class HomeController extends Controller
         }
         return $return;
     } 
+
+    public function AjaxCalcQ(Request $request)
+    {
+        if(empty($request->qty))
+        {
+            $data = array();
+            return \Response::json($data);
+        }
+        else
+        {            
+            $kuantitas=0;
+            $total_price_kuant=0;
+            $text = "<div class='col-md-12'>".
+                        "<div class='panel panel-default'>".
+                            "<table class='table table-stripped'>".
+                                "<tr>".
+                                "<th>Pakan</th>".
+                                "<th class='text-center'>Persentase</th>".
+                                "<th width='10'>&nbsp;</th>".
+                                "<th class='text-center' width='250'>Harga</th>".
+                                "<th class='text-right' width='150'>Kuantitas</th>".
+                                "<th width='50'>&nbsp;</th>".
+                                "<th class='text-right' width='250'>Total Harga</th>".
+                                "</tr>";
+                                    
+                foreach(Calculate::mapping_feed_id_result($request->harga_terakhir) as $feed){
+                    $kuant = $feed['result']*$request->qty/100; $kuantitas+=$kuant;
+                    $price_kuant = $feed['price']*$kuant; $total_price_kuant+=$price_kuant;
+                    $text.= "<tr>".
+                                "<td>".$feed['name']."</td>".
+                                "<td><span class='align-center'>".$feed['result']." %</span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><span class='pull-left'>IDR</span> <span class='pull-right'>".$feed['price']." / kg</span></td>".
+                                "<td><span class='pull-right'>".$kuant." kg</span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($price_kuant, 2, ',', '.')."</span></td>".
+                            "</tr>";
+                }
+
+                    $text .= "<tr>".
+                                "<td width='300'><strong><h4>Harga Terakhir</strong></h4></td>".
+                                "<td>&nbsp;</td>".
+                                "<th>&nbsp;</th>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".round($request->harga_terakhir)." /kg</span></h4></strong></td>".
+                                "<td><span class='pull-right'><h4>".$kuantitas." kg</h4></span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($total_price_kuant, 2, ',', '.')."</h4></span></td>".
+                            "</tr>".
+                        "</table>".
+                    "</div>".
+                "</div>";
+
+            return \Response::json($text);
+        }
+    }
+    
+    public function print($id)
+    {
+        $data = array();
+        $data["forsum"] = Forsum::findOrFail($id);;
+        $data["forfeeds"] = ForsumFeed::SearchByForsum($id)->get();
+        $data["fornuts"] = ForsumNutrient::SearchByForsum($id)->get();
+
+        return view('formula.print')->with(compact('data'));
+        $pdf = PDF::loadView('formula.print', $forsum);
+        return $pdf->download('invoice.pdf');
+    }
 }

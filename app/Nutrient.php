@@ -22,6 +22,11 @@ class Nutrient extends Model
         return $this->hasMany('App\FeedNutrient');
     }
 
+    public function forsumnutrients()
+    {
+        return $this->hasMany('App\ForsumNutrient');
+    }
+
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {

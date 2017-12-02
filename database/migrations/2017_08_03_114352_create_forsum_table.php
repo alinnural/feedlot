@@ -16,7 +16,7 @@ class CreateForsumTable extends Migration
         Schema::create('forsums', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('explanation');
+            $table->string('explanation')->nullable();
             $table->integer('requirement_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();

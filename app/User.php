@@ -32,4 +32,9 @@ class User extends Authenticatable
     protected $casts = [ 
         'is_verified' => 'boolean',
     ];
+
+    public function ransums()
+    {
+        return $this->hasMany('App\Ransum');
+    }
 }
