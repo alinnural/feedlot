@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+  Kontak - {{ config('configuration.site_name') }}
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

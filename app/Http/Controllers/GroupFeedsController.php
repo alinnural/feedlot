@@ -27,13 +27,13 @@ class GroupFeedsController extends Controller
                         'model' => $group,
                         'edit_url' => route('groupfeeds.edit',$group->id),
                         'delete_url' => route('groupfeeds.destroy', $group->id),
-                        'confirm_message' => 'Are you sure to delete '. $group->name . '?'
+                        'confirm_message' => 'Apakah Anda yakin akan menghapus '. $group->name . '?'
                     ]);
                 })->make(true);
         }
         $html = $htmlBuilder
             ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
-            ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
+            ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false,'width'=>100]);
         return view('groupfeeds.index')->with(compact('html'));
     }
 
@@ -117,7 +117,7 @@ class GroupFeedsController extends Controller
         if(!GroupFeed::destroy($id)) return redirect()->back();
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Penulis berhasil dihapus"
+            "message"=>"Kelompok pakan sapi berhasil dihapus"
         ]);
         return redirect()->route('groupfeeds.index');
     }

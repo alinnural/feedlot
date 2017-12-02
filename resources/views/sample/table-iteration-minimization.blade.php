@@ -21,11 +21,7 @@ $harga_terakhir = 0;
     @php $minRow = $minimization->getMinimumRow($initial_tableau, $num[0], $minCol, $total_number); @endphp
     <!--if there are no non-negative or zero, the problem is infeasible-->
     
-    @if($minRow==$num[0])
-        @php $flag=1; @endphp
-        <p class='final'>Tidak mungkin (Problem is infeasible). </p>
-        @break
-    @endif
+  
     
     <!--display the iteration number-->
     @php $itr=$max+1; @endphp

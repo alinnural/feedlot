@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Formula Ransum Sapi Pedaging',
+    'name' => 'Formula Ransum Ternak Ruminansia',
 
     /*
     |--------------------------------------------------------------------------
@@ -183,6 +183,9 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
+        
+        Lavary\Menu\ServiceProvider::class,
+        App\Providers\ConfigurationServiceProvider::class,
     ],
 
     /*
@@ -235,6 +238,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Calculate' => App\Helpers\Calculate::class,
+        'Menu'      => Lavary\Menu\Facade::class,
     ],
 
 ];

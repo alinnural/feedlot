@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('title')
+  Pakan - Admin {{ config('configuration.site_name') }}
+@endsection
+
 @section('content')
   <div class="container">
     <div class="row">
@@ -11,7 +16,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="btn-group pull-right">
-                <a class="btn btn-primary btn-sm" href="{{ route('feeds.create') }}"><i class="fa fa-pencil"></i> Create</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('feeds.create') }}"><i class="fa fa-pencil"></i> Tambah</a>
             </div>
             <h2 class="panel-title" style="padding-bottom:5px;padding-top:5px;">Feeds Stuff</h2>
           </div>

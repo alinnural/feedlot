@@ -13,13 +13,10 @@ class GroupFeedsTableSeeder extends Seeder
     public function run()
     {
         DB::table('group_feeds')->insert([
-        ['name'=>'DRY FORAGE'],
-        ['name'=>'FRESH FORAGE'],
-        ['name'=>'SILAGE'],
-        ['name'=>'ENERGETIC CONCENTRATE'],
-        ['name'=>'PROTEIC CONCENTRATE'],
-        ['name'=>'ADDITIVE AND OTHERS BY-PRODUCT'],
-        ['name'=>'SOURCE OF MINERALS']
+        ['name'=>'Hijauan'],
+        ['name'=>'Energi'],
+        ['name'=>'Protein'],
+        ['name'=>'Mineral']
         ]);
     }
 }

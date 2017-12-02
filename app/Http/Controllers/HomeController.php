@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Feed;
 use App\Requirement;
+use App\RequirementNutrient;
+use App\FeedNutrient;
+use App\Slider;
+use App\Post;
+use App\Setting;
 
 use App\Library\SimplexMethod;
 use App\Library\Minimization;
@@ -46,7 +52,18 @@ class HomeController extends Controller
 
     public function beranda()
     {
-        return view('formula.beranda');
+        $sliders = Slider::where('is_active',1)->orderBy('id','desc')
+                        ->take(config('configuration.paging_slider'))
+                        ->get();
+
+        $posts = Post::where('is_draft',0)->where('published_at', '<=', Carbon::now())
+                    ->orderBy('published_at', 'desc')
+                    ->paginate(config('configuration.paging_news'))
+                    ->setPath('post');
+
+        return view('formula.beranda')
+                    ->with(compact('posts'))
+                    ->with(compact('sliders'));
     }
 
     public function home()
@@ -74,11 +91,127 @@ class HomeController extends Controller
 
     public function input(Request $request)
     {
-        $request->session()->put('requirement_id',$request->session()->get('requirement_id'));
-        
-        $feeds = Feed::pluck('feed_stuff','id')->all();
-        return View('formula.input-feed')->with(compact('feeds'));
+        $this->validate($request, [
+            'requirement_id'=> 'required'
+        ]);
+        $req_id = $request->requirement_id; 
+        $request->session()->put('requirement_id',$req_id);
+        $request->session()->put('kuantitas',$request->kuantitas);
+        $reqnuts = RequirementNutrient::SearchNutrient($req_id)->get();
+        $feeds = Feed::pluck('name','id')->all();
+
+        return view('formula.input-feed')
+                ->with('reqnuts',$reqnuts)
+                ->with(compact('feeds'));
     }
+
+    public function calculate(Request $request)
+    {
+        $this->validate($request, [
+            'harga'=> 'required'
+        ]);
+
+        $data["category"] = "minimization ";
+        $feeds = $request->feeds;  
+        $request->session()->put('feeds',$feeds);   
+        $req_id = $request->session()->get('requirement_id');
+        $reqnuts = $request->reqnuts;
+        $harga = $request->harga;
+        $request->session()->put('harga',$harga);  
+        $i_var = 0;
+        foreach($harga as $key => $value){
+            $i_var ++;
+            $data["var".$i_var] = $value;
+        }
+
+        $i_cons = 0;
+        //contrainst untuk nutrisi ternak
+        foreach($reqnuts as $key => $value){
+            if($request->min_composition[$key] != 0){
+                $i_cons++;
+
+                $i = 1;
+                foreach($feeds as $key2 => $value2){
+                    $feednuts = FeedNutrient::SearchByNutrientAndFeed($value,$value2)->first();
+                    //print_r($value->nutrient_id.",".$value2);
+                    $data["cons".$i_cons."_".$i++] = $feednuts->composition;
+                }
+                $data["sign".$i_cons] = "greaterThan";
+                $data["answer".$i_cons] = $request->min_composition[$key];
+                if($request->max_composition[$key] > $request->min_composition[$key]){
+                    $i_cons++;
+                    
+                    $i = 1;
+                    foreach($feeds as $key2 => $value2){
+                    $feednuts = FeedNutrient::SearchByNutrientAndFeed($value,$value2)->first();
+                        $data["cons".$i_cons."_".$i++] = $feednuts->composition;
+                    }
+                    $data["sign".$i_cons] = "lessThan";
+                    $data["answer".$i_cons] = $request->max_composition[$key];
+                }
+            }            
+        }
+        
+        //contraint untuk komposisi feed
+        foreach($feeds as $key => $value){
+            for($x=1;$x<=2;$x++){ // untuk min dam max composition
+                $i_cons++;
+                $i = 1;
+                foreach($feeds as $key2 => $value2){
+                    if($key2==$key){
+                        $data["cons".$i_cons."_".$i++] = 1;
+                    }else{
+                        $data["cons".$i_cons."_".$i++] = 0;
+                    }
+                }
+                if($x == 1){
+                    $data["sign".$i_cons] = "greaterThan";
+                    $data["answer".$i_cons] = $request->min_feed[$key]/100;
+                }else{
+                    $data["sign".$i_cons] = "lessThan";
+                    $data["answer".$i_cons] = $request->max_feed[$key]/100;
+                }
+            }
+        }
+
+        //constraint untuk total
+        $i_cons++;
+        $i = 1;
+        foreach($feeds as $feed){
+            $data["cons".$i_cons."_".$i++] = 1;
+        }
+        $data["sign".$i_cons] = "lessThan";
+        $data["answer".$i_cons] = 1;
+        $i_cons++;
+        $i = 1;
+        foreach($feeds as $feed){
+            $data["cons".$i_cons."_".$i++] = 1;
+        }
+        $data["sign".$i_cons] = "greaterThan";
+        $data["answer".$i_cons] = 1;
+
+        $constraint = $i_cons;
+        $data["numbers"] = count($feeds).",".$constraint;
+        //print_r($data); exit();
+        $requirement = array();
+        $no=0;
+        foreach($request->reqnuts_name as $key => $value)
+        {
+            $requirement[$no]['id'] = $reqnuts[$key];
+            $requirement[$no]['name'] = $value;
+            $requirement[$no]['min_composition'] = $request->min_composition[$key];
+            $requirement[$no]['max_composition'] = $request->max_composition[$key];
+            $no++;
+        }
+        //print_r($request->max_composition); exit();
+        $minimization = new MinimizationFeedlot;
+        $initial_tableau = $minimization->optimize($data);
+
+        return view('formula.result',[
+            'minimization'=> $minimization,
+             'requirement' => $requirement
+            ])->with('initial_tableau',$initial_tableau);
+    } 
 
     public function price(Request $request)
     {
@@ -126,7 +259,7 @@ class HomeController extends Controller
             'numbers'=>count($feeds).",5",
             'sign'=>$sign
         );
-
+        
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
         //print_r($initial_tableau);
@@ -162,7 +295,7 @@ class HomeController extends Controller
         else
         {
             $minimization = new Minimization;
-            //print_r();
+            //print_r($request->all()); exit();
             $initial_tableau = $minimization->optimize($request);
 
             return view('sample.result-minimization',[
