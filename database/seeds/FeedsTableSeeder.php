@@ -2,9 +2,16 @@
 
 use Illuminate\Database\Seeder;
 use App\Feeds;
+use Flynsarmy\CsvSeeder\CsvSeeder;
 
-class FeedsTableSeeder extends Seeder
+class FeedsTableSeeder extends CsvSeeder
 {
+    public function __construct()
+	{
+		$this->table = 'feeds';
+		$this->filename = base_path().'/database/seeds/csvs/feeds.csv';
+	}
+
     /**
      * Run the database seeds.
      *
@@ -12,127 +19,12 @@ class FeedsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('feeds')->insert([
-        [
-            'name'              =>'Jerami Padi',	
-            'min'               =>'0',
-            'max'               =>'30',
-            'group_feed_id'     =>'1'
-        ],
-        [
-            'name'              =>'Rumput Lapang',	
-            'min'               =>'0',
-            'max'               =>'50',	
-            'group_feed_id'     =>'1'
-        ],
-        [
-            'name'              =>'Rumput Gajah',		
-            'min'               =>'0',
-            'max'               =>'50',
-            'group_feed_id'     =>'1'
-        ],
-        [
-            'name'              =>'Daun Jagung',		
-            'min'               =>'0',
-            'max'               =>'40',
-            'group_feed_id'     =>'1'
-        ],
-        [
-            'name'              =>'Daun Singkong',	
-            'min'               =>'0',
-            'max'               =>'30',	
-            'group_feed_id'     =>'1'
-        ],
-        [
-            'name'              =>'Daun Lamtoro',		
-            'min'               =>'0',
-            'max'               =>'30',
-            'group_feed_id'     =>'1'
-        ],
-        [
-            'name'              =>'Jagung',		
-            'min'               =>'10',
-            'max'               =>'50',
-            'group_feed_id'     =>'2'
-        ],
-        [
-            'name'              =>'Onggok',		
-            'min'               =>'0',
-            'max'               =>'40',
-            'group_feed_id'     =>'2'
-        ],
-        [
-            'name'              =>'Molases',		
-            'min'               =>'5',
-            'max'               =>'7',
-            'group_feed_id'     =>'2'
-        ],
-        [
-            'name'              =>'Dedak Padi Halus',		
-            'min'               =>'0',
-            'max'               =>'40',
-            'group_feed_id'     =>'2'
-        ],
-        [
-            'name'              =>'Singkong',		
-            'min'               =>'0',
-            'max'               =>'30',
-            'group_feed_id'     =>'3'
-        ],
-        [
-            'name'              =>'Biji Kedelai',	
-            'min'               =>'0',
-            'max'               =>'20',	
-            'group_feed_id'     =>'3'
-        ],
-        [
-            'name'              =>'Bungkil Kelapa Sawit',	
-            'min'               =>'0',
-            'max'               =>'30',	
-            'group_feed_id'     =>'3'
-        ],
-        [
-            'name'              =>'Bungkil Kelapa',	
-            'min'               =>'0',
-            'max'               =>'30',	
-            'group_feed_id'     =>'3'
-        ],
-        [
-            'name'              =>'Ampas Kecap',	
-            'min'               =>'0',
-            'max'               =>'20',	
-            'group_feed_id'     =>'3'
-        ],
-        [
-            'name'              =>'Kapur',		
-            'min'               =>'0',
-            'max'               =>'2',
-            'group_feed_id'     =>'4'
-        ],
-        [
-            'name'              =>'Kalsium Karbonat',	
-            'min'               =>'0',
-            'max'               =>'2',	
-            'group_feed_id'     =>'4'
-        ],
-        [
-            'name'              =>'Garam',		
-            'min'               =>'0.25',
-            'max'               =>'1',
-            'group_feed_id'     =>'4'
-        ],
-        [
-            'name'              =>'Konsentrat',		
-            'min'               =>'0',
-            'max'               =>'100',
-            'group_feed_id'     =>'4'
-        ],
-        [
-            'name'              =>'Ampas Tahu',		
-            'min'               =>'0',
-            'max'               =>'100',
-            'group_feed_id'     =>'4'
-        ]
-        ]);
+        // Recommended when importing larger CSVs
+		DB::disableQueryLog();
+        
+        // Uncomment the below to wipe the table clean before populating
+        // DB::table($this->table)->truncate();
+
+        parent::run();
     }
 }

@@ -26,7 +26,7 @@ Route::group(['middleware' => ['web','menu']],function(){
         Route::post('/calculate','HomeController@calculate');
         Route::post('/store','HomeController@store');
         Route::get('/', 'HomeController@index');
-        Route::get('/print/{id}','HomeController@print');
+        Route::post('/print','HomeController@print');
     });
 
     Route::group(['prefix'=>'laktasi'],function(){

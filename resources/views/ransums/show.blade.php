@@ -8,7 +8,9 @@
             <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="btn-group pull-right">
-                    <a href="{{ url('formula/print/'.$forsum->id) }}" class="btn btn-primary"></i> Print</a>
+                    {!! Form::open(['url' => 'formula/print', 'method' => 'post', 'class'=>'form-horizontal']) !!}  
+                    <input type="submit" class="btn btn-primary" value="Print Ransum">
+                    <input type="hidden" name="id" value="@php echo $forsum->id @endphp">
                 </div>
                 <h4><i class="fa fa-breafcase"></i> Ransum</h4>
             </div>
@@ -25,6 +27,7 @@
                             </div>
                         </div>
                     </div>
+                    {!! Form::close() !!}  
                     <br>
                     <div class="row">
                         <div class="form-group">

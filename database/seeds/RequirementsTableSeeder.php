@@ -15,7 +15,6 @@ class RequirementsTableSeeder extends Seeder
         ['animal_type'      =>'Sapi Potong Konsentrat Penggemukan','current_weight'=>'0','average_daily_gain'=>'0'],
         ['animal_type'      =>'Sapi Potong Konsentrat Induk','current_weight'=>'0','average_daily_gain'=>'0'],
         ['animal_type'      =>'Sapi Potong Konsentrat Pejantan','current_weight'=>'0','average_daily_gain'=>'0'],
-        ['animal_type'      =>'Sapi Potong Konsentrat Pertumbuhan','current_weight'=>'0','average_daily_gain'=>'0'],
         ['animal_type'      =>'Sapi Perah Starter-1','current_weight'=>'0','average_daily_gain'=>'0'],
         ['animal_type'      =>'Sapi Perah Starter-2','current_weight'=>'0','average_daily_gain'=>'0'],
         ['animal_type'      =>'Sapi Perah Dara','current_weight'=>'0','average_daily_gain'=>'0'],

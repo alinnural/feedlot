@@ -28,11 +28,10 @@ class RequirementNutrient extends Model
         if($req_id != '')
         {
             $query->join('nutrients', function ($join) use ($req_id) {
-                $join->on('nutrients.id', '=', 'nutrient_id')
-                    ->where('requirement_id', '=', $req_id);
+                $join->on('nutrients.id', '=', 'nutrient_id');
             })
-            ->where('min_composition', '>', '0')
-            ->orwhere('max_composition', '>', '0');
+            ->where('requirement_id', '=', $req_id)
+            ->where('min_composition', '>', '0');
             return $query;
         }
         else
