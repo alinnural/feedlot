@@ -16,6 +16,7 @@ class UpdateForsumTable extends Migration
         Schema::table('forsums', function (Blueprint $table) {
             $table->dropForeign('forsums_requirement_id_foreign');
             $table->dropColumn('requirement_id');
+            $table->integer('total_price');
         });
     }
 

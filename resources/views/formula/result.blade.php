@@ -211,38 +211,71 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group">
+                                {{ Form::label('var', 'Nama Ransum', ['class' => 'col-sm-3 control-label']) }}
+                                <div class="col-md-8">
+                                    {{ Form::text('name', '',['class' => 'form-control', 'placeholder'=>'Nama Ransum', 'required'=>'true'])}}
+                                    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                {{ Form::label('var', 'Keterangan', ['class' => 'col-sm-3 control-label']) }}
+                                <div class="col-md-8">
+                                    {{ Form::textarea('explanation', '',['class' => 'form-control', 'placeholder'=>'Keterangan Ransum', 'rows'=>'5', 'required'=>'true'])}}
+                                    {!! $errors->first('explanation', '<p class="help-block">:message</p>') !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                    <input type="hidden" name="total_price" value="@php echo $harga_terakhir @endphp">
+                                    {{ Form::button('<span class="fa fa-save"></span> Simpan', array('class'=>'btn btn-success', 'type'=>'submit')) }}
+                                </div>
+                            </div>
+                        </div>
                         <br>
                         <div class='row' id='results'>
-                            <div class='col-md-10'>
+                            <div class='col-md-12'>
                                 <div class='panel panel-default'>
                                     <table class='table table-stripped'>
                                         <tr>
                                             <th>Pakan</th>
-                                            <th class='text-right'>Persentase</th>
-                                            <th width='100'>&nbsp;</th>
-                                            <th class='text-center' width='200'>Harga</th>
-                                            <th class='text-right' width='200'>Kuantitas</th>
+                                            <th class='text-center'>Persentase</th>
+                                            <th width='10'>&nbsp;</th>
+                                            <th class='text-center' width='250'>Harga</th>
+                                            <th class='text-right' width='150'>Kuantitas</th>
+                                            <th width='50'>&nbsp;</th>
+                                            <th class='text-right' width='250'>Total Harga</th>
                                         </tr>
-                                        @php $kuantitas=0; @endphp
-                                        @foreach (Calculate::mapping_feed_id_result(Session::get('feeds'),Session::get('harga'),$feeds,$harga_terakhir) as $feed)
+                                        @php $kuantitas=0; $total_price_kuant = 0; @endphp   
+                                        @foreach (Calculate::mapping_feed_id_result($harga_terakhir) as $feed)
                                         <tr>
                                             <td>{{ $feed['name'] }}</td>
-                                            <td><span class='pull-right'>{{ $feed['result'] }} %</span></td>
+                                            <td><span class='align-center'>{{ $feed['result'] }} %</span></td>
                                             <th>&nbsp;</th>
                                             <td><span class='pull-left'>IDR</span> <span class='pull-right'>{{ $feed['price'] }} / kg</span></td>
-                                            <td><span class='pull-right'>@php $kuant = $feed['result']*Session::get('quantity')/100; $kuantitas+=$kuant; @endphp {{ $kuant }}</span></td>
+                                            <td><span class='pull-right'>@php $kuant = $feed['result']*1000/100; $kuantitas+=$kuant; @endphp {{ $kuant }} kg</span></td>
+                                            <th>&nbsp;</th>
+                                            <td><span class='pull-left'>IDR</span><span class='pull-right'>@php $price_kuant = $feed['price']*$kuant; $total_price_kuant+=$price_kuant; @endphp {{ number_format($price_kuant, 2, ',', '.') }}</span></td>
                                         </tr>
                                         @endforeach
                                         <tr>
                                             <td width='300'><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
                                             <td>&nbsp;</td>
                                             <th>&nbsp;</th>
-                                            <td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>{{ round($harga_terakhir) }},00</span></h4></strong></td>
+                                            <td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>{{ round($harga_terakhir) }} /kg</span></h4></strong></td>
                                             <td><span class='pull-right'><h4>{{ $kuantitas }} kg</h4></span></td>
+                                            <th>&nbsp;</th>
+                                            <td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>{{ number_format($total_price_kuant, 2, ',', '.') }}</h4></span></td>
                                         </tr>
                                     </table>
                                 </div>
-                            </div>                        
+                            </div>                      
                         </div>      
                         <div class="row">
                             <div class="col-md-12">
@@ -257,7 +290,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (Calculate::mapping_nutrient_id_result(Session::get('feeds'),$requirement,$feeds) as $nu)
+                                            @foreach (Calculate::mapping_nutrient_id_result() as $nu)
                                             <tr>
                                                 <td><label class="control-label">{{ $nu['name'] }}</label></td>
                                                 <td>{{ $nu['min_composition'] }}</td>
@@ -291,7 +324,6 @@
     function calc(){
         var quantity = parseInt($('#kuantitas').val());
         var harga_terakhir = @php echo $harga_terakhir; @endphp ;
-        @php Session::put('feed_result',$feeds); @endphp ;
 
         $.ajax({
             type: "GET",

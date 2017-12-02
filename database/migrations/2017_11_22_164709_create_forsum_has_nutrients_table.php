@@ -19,6 +19,7 @@ class CreateForsumHasNutrientsTable extends Migration
             $table->integer('nutrient_id')->unsigned()->index();
             $table->integer('min');
             $table->integer('max');
+            $table->integer('result');
             $table->timestamps();
 
             $table->foreign('forsum_id')->references('id')->on('forsums')

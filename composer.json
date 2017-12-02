@@ -12,6 +12,7 @@
         "santigarcor/laratrust": "3.0.*",
         "maatwebsite/excel": "^2.1",
         "barryvdh/laravel-debugbar": "^2.3",
+        "barryvdh/laravel-dompdf":">0",
         "michelf/php-markdown": "^1.7",
         "lavary/laravel-menu": "^1.7"
     },

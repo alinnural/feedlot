@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Feed;
 use App\Requirement;
 use App\FeedNutrient;
+use Session;
 
 class Calculate{
     /*
@@ -64,25 +65,39 @@ class Calculate{
         return $sign;
     }
 
-    public static function mapping_feed_id_result($feeds_id,$feed_price,$result,$harga_terakhir)
+    public static function mapping_feed_id_result($harga_terakhir)
     {
+        $max_composition = Session::get('max_composition');
+        $min_composition = Session::get('min_composition');
+        $feeds_id = Session::get('feeds'); 
+        $feed_price = Session::get('harga');
+        $result = Session::get('results');
         $percent = array();
         $no = 1;
         foreach($feeds_id as $key => $value)
-        {            $feeds = Feed::find($value);
+        {            
+            $feeds = Feed::find($value);
+            $percent[$no]['id'] = $feeds->id;
             $percent[$no]['name'] = $feeds->name;
             $percent[$no]['result'] = round($result[$no]*100,2);
-            $percent[$no]['price'] = $feed_price[$key];            
+            $percent[$no]['price'] = $feed_price[$key];   
+            $percent[$no]['max_composition'] = $max_composition[$key];   
+            $percent[$no]['min_composition'] = $min_composition[$key];            
             $no++;
         }
         return $percent;
     }
 
-    public static function mapping_nutrient_id_result($feeds,$requirement,$result)
+    public static function mapping_nutrient_id_result()
     {
+        $feeds = Session::get('feeds'); 
+        $requirement = Session::get('requirement');
+        $result = Session::get('results');
+
         $no=0;
         foreach($requirement as $req)
         {
+            $nutrient[$no]['id'] = $req['id'];
             $nutrient[$no]['name'] = $req['name'];
             $nutrient[$no]['min_composition'] = $req['min_composition'];
             $nutrient[$no]['max_composition'] = $req['max_composition'];
@@ -99,6 +114,7 @@ class Calculate{
             $no++;
         }
         //print_r($nutrient); exit;
+        Session::put('nutrientresult',$nutrient);  
         return $nutrient;
     }
 }

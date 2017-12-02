@@ -24,7 +24,9 @@ Route::group(['middleware' => ['web','menu']],function(){
         Route::post('/input','HomeController@input');
         Route::get('/price','HomeController@price');
         Route::post('/calculate','HomeController@calculate');
+        Route::post('/store','HomeController@store');
         Route::get('/', 'HomeController@index');
+        Route::get('/print/{id}','HomeController@print');
     });
 
     Route::get('post', 'PostController@index');
@@ -93,7 +95,8 @@ Route::group(['middleware'=>'web'],function(){
         Route::resource('units','UnitsController');
         Route::resource('nutrients','NutrientsController');
         Route::resource('feednutrients','FeedNutrientsController');
-
+        Route::resource('ransums','RansumsController');
+        
         Route::get('template/feeds', [
             'as'   => 'template.feeds',
             'uses' => 'FeedsController@generateExcelTemplate'
