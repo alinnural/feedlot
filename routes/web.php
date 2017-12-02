@@ -27,6 +27,8 @@ Route::group(['middleware' => ['web','menu']],function(){
         Route::post('/store','HomeController@store');
         Route::get('/', 'HomeController@index');
         Route::get('/print/{id}','HomeController@print');
+        Route::get('/laktasi','HomeController@laktasi');
+        Route::post('/calc_laktasi','HomeController@calc_laktasi');
     });
 
     Route::get('post', 'PostController@index');

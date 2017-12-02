@@ -462,6 +462,106 @@ class FeedNutrientsTableSeeder extends Seeder
             'feed_id'               =>'18',
             'nutrient_id'           =>'9',
             'composition'           =>'0'
+        ],
+        [
+            'feed_id'               =>'3',
+            'nutrient_id'           =>'1',
+            'composition'           =>'22.2'
+        ],
+        [
+            'feed_id'               =>'3',
+            'nutrient_id'           =>'7',
+            'composition'           =>'52.4'
+        ],
+        [
+            'feed_id'               =>'3',
+            'nutrient_id'           =>'3',
+            'composition'           =>'8.69'
+        ],
+        [
+            'feed_id'               =>'3',
+            'nutrient_id'           =>'8',
+            'composition'           =>'0.475'
+        ],
+        [
+            'feed_id'               =>'3',
+            'nutrient_id'           =>'9',
+            'composition'           =>'0.347'
+        ],
+        [
+            'feed_id'               =>'1',
+            'nutrient_id'           =>'1',
+            'composition'           =>'87.5'
+        ],
+        [
+            'feed_id'               =>'1',
+            'nutrient_id'           =>'7',
+            'composition'           =>'43.2'
+        ],
+        [
+            'feed_id'               =>'1',
+            'nutrient_id'           =>'3',
+            'composition'           =>'4.15'
+        ],
+        [
+            'feed_id'               =>'1',
+            'nutrient_id'           =>'8',
+            'composition'           =>'0.413'
+        ],
+        [
+            'feed_id'               =>'1',
+            'nutrient_id'           =>'9',
+            'composition'           =>'0.292'
+        ],
+        [
+            'feed_id'               =>'19',
+            'nutrient_id'           =>'1',
+            'composition'           =>'87.0'
+        ],
+        [
+            'feed_id'               =>'19',
+            'nutrient_id'           =>'7',
+            'composition'           =>'70.0'
+        ],
+        [
+            'feed_id'               =>'19',
+            'nutrient_id'           =>'3',
+            'composition'           =>'15.00'
+        ],
+        [
+            'feed_id'               =>'19',
+            'nutrient_id'           =>'8',
+            'composition'           =>'1.000'
+        ],
+        [
+            'feed_id'               =>'19',
+            'nutrient_id'           =>'9',
+            'composition'           =>'0.800'
+        ],
+        [
+            'feed_id'               =>'20',
+            'nutrient_id'           =>'1',
+            'composition'           =>'14.6'
+        ],
+        [
+            'feed_id'               =>'20',
+            'nutrient_id'           =>'7',
+            'composition'           =>'77.9'
+        ],
+        [
+            'feed_id'               =>'20',
+            'nutrient_id'           =>'3',
+            'composition'           =>'30.30'
+        ],
+        [
+            'feed_id'               =>'20',
+            'nutrient_id'           =>'8',
+            'composition'           =>'0.882'
+        ],
+        [
+            'feed_id'               =>'20',
+            'nutrient_id'           =>'9',
+            'composition'           =>'0.141'
         ]
         ]);
         	

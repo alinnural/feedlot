@@ -1,39 +1,44 @@
 @extends('layouts.app')
 
-@section('title')
-  Formula - {{ config('configuration.site_name') }}
-@endsection
-
 @section('content')
 <div class="container">
     <div class="row">      
         @include('layouts.menu')  
-        {!! Form::open(['url' => 'formula/calculate','class'=>'form-horizontal','method'=>'POST','target'=>'_blank']) !!}
+        {!! Form::open(['url' => 'formula/calc_laktasi','class'=>'form-horizontal','method'=>'POST','target'=>'_blank']) !!}
         <input type="hidden" class="x">
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4> Kandungan nutrisi ransum</h4>
+                    <h4> Data Sapi Perah Laktasi</h4>
                 </div>
-                <div class="panel-body">    
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th width="200px;">Nutrisi</th>
-                                <th width="200px;">Minimum</th>
-                                <th width="200px;">Maksimum</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($reqnuts as $item)
-                            <tr>
-                                <td>{{ $item['name'] }}<input type="hidden" name="reqnuts[]" value="{{ $item['id'] }}"><input type="hidden" name="reqnuts_name[]" value="{{ $item['name'] }}"></td>
-                                <td>{!! Form::text('min_composition[]', $item['min_composition'], ['class'=>'form-control','placeholder'=>'Kandungan minimum']) !!}</td>
-                                <td>{!! Form::text('max_composition[]', $item['max_composition'], ['class'=>'form-control','placeholder'=>'Kandungan maksimum']) !!}</td>
-                            <tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="panel-body">  
+                    <div class="row">
+                        <div class="form-group">
+                            {{ Form::label('var', 'Berat Badan (kg)', ['class' => 'col-sm-3 control-label']) }}
+                            <div class="col-md-6">
+                                {{ Form::number('bb', '',['class' => 'form-control', 'id'=>'bb'])}}
+                                {!! $errors->first('bb', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ Form::label('var', 'Produksi Susu (kg/hari)', ['class' => 'col-sm-3 control-label']) }}
+                            <div class="col-md-6">
+                                {{ Form::number('ps', '',['class' => 'form-control', 'id'=>'ps'])}}
+                                {!! $errors->first('ps', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ Form::label('var', 'Bulan Laktasi (bulan)', ['class' => 'col-sm-3 control-label']) }}
+                            <div class="col-md-6">
+                                {{ Form::number('bl', '',['class' => 'form-control', 'id'=>'bl'])}}
+                                {!! $errors->first('bl', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,14 +53,8 @@
                             <div class='col-md-4'>
                                 {!! Form::select('feeds[]',$feeds,null,['class'=>'form-control feed_list','placeholder' => '- Pilih Pakan -','onchange'=>'getFeed(this)']) !!}
                             </div>
-                            <div class='col-md-2'>
-                                {{ Form::text('min_feed[]', '',['class' => 'form-control min_feed_0','placeholder' => 'Nilai min'])}} 
-                            </div>
-                            <div class='col-md-2'>
-                                {{ Form::text('max_feed[]', '',['class' => 'form-control max_feed_0','placeholder' => 'Nilai maks'])}} 
-                            </div>
-                            <div class='col-md-2'>
-                                {{ Form::number('harga[]', '',['class' => 'form-control harga','placeholder' => 'Harga'])}} 
+                            <div class='col-md-4'>
+                                {{ Form::number('kuantitas[]', '',['class' => 'form-control kuantitas','placeholder' => 'Kuantitas'])}} 
                             </div>
                             <div class='col-md-1'>
                                 <a href='#' class='btn btn-sm btn-danger btn-remove'>Hapus</a>
@@ -104,14 +103,8 @@
         var template_feed = "<div class='form-group feeds-container'>"+
                                 "<div id='"+x+"'>"+
                                     feed_list+
-                                    "<div class='col-md-2'>"+
-                                        "<input class='form-control min_feed_"+x+"' placeholder='Nilai min' name='min_feed[]' type='text' value=''> "+
-                                    "</div>"+
-                                    "<div class='col-md-2'>"+
-                                        "<input class='form-control max_feed_"+x+"' placeholder='Nilai maks' name='max_feed[]' type='text' value=''> "+
-                                    "</div>"+
-                                    "<div class='col-md-2'>"+
-                                        "<input class='form-control harga' placeholder='Harga' name='harga[]' type='number' value=''> "+
+                                    "<div class='col-md-4'>"+
+                                        "<input class='form-control kuantitas' placeholder='Kuantitas' name='kuantitas[]' type='number' value=''> "+
                                     "</div>"+
                                     "<div class='col-md-1'>"+
                                         "<a href='#' class='btn btn-sm btn-danger btn-remove'>Hapus</a>"+

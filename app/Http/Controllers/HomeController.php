@@ -420,4 +420,78 @@ class HomeController extends Controller
         $pdf = PDF::loadView('formula.print', $forsum);
         return $pdf->download('invoice.pdf');
     }
+
+    public function laktasi()
+    {
+        $feeds = Feed::pluck('name','id')->all();
+
+        return view('formula.laktasi')
+                ->with(compact('feeds'));
+    }
+
+    public function calc_laktasi(Request $request)
+    {
+        $this->validate($request, [
+            'bb'=> 'required',
+            'ps'=> 'required',
+            'bl'=> 'required'
+        ]);
+        
+        #  Kebutuhan
+        $kebutuhan = array();
+        $kebutuhan["bk"]["persen"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+        $kebutuhan["bk"]["satuan"] = $kebutuhan["bk"]["persen"]*$request->bb/100;
+        
+        if($request->bl < 7){
+            $kebutuhan["tdn"]["satuan"] = (0.46 + (7.743 * $request->bb/1000) + (2.053 * $request->bb/pow(1000,2)) + (0.326 * $request->ps));
+            $kebutuhan["tdn"]["persen"] = $kebutuhan["tdn"]["satuan"]/$kebutuhan["bk"]["satuan"]*100;
+            $kebutuhan["protein"]["satuan"] = 0.040 + (0.8 * $request->bb/1000) - (0.2 * pow(($request->bb/1000),2)) - 0.003 + (0.0872 * $request->ps) ;
+            $kebutuhan["protein"]["persen"] = $kebutuhan["protein"]["satuan"]/$kebutuhan["bk"]["satuan"]*100;
+            $kebutuhan["calcium"]["satuan"] = 2.9343 + (32.9714 * $request->bb/1000) - (5.7143 * $request->bb/pow(1000,2)) + (2.7 * $request->ps);
+            $kebutuhan["calcium"]["persen"] = $kebutuhan["calcium"]["satuan"]/$kebutuhan["bk"]["satuan"]*100;
+            $kebutuhan["pospor"]["satuan"] = 1.7914 + (30.6571 * $request->bb/1000) - (8.5714 * $request->bb/pow(1000,2)) + (1.8 * $request->ps);
+            $kebutuhan["pospor"]["persen"] = $kebutuhan["pospor"]["satuan"]/$kebutuhan["bk"]["satuan"]*100;   
+        }
+        else
+        {
+            $kebutuhan["tdn"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+            $kebutuhan["tdn"]["persen"] = $kebutuhan["bk"]["persen"]*$request->bb/100;
+            $kebutuhan["protein"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+            $kebutuhan["protein"]["persen"] = $kebutuhan["bk"]["persen"]*$request->bb/100;
+            $kebutuhan["calcium"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+            $kebutuhan["calcium"]["persen"] = $kebutuhan["bk"]["persen"]*$request->bb/100;
+            $kebutuhan["pospor"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+            $kebutuhan["pospor"]["persen"] = $kebutuhan["bk"]["persen"]*$request->bb/100;   
+        }
+
+        #  Pemberian
+        $pemberian = array();            
+        $pemberian["bk"] = 0;
+        $pemberian["tdn"] = 0;
+        $pemberian["protein"] = 0;
+        $pemberian["calcium"] = 0;
+        $pemberian["pospor"] = 0;
+        
+        foreach($request->feeds as $key => $value){            
+            $pemberian["bk"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(1,$value)->first()->composition)/100;
+            $pemberian["tdn"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(7,$value)->first()->composition)/100;
+            $pemberian["protein"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(3,$value)->first()->composition)/100;
+            $pemberian["calcium"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(8,$value)->first()->composition)/100;
+            $pemberian["pospor"] += $request->kuantitas[$key]*(FeedNutrient::SearchByNutrientAndFeed(9,$value)->first()->composition)/100;
+        }
+
+        #  Hasil
+        $hasil = array();
+        foreach($pemberian as $key => $value){
+            $hasil[$key] = $value - $kebutuhan[$key]["satuan"];
+        }
+
+        echo "<pre>";
+        print_r($pemberian);print_r($kebutuhan);print_r($hasil); echo "</pre>"; exit();
+        $data["category"] = "minimization ";
+        $feeds = $request->feeds;  
+
+        return view('formula.laktasi')
+                ->with(compact('feeds'));
+    }
 }
