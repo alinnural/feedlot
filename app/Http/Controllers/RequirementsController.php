@@ -39,7 +39,7 @@ class RequirementsController extends Controller
             ->addColumn(['data'=>'animal_type', 'name'=>'animal_type','title'=>'Animal Type'])
             ->addColumn(['data'=>'current_weight', 'name'=>'current_weight','title'=>'Current Body'])
             ->addColumn(['data'=>'average_daily_gain', 'name'=>'average_daily_gain','title'=>'Average Daily Gain'])
-            ->addColumn(['data'=>'action','name'=>'action','title'=>'Action','orderable'=>false,'searchable'=>false]);
+            ->addColumn(['data'=>'action','name'=>'action','title'=>'Action','orderable'=>false,'searchable'=>false,'width'=>100]);
         return view('requirements.index')->with(compact('html'));
     }
 

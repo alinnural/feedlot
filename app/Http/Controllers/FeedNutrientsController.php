@@ -38,7 +38,7 @@ class FeedNutrientsController extends Controller
         ->addColumn(['data' => 'feed.name', 'name'=>'feed.name', 'title'=>'Feeds'])
         ->addColumn(['data' => 'nutrient.name', 'name'=>'nutrient.name', 'title'=>'Nutrien'])
         ->addColumn(['data' => 'composition', 'name'=>'composition', 'title'=>'Komposisi'])
-        ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
+        ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false,'width'=>100]);
         return view('feednutrients.index')->with(compact('html'));
     }
 

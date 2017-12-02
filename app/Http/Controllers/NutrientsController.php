@@ -39,7 +39,7 @@ class NutrientsController extends Controller
         ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
         ->addColumn(['data' => 'abbreviation', 'name'=>'abbreviation', 'title'=>'Abbreviation'])
         ->addColumn(['data' => 'unit.name', 'name'=>'unit.name', 'title'=>'Unit'])
-        ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
+        ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false,'width'=>100]);
         return view('nutrients.index')->with(compact('html'));
     }
 
