@@ -89,7 +89,7 @@
         $(".x").val(0);
         $(".loader").fadeOut("slow");
         $('.feed_list').select2({
-            minimumInputLength: 2,
+            minimumInputLength: 0,
             width:250,
             dropdownAutoWidth : true
         });
@@ -122,7 +122,7 @@
         e.preventDefault();
         $(".result-btn-add").before(template_feed);
         $('.feed_list').select2({
-            minimumInputLength: 2,
+            minimumInputLength: 0,
             width:250,
             dropdownAutoWidth : true
         });

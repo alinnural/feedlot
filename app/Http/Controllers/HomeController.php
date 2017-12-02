@@ -96,7 +96,6 @@ class HomeController extends Controller
         ]);
         $req_id = $request->requirement_id; 
         $request->session()->put('requirement_id',$req_id);
-        $request->session()->put('kuantitas',$request->kuantitas);
         $reqnuts = RequirementNutrient::SearchNutrient($req_id)->get();
         $feeds = Feed::pluck('name','id')->all();
 
@@ -113,7 +112,10 @@ class HomeController extends Controller
 
         $data["category"] = "minimization ";
         $feeds = $request->feeds;  
-        $request->session()->put('feeds',$feeds);   
+        $request->session()->put('feeds',$feeds);
+        $request->session()->put('max_composition',$request->max_composition);
+        $request->session()->put('min_composition',$request->min_composition);   
+        $request->session()->put('quantity','1000');  
         $req_id = $request->session()->get('requirement_id');
         $reqnuts = $request->reqnuts;
         $harga = $request->harga;
@@ -212,7 +214,7 @@ class HomeController extends Controller
              'requirement' => $requirement
             ])->with('initial_tableau',$initial_tableau);
     } 
-
+    
     public function price(Request $request)
     {
         //print_r($request->input('feeds'));
@@ -334,4 +336,51 @@ class HomeController extends Controller
         }
         return $return;
     } 
+
+    public function AjaxCalcQ(Request $request)
+    {
+        if(empty($request->qty))
+        {
+            $data = array();
+            return \Response::json($data);
+        }
+        else
+        {            
+            $kuantitas=0;
+            $text = "<div class='col-md-10'>".
+                        "<div class='panel panel-default'>".
+                            "<table class='table table-stripped'>".
+                                "<tr>".
+                                    "<th>Pakan</th>".
+                                    "<th class='text-right'>Persentase</th>".
+                                    "<th width='100'>&nbsp;</th>".
+                                        "<th class='text-center' width='200'>Harga</th>".
+                                    "<th class='text-right' width='200'>Kuantitas</th>".
+                                "</tr>";
+                                    
+                foreach(Calculate::mapping_feed_id_result($request->session()->get('feeds'),$request->session()->get('harga'),$request->session()->get('feed_result'),$request->harga_terakhir) as $feed){
+                    $kuant = $feed['result']*$request->qty/100; $kuantitas+=$kuant;
+                    $text.= "<tr>".
+                                "<td>".$feed['name']."</td>".
+                                "<td><span class='pull-right'>".$feed['result']."%</span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><span class='pull-left'>IDR</span> <span class='pull-right'>".$feed['price']." / kg</span></td>".
+                                "<td><span class='pull-right'>".$kuant."</span></td>".
+                            "</tr>";
+                }
+
+                    $text .= "<tr>".
+                                "<td width='300'><strong><h4>Harga Terakhir</strong></h4></td>".
+                                "<td>&nbsp;</td>".
+                                "<th>&nbsp;</th>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".round($request->harga_terakhir).",00</span></h4></strong></td>".
+                                "<td><span class='pull-right'><h4>".$kuantitas." kg</h4></span></td>".
+                            "</tr>".
+                        "</table>".
+                    "</div>".
+                "</div>";
+
+            return \Response::json($text);
+        }
+    }
 }

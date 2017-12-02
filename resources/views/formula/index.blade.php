@@ -23,13 +23,6 @@
                                 {!! $errors->first('requirement_id', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('var', 'Kuantitas Ransum (kg)', ['class' => 'col-sm-5 control-label']) }}
-                            <div class="col-md-7">
-                                {{ Form::number('kuantitas', '',['class' => 'form-control'])}}
-                                {!! $errors->first('kuantitas', '<p class="help-block">:message</p>') !!}
-                            </div>
-                        </div>
                     </div>
                     <div class="panel-footer">
                         <div class="row">
