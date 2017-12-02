@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('title')
+  Tambah Nutrisi - Admin {{ config('configuration.site_name') }}
+@endsection
+
 @section('content')
   <div class="container">
     <div class="row">

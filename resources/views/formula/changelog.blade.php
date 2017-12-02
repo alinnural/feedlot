@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+  Perubahan Versi - {{ config('configuration.site_name') }}
+@endsection
+
 @section('content')
 <style>
 .published{
