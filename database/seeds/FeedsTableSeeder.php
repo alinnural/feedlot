@@ -120,6 +120,18 @@ class FeedsTableSeeder extends Seeder
             'min'               =>'0.25',
             'max'               =>'1',
             'group_feed_id'     =>'4'
+        ],
+        [
+            'name'              =>'Konsentrat',		
+            'min'               =>'0',
+            'max'               =>'100',
+            'group_feed_id'     =>'4'
+        ],
+        [
+            'name'              =>'Ampas Tahu',		
+            'min'               =>'0',
+            'max'               =>'100',
+            'group_feed_id'     =>'4'
         ]
         ]);
     }
