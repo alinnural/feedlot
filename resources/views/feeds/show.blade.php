@@ -73,8 +73,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Simbol</th>
-                                <th>Komposisi</th>
+                                <th class="text-center">Simbol</th>
+                                <th class="text-center">Komposisi</th>
                                 @role('admin')
                                     <th>Action</th>
                                 @endrole
@@ -84,10 +84,10 @@
                             @php $no=1; @endphp
                             @foreach ($nutrients as $nu)
                                 <tr>
-                                    <td>{{$no++}}</td>
+                                    <td width="50">{{$no++}}</td>
                                     <td>{{$nu->nutrient->name}}</td>
-                                    <td>{{$nu->nutrient->abbreviation}}</td>
-                                    <td>{{$nu->composition}}</td>
+                                    <td width="100" class="text-center">{{$nu->nutrient->abbreviation}}</td>
+                                    <td width="100" class="text-center">{{$nu->composition}}</td>
                                     @role('admin')
                                     <td width="150">
                                         {!! Form::model($nutrients, ['url' => route('feednutrients.destroy',$nu->id), 'method' => 'delete', 'class' => 'form-inline js-confirm', 'data-confirm' => 'Apakah Anda yakin akan menghapus '. $nu->nutrient->name . '?' ]) !!}

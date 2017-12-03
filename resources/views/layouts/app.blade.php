@@ -88,7 +88,6 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
-                            <li><a href="{{ url('/register') }}"><i class="fa fa-user"></i> Register</a></li>
                         @else
                             <li><a href="{{ url('/settings/profile') }}"><i class="fa fa-user"></i> Profile</a></li>
                             <li class="dropdown">
