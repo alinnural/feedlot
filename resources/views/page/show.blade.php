@@ -19,7 +19,7 @@
                     @if($page->image != '')
                         <div class="card">
                             <img src="
-                            @if($feed->image == null)
+                            @if($page->image == null)
                                 {{asset('images/no-photo.jpg')}}
                             @else
                                 {{url('img/page')}}/{{$page->image}}
