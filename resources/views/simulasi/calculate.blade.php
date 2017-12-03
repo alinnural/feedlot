@@ -1,13 +1,18 @@
 @extends('layouts.app')
 
+@section('title')
+  Hasil Simulasi Linear Programming - {{ config('configuration.site_name') }}
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        @include('layouts.menu')
+        <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="btn-group pull-right">
-                        <a href="/" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <a href="/welcome" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
                     </div>
                     <h4> Hasil Optimasi </h4>
                 </div>
@@ -43,7 +48,7 @@
                         </tr>
 					</table>
 
-                    @include('sample.table-iteration-minimization')
+                    @include('front.table-iteration-using-class')
                 </div>
             </div>
         </div>

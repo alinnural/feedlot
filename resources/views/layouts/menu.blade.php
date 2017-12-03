@@ -3,6 +3,7 @@
         {!! Html::smartNav(url('/'), 'Beranda','fa-home') !!}
         {!! Html::smartNav(url('/formula'), 'Formulasi Ransum','fa-calculator') !!}
         {!! Html::smartNav(url('/laktasi'), 'Kebutuhan Nutrien Laktasi','fa-check') !!}
+        {!! Html::smartNav(url('/simulasi'), 'Simulasi Linear Programming','fa-code') !!}
         @role('admin')
             {!! Html::smartNav(route('ransums.index'),'Ransum','fa fa-list-ul ') !!}
         @endrole

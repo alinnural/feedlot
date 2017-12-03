@@ -1,13 +1,18 @@
 @extends('layouts.app')
 
+@section('title')
+  Input Value Simulasi Linier Programming - {{ config('configuration.site_name') }}
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        @include('layouts.menu')
+        <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">Input Value</div>
 
-                    {!! Form::open(['url' => 'sample/calculate','class'=>'form-horizontal']) !!}
+                    {!! Form::open(['url' => 'simulasi/calculate','class'=>'form-horizontal']) !!}
                     <div class="panel-body">
                         <div class="form-group">
                             <div class="col-md-4 control-label">
@@ -15,7 +20,7 @@
                             </div>
                             <div class="col-md-8">
                                 {{ Form::radio('category', 'minimization', true) }} Minimization
-                                {{ Form::radio('category','maximization') }} Maximization
+                                {{ Form::radio('category','maximization',false,['disabled' => "disabled"]) }} Maximization <i style="color:red">(dalam pengembangan)</i>
                             </div>
                         </div>  
                         <input name="numbers" type="hidden" value="{{ $data['var'] }},{{ $data['cons'] }}">  

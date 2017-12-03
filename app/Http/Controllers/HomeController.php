@@ -291,25 +291,25 @@ class HomeController extends Controller
     }
 
     /* Sample Optimization using Simplex Method --------------------------------------------*/
-    public function sampleIndex()
+    public function simulasiIndex()
     {
-        return view('sample.index');
+        return view('simulasi.index');
     }
 
-    public function SampleInput(Request $request)
+    public function simulasiInput(Request $request)
     {
         $data = ['var' => $request->get('var'), 'cons'=> $request->get('cons')];
-        return view('sample.input')->with('data',$data);
+        return view('simulasi.input')->with('data',$data);
     }
 
-    public function sampleCalculate(Request $request)
+    public function simulasiCalculate(Request $request)
     {
         if($request->input('category') == 'maximization')
         {
             $maximization = new Maximization;
             $initial_tableau = $maximization->optimize($request);
 
-            return view('sample.result-maximization',[
+            return view('simulasi.result-maximization',[
                 'maximization'=> $maximization 
                 ])->with('initial_tableau',$initial_tableau);
         }
@@ -319,25 +319,18 @@ class HomeController extends Controller
             //print_r($request->all()); exit();
             $initial_tableau = $minimization->optimize($request);
 
-            return view('sample.result-minimization',[
+            return view('simulasi.result-minimization',[
                 'minimization'=> $minimization 
                 ])->with('initial_tableau',$initial_tableau);
         }
     }
 
-    public function sampleSimplexMethod()
+    public function simulasiSimplexMethod()
     {
         //$FmyFunctions1 = new SimplexMethod;
         $FmyFunctions1 = new Maximization;
         $is_ok = $FmyFunctions1->index();
         echo $is_ok;
-    }
-   
-    private function print_dump($array)
-    {
-        echo "<pre>";
-        print_r($array);
-        die();
     }
 
     function array_transpose($array, $selectKey = false) {

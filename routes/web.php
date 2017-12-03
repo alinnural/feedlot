@@ -52,11 +52,11 @@ Route::group(['middleware' => ['web','menu']],function(){
 
 Auth::routes();
 
-Route::group(['prefix'=>'sample'],function(){
-    Route::get('/','HomeController@SampleIndex');
-    Route::post('/input','HomeController@sampleInput');
-    Route::post('/calculate','HomeController@sampleCalculate');
-    Route::get('/simplex','HomeController@sampleSimplexMethod');
+Route::group(['prefix'=>'simulasi', 'middleware'=>['web','menu']],function(){
+    Route::get('/','HomeController@simulasiIndex');
+    Route::post('/input','HomeController@simulasiInput');
+    Route::post('/calculate','HomeController@simulasiCalculate');
+    Route::get('/simplex','HomeController@simulasiSimplexMethod');
 });
 
 Route::group(['prefix'=>'ajax'],function(){

@@ -1,13 +1,18 @@
 @extends('layouts.app')
 
+@section('title')
+  Pnput Parameter Simulasi Linier Programming - {{ config('configuration.site_name') }}
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        @include('layouts.menu')
+        <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">Input Parameter</div>
 
-                    {!! Form::open(['url' => 'sample/input','class'=>'form-horizontal']) !!}
+                    {!! Form::open(['url' => 'simulasi/input','class'=>'form-horizontal']) !!}
                     <div class="panel-body">    
                         <div class="form-group">
                             {!! Form::label('var', 'Berapa Variabel?', ['class' => 'col-sm-4 control-label']) !!}
