@@ -18,7 +18,12 @@
                     <hr>
                     @if($page->image != '')
                         <div class="card">
-                            <img src="{{url('img/page')}}/{{$page->image}}" alt="{{ $page->title }}" class="img img-responsive" width="350px;" style="float:left; margin-right : 20px; margin-bottom : 20px;">
+                            <img src="
+                            @if($feed->image == null)
+                                {{asset('images/no-photo.jpg')}}
+                            @else
+                                {{url('img/page')}}/{{$page->image}}
+                            @endif" alt="{{ $page->title }}" class="img img-responsive" width="350px;" style="float:left; margin-right : 20px; margin-bottom : 20px;">
                         </div>
                     @endif
                     {!! $page->content !!}

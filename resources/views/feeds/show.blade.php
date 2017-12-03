@@ -30,7 +30,12 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <image src="{{asset('img/feeds/'.$feed->image)}}" class="img img-thumbnail" style="width: 200px; height: 200px;">
+                            <image src="
+                            @if($feed->image == null)
+                                {{asset('images/no-photo.jpg')}}
+                            @else
+                                {{url('img/feeds')}}/{{$feed->image}}
+                            @endif" class="img img-thumbnail" style="width: 300px; height: 170px;">
                         </div>
                         <div class="col-md-8">
                             <div class="row form-horizontal">

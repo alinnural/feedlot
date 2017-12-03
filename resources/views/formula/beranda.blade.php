@@ -26,7 +26,12 @@
                             <hr>
                             <div class="col-md-4">
                                 <div class="card">
-                                    <img src="{{url('img/post')}}/{{$post->page_image}}" alt="{{ $post->title }}" class="img img-responsive">
+                                    <img src="
+                                    @if($post->page_image == null)
+                                        {{asset('images/no-photo.jpg')}}
+                                    @else
+                                        {{url('img/post')}}/{{$post->page_image}}
+                                    @endif" alt="{{ $post->title }}" class="img img-responsive">
                                 </div>
                             </div>
                             <div class="col-md-8">

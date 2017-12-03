@@ -17,11 +17,13 @@
                     </div>
                     <hr>
                     <div class="card">
-                        @if($post->page_image == '')
-                            <img src="http://5uoqf25iuenklnzqg8khs17s.wpengine.netdna-cdn.com/wp-content/uploads/2014/10/d61-1024x525.jpg" class="attachment-large size-large wp-post-image" asizes="(max-width: 1024px) 100vw, 1024px">		</a>
+                        <img src="
+                        @if($feed->image == null)
+                            {{asset('images/no-photo.jpg')}}
                         @else
-                            <img src="{{url('img/post')}}/{{$post->page_image}}" alt="{{ $post->title }}" class="img img-responsive" width="350px;" style="float:left; margin-right : 20px; margin-bottom : 20px;">
+                            {{url('img/post')}}/{{$post->page_image}}
                         @endif
+                        " alt="{{ $post->title }}" class="img img-responsive" width="350px;" style="float:left; margin-right : 20px; margin-bottom : 20px;">
                     </div>
                     {!! $post->content_html !!}
                 </div><!-- /.post-content --> 

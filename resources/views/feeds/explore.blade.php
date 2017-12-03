@@ -13,14 +13,22 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a href="{{ url('feeds/detail') }}/{{$feed->id}}" style="font-size:20pt">
-                        {{ str_limit($feed->name,35) }}
+                        {{ str_limit($feed->name,35) }} 
+                        @if($feed->latin_name != null)
+                            <i>({{ $feed->latin_name }})</i>
+                        @endif
                     </a><br>
                     <span class="date" style="font-size:10pt">
                     </span>
                     <hr>
                     <div class="col-md-4">
                         <div class="card">
-                            <img src="{{url('img/feeds')}}/{{$feed->image}}" alt="{{ $feed->name }}" class="img img-responsive">
+                            <img src="
+                            @if($feed->image == null)
+                                {{asset('images/no-photo.jpg')}}
+                            @else
+                                {{url('img/feeds')}}/{{$feed->image}}
+                            @endif" alt="{{ $feed->name }}" class="img img-thumbnail" style="width: 300px; height: 170px;">
                         </div>
                     </div>
                     <div class="col-md-8">
