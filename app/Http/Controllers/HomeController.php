@@ -103,6 +103,7 @@ class HomeController extends Controller
         $req_id = $request->requirement_id; 
         $request->session()->put('requirement_id',$req_id);
         $reqnuts = RequirementNutrient::SearchNutrient($req_id)->get();
+        
         $feeds = Feed::pluck('name','id')->all();
 
         return view('formula.input-feed')
@@ -410,16 +411,18 @@ class HomeController extends Controller
         }
     }
     
-    public function print($id)
+    public function print(Request $request)
     {
+        $id = $request->id;
         $data = array();
+        $data["kuantitas"] = $request->kuantitas;
         $data["forsum"] = Forsum::findOrFail($id);;
         $data["forfeeds"] = ForsumFeed::SearchByForsum($id)->get();
         $data["fornuts"] = ForsumNutrient::SearchByForsum($id)->get();
-
-        return view('formula.print')->with(compact('data'));
-        $pdf = PDF::loadView('formula.print', $forsum);
-        return $pdf->download('invoice.pdf');
+        //print_r($data["forsum"]); exit();
+        //return view('formula.print')->with(compact('data'));
+        $pdf = PDF::loadView('formula.print', $data)->setPaper('a4', 'potrait')->setWarnings(false)->save('myfile.pdf');
+        return $pdf->download($data["forsum"]->name.'.pdf');
     }
 
     public function laktasi()
@@ -457,14 +460,14 @@ class HomeController extends Controller
         }
         else
         {
-            $kebutuhan["TDN"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
-            $kebutuhan["TDN"]["persen"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;
-            $kebutuhan["Protein"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
-            $kebutuhan["Protein"]["persen"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;
-            $kebutuhan["Kalsium"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
-            $kebutuhan["Kalsium"]["persen"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;
-            $kebutuhan["Posfor"]["satuan"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
-            $kebutuhan["Posfor"]["persen"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;   
+            $kebutuhan["TDN"]["satuan"] = (0.46 + (7.743 * $request->bb/1000) + (2.053 * $request->bb/pow(1000,2)) + (0.326 * $request->ps)) + (1.002 + 0.008 * $request->bb);
+            $kebutuhan["TDN"]["persen"] = $kebutuhan["TDN"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+            $kebutuhan["Protein"]["satuan"] = 0.040 + (0.8 * $request->bb/1000) - (0.2 * pow(($request->bb/1000),2)) - 0.003 + (0.0872 * $request->ps) + 0.125 + (0.0014 * $request->ps)  ;
+            $kebutuhan["Protein"]["persen"] = $kebutuhan["Protein"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+            $kebutuhan["Kalsium"]["satuan"] = 2.9343 + (32.9714 * $request->bb/1000) - 5.7143 * pow(($request->bb/1000),2) + (2.7 * $request->ps)+ 6.64 + (0.0488 * $request->bb);
+            $kebutuhan["Kalsium"]["persen"] = $kebutuhan["Kalsium"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+            $kebutuhan["Posfor"]["satuan"] = 1.7914 + (30.6571 * $request->bb/1000) - 8.5714 * pow(($request->bb/1000),2) + (1.8 * $request->ps) + 4.7 + (0.0346 * $request->bb);
+            $kebutuhan["Posfor"]["persen"] = $kebutuhan["Posfor"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;    
         }
 
         #  Pemberian
