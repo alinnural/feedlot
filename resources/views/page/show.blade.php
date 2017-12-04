@@ -11,7 +11,15 @@
         <div class="col-md-9 panel panel-default">
             <div class="post">
                 <div class="post-content image-caption">
-                    <h1 class="post-title">{!! $page->title !!}</h1>
+                    <h1 class="post-title">
+                        {!! $page->title !!}
+
+                        @if (Auth::check())
+                        <div class="pull-right">
+                           <a href="{{ route('page.edit',$page->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                        </div>
+                        @endif
+                    </h1>
                     <div class="meta">
                         <span class="date">{{ $page->created_at->format('M jS Y g:ia') }}</span> 
                     </div>
