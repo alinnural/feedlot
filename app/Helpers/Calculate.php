@@ -113,7 +113,7 @@ class Calculate{
                     $sum_comp += $temp;
                 }
             }           
-            $nutrient[$no]['result'] = round($sum_comp);
+            $nutrient[$no]['result'] = round($sum_comp,2);
             $no++;
         }
         //print_r($nutrient); exit;

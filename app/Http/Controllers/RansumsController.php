@@ -83,7 +83,7 @@ class RansumsController extends Controller
         else
         {            
             if ($request->ajax()) {
-                $forsums = Forsum::with('forsumfeeds','forsumnutrients');
+                $forsums = Forsum::with('forsumfeeds','forsumnutrients')->where('user_id',Auth::user()->id);
                 return Datatables::of($forsums)
                     ->addColumn('group', function($forsums) {
                         return $forsums->name; })
