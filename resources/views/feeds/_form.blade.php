@@ -26,6 +26,26 @@
     {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
   </div>
 </div>
+
+<div class="form-group{{ $errors->has('is_public') ? ' has-error' : '' }}">
+    {!! Form::label('is_public','Dibuka Umum (Public)',['class'=>'col-md-2 control-label'])!!}
+    <div class="col-sm-10">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!! Form::radio('is_public','1',true) !!}
+        Ya  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!! Form::radio('is_public','0') !!}
+        Tidak
+      {!! $errors->first('is_public', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
+<div class="form-group{{ $errors->has('urutan') ? ' has-error' : '' }}">
+    {!! Form::label('urutan', 'Urutan', ['class'=>'col-md-2 control-label']) !!} 
+    <div class="col-md-10">
+        {!! Form::number('urutan',0,['class'=>'form-control']); !!}
+        {!! $errors->first('urutan', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
 <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
     {!! Form::label('image', 'Foto', ['class'=>'col-md-2 control-label']) !!} 
     <div class="col-md-10">
@@ -35,7 +55,7 @@
 </div>
 
 <div class="form-group">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-2">
     {!! Form::submit('Simpan', ['class'=>'btn btn-primary']) !!}
   </div>
 </div>

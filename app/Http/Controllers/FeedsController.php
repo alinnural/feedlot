@@ -25,8 +25,16 @@ class FeedsController extends Controller
             $feeds = Feed::with('groupfeed');
 
             return Datatables::of($feeds)
-                ->addColumn('group', function($feeds) {
-                    return $feeds->groupfeed->name; })
+                ->addColumn('is_public', function($feeds) {
+                    return $feeds->is_public == 1 ? "Ya" : "Tidak";
+                })
+                ->addColumn('name_and_latin', function($feeds) {
+                    if($feeds->latin_name == null){
+                        return $feeds->name;
+                    }else{
+                        return $feeds->name."(<i>".$feeds->latin_name."</i>)";
+                    }
+                })
                 ->addColumn('action', function($feeds){
                     return view('feeds._action',[
                         'model' => $feeds,
@@ -39,8 +47,9 @@ class FeedsController extends Controller
         }
         $html = $htmlBuilder
         ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
-        ->addColumn(['data' => 'latin_name', 'name'=>'latin_name', 'title'=>'Nama Latin'])
         ->addColumn(['data' => 'groupfeed.name', 'name'=>'groupfeed.name', 'title'=>'Group Feeds'])
+        ->addColumn(['data' => 'is_public', 'name'=>'is_public', 'title'=>'Public'])
+        ->addColumn(['data' => 'urutan', 'name'=>'urutan', 'title'=>'Urutan'])
         ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false,'width'=>150]);
         return view('feeds.index')->with(compact('html'));
     }

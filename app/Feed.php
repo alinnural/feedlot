@@ -10,6 +10,8 @@ class Feed extends Model
         'name',
         'latin_name',
         'description',
+        'is_public',
+        'urutan',
         'image',
         'group_feed_id',
         ];
