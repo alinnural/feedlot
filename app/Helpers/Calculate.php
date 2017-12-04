@@ -72,6 +72,9 @@ class Calculate{
         $feeds_id = Session::get('feeds'); 
         $feed_price = Session::get('harga');
         $result = Session::get('results');
+
+        
+
         $percent = array();
         $no = 1;
         foreach($feeds_id as $key => $value)

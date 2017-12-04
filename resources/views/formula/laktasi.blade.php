@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-offset-3 col-md-9" style="margin-top:-150px;">
+        <div class="col-md-offset-3 col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4> Pilih pakan ternak yang akan diformulasikan</h4>

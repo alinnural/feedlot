@@ -252,7 +252,7 @@
                                             <th width='50'>&nbsp;</th>
                                             <th class='text-right' width='250'>Total Harga</th>
                                         </tr>
-                                        @php $kuantitas=0; $total_price_kuant = 0; @endphp   
+                                        @php $kuantitas=0; $total_price_kuant = 0; Session::put('results',$feeds) @endphp   
                                         @foreach (Calculate::mapping_feed_id_result($harga_terakhir) as $feed)
                                         <tr>
                                             <td>{{ $feed['name'] }}</td>
