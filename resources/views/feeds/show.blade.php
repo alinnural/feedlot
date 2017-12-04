@@ -51,14 +51,11 @@
                                         <i>{{$feed->latin_name}}</i>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Deskripsi</label>
-                                    <div class="col-md-9">
-                                        {{$feed->description}}
-                                    </div>
-                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="description">
+                        {!! $feed->description !!}
                     </div>
                     <hr>
                     @role('admin')

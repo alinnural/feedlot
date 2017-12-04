@@ -11,14 +11,22 @@
         <div class="col-md-9 panel panel-default">
             <div class="post">
                 <div class="post-content image-caption">
-                    <h1 class="post-title">{!! $post->title !!}</h1>
+                    <h1 class="post-title">
+                        {!! $post->title !!}
+
+                        @if (Auth::check())
+                        <div class="pull-right">
+                           <a href="{{ route('post.edit',$post->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
+                        </div>
+                        @endif
+                    </h1>
                     <div class="meta">
                         <span class="date">{{ $post->published_at->format('M jS Y g:ia') }}</span> 
                     </div>
                     <hr>
                     <div class="card">
                         <img src="
-                        @if($feed->image == null)
+                        @if($post->image == null)
                             {{asset('images/no-photo.jpg')}}
                         @else
                             {{url('img/post')}}/{{$post->page_image}}
