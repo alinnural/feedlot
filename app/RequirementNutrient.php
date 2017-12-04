@@ -27,11 +27,21 @@ class RequirementNutrient extends Model
     {
         if($req_id != '')
         {
-            $query->join('nutrients', function ($join) use ($req_id) {
-                $join->on('nutrients.id', '=', 'nutrient_id');
-            })
-            ->where('requirement_id', '=', $req_id)
-            ->where('min_composition', '>', '0');
+            if($req_id == 11)
+            {                
+                $query->join('nutrients', function ($join) use ($req_id) {
+                    $join->on('nutrients.id', '=', 'nutrient_id');
+                })
+                ->where('requirement_id', '=', $req_id);
+            }
+            else
+            {
+                $query->join('nutrients', function ($join) use ($req_id) {
+                    $join->on('nutrients.id', '=', 'nutrient_id');
+                })
+                ->where('requirement_id', '=', $req_id)
+                ->where('min_composition', '>', '0');
+            }
             return $query;
         }
         else

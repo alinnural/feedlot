@@ -21,7 +21,8 @@ class RequirementsTableSeeder extends Seeder
         ['animal_type'      =>'Sapi Perah Laktasi','current_weight'=>'0','average_daily_gain'=>'0'],
         ['animal_type'      =>'Sapi Perah Laktasi Prod Tinggi','current_weight'=>'0','average_daily_gain'=>'0'],
         ['animal_type'      =>'Sapi Perah Kering Bunting','current_weight'=>'0','average_daily_gain'=>'0'],
-        ['animal_type'      =>'Sapi Perah Jantan','current_weight'=>'0','average_daily_gain'=>'0']
+        ['animal_type'      =>'Sapi Perah Jantan','current_weight'=>'0','average_daily_gain'=>'0'],
+        ['animal_type'      =>'New Ransum','current_weight'=>'0','average_daily_gain'=>'0']
         ]);
         	
     }

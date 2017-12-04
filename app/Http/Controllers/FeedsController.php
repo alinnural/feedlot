@@ -349,8 +349,14 @@ class FeedsController extends Controller
         else
         {
             $feed = Feed::find($request->feed_id);
-                        
-            $result = ['min' => $feed->min, 'max' => $feed->max];
+            $req_id = $request->session()->get('requirement_id');
+
+            if($req_id == 11){
+                $result = ['min' => 0, 'max' => 100];
+            }else{
+                $result = ['min' => $feed->min, 'max' => $feed->max];
+            }
+
             return \Response::json($result);
         }
     }
