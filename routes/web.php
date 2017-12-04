@@ -101,6 +101,7 @@ Route::group(['middleware'=>['web','menu']],function(){
             Route::resource('slider','Admin\SliderController');
             Route::resource('setting','Admin\SettingController');
             Route::resource('album','Admin\AlbumController');
+            Route::resource('file','Admin\FileController');
     
             Route::resource('image','Admin\ImageController');
             Route::put('/image/{image}/move', array('as' => 'image.move', 'uses' => 'Admin\ImageController@move'));
