@@ -187,7 +187,8 @@ return [
         
         Lavary\Menu\ServiceProvider::class,
         App\Providers\ConfigurationServiceProvider::class,
-        Riverskies\Laravel\MobileDetect\MobileDetectServiceProvider::class
+        Riverskies\Laravel\MobileDetect\MobileDetectServiceProvider::class,
+        Unisharp\Ckeditor\ServiceProvider::class,
     ],
 
     /*
