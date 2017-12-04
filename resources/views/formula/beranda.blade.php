@@ -19,10 +19,10 @@
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <a href="{{ url('post') }}/{{$post->slug}}" style="font-size:20pt">
+                            <a href="{{ url('post') }}/{{$post->slug}}" style="font-size:20pt;text-decoration:none">
                                 {{ str_limit($post->title,35) }}
                             </a><br>
-                            <span class="date" style="font-size:10pt">{{ $post->published_at->format('M jS Y g:ia') }}</span>
+                            <span class="date" style="font-size:10pt"><i class="fa fa-calendar"></i> {{ $post->published_at->format('Y-m-d g:ia') }}</span>
                             <hr>
                             <div class="col-md-4">
                                 <div class="card">

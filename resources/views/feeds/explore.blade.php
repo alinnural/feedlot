@@ -12,7 +12,7 @@
             @foreach($feeds as $feed)
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="{{ url('feeds/detail') }}/{{$feed->id}}" style="font-size:20pt">
+                    <a href="{{ url('feeds/detail') }}/{{$feed->id}}" style="font-size:20pt;text-decoration:none">
                         {{ str_limit($feed->name,35) }} 
                         @if($feed->latin_name != null)
                             <i>({{ $feed->latin_name }})</i>
