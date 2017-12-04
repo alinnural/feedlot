@@ -21,7 +21,7 @@
                         @endif
                     </h1>
                     <div class="meta">
-                        <span class="date">{{ $post->published_at->format('M jS Y g:ia') }}</span> 
+                        <span class="date"><i class="fa fa-calendar"></i> {{ $post->published_at->format('Y-m-d g:ia') }}</span> 
                     </div>
                     <hr>
                     <div class="card">

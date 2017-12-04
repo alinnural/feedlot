@@ -21,7 +21,8 @@
                         @endif
                     </h1>
                     <div class="meta">
-                        <span class="date">{{ $page->created_at->format('M jS Y g:ia') }}</span> 
+                        <span class="date"><i class="fa fa-calendar"></i> {{ $page->created_at->format('Y-m-d g:ia') }}</span> 
+                        
                     </div>
                     <hr>
                     @if($page->image != '')
@@ -39,9 +40,8 @@
                 <br>
                 <hr>
                 @include('layouts.shareit')
+                <hr>
             </div>
-            <hr>
-            @include('layouts.disqus')    
         </div>
     </div>
 @endsection

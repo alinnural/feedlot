@@ -20,7 +20,8 @@
 @section('content')
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+      @include('layouts.menu')
+      <div class="col-md-9">
         <ul class="breadcrumb">
           <li><a href="{{ url('/admin') }}">Dashboard</a></li>
           <li class="active">Editor Slider</li>
@@ -42,7 +43,7 @@
                     <div class="col-md-3">
                         <div class="thumbnail">
                             <div class="imgHolder">
-                                <img src="{{asset('img/slider/'.$slide->photo)}}" style="width: 245px; height: 200px;"  />
+                                <img src="{{asset('img/slider/'.$slide->photo)}}" style="width: 155px; height: 120px;"  />
                                 <span>
                                     @if($slide->is_active == 1)
                                         <label class="label label-success">aktif</label>

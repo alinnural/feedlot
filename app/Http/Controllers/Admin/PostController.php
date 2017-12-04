@@ -105,9 +105,10 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        if(!$post->update($request->all()))
+        if(!$post->update($request->postFillData()))
             return redirect()->back();
 
+        // print_r($request->all());die();
         if($request->hasFile('page_image'))
         {
             // menambil cover yang diupload berikut ekstensinya
@@ -141,7 +142,7 @@ class PostController extends Controller
             "message"=>"Berhasil menyimpan $post->title"
         ]);
 
-        return redirect()->route('post.index');
+        return redirect()->back();
     }
 
     /**

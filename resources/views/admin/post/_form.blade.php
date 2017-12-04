@@ -1,7 +1,3 @@
-@section('styles')
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
-@endsection
-
 <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}"> 
   {!! Form::label('title', 'Judul', ['class'=>'col-md-3 control-label']) !!} 
   <div class="col-md-9">
@@ -45,10 +41,12 @@
 </div>
 
 @section('scripts')
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+<script src="{{asset('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
+<script src="{{asset('vendor/unisharp/laravel-ckeditor/adapters/jquery.js')}}"></script>
 <script>
-$(document).ready(function() {
-  $('#summernote').summernote();
-});
+    CKEDITOR.replace('summernote',{
+      skin: 'moono-lisa',
+	    preset: 'full',
+    });
 </script>
 @endsection
