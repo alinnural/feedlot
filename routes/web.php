@@ -76,7 +76,7 @@ Route::group(['prefix'=>'ajax'],function(){
     ]);
 });
 
-Route::group(['middleware'=>'web'],function(){
+Route::group(['middleware'=>['web','menu']],function(){
     Route::get('/settings/profile','Admin\MemberController@Profile');
     Route::group(['middleware'=>['auth','role:admin']],function(){
         Route::group(['prefix'=>'admin'],function(){
