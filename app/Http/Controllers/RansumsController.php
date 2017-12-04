@@ -83,7 +83,11 @@ class RansumsController extends Controller
         else
         {            
             if ($request->ajax()) {
-                $forsums = Forsum::with('forsumfeeds','forsumnutrients');
+                if(Auth::user()->roles->first()->name == "admin")
+                    $forsums = Forsum::with('forsumfeeds','forsumnutrients','user');
+                else
+                    $forsums = Forsum::with('forsumfeeds','forsumnutrients')->where('user_id',Auth::user()->id);
+                
                 return Datatables::of($forsums)
                     ->addColumn('group', function($forsums) {
                         return $forsums->name; })
@@ -96,10 +100,22 @@ class RansumsController extends Controller
                         ]);
                     })->make(true);
             }
-            $html = $htmlBuilder
-            ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
-            ->addColumn(['data' => 'total_price', 'name'=>'total_price', 'title'=>'Total Harga'])
-            ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
+            if(Auth::user()->roles->first()->name == "admin")
+            {
+                $html = $htmlBuilder
+                ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
+                ->addColumn(['data' => 'user.name', 'name'=>'user.name', 'title'=>'Pembuat'])
+                ->addColumn(['data' => 'total_price', 'name'=>'total_price', 'title'=>'Total Harga'])
+                ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
+            }
+            else
+            {
+                $html = $htmlBuilder
+                ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
+                ->addColumn(['data' => 'total_price', 'name'=>'total_price', 'title'=>'Total Harga'])
+                ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
+            }
+            
             return view('ransums.index')->with(compact('html'));
         }
     }    

@@ -8,7 +8,7 @@
             <tr>
                 <th width="100px" style="text-align:left">Nama Ransum</th>
                 <td width="150px" >{{ $forsum->name }}</td>
-                <th width="100px" style="text-align:left">Keterangan</th>
+                <th width="300px" style="text-align:left">Keterangan</th>
                 <td rowspan=2 valign="top">{{ $forsum->explanation }}</td>
             </tr>
             <tr>

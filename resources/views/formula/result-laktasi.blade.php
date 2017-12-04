@@ -53,9 +53,9 @@
                                     @foreach ($hasil as $key => $value)
                                     <tr>
                                         <td>{{ $key }}</td>
-                                        <td><span>{{ $pemberian[$key] }}</span></td>
-                                        <td>{{ $kebutuhan[$key]["satuan"] }}</td>
-                                        <td><span>{{ $value }}</span></td>
+                                        <td><span>{{ round($pemberian[$key],2) }}</span></td>
+                                        <td>{{ round($kebutuhan[$key]["satuan"],2) }}</td>
+                                        <td><span>{{ round($value,2) }}</span></td>
                                         <th>
                                             @if($value > 0.05*$pemberian[$key])
                                                 <p>Lebih</p>
