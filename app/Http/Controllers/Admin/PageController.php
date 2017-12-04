@@ -151,7 +151,7 @@ class PageController extends Controller
             "message"=>"Berhasil menyimpan $page->title"
         ]);
 
-        return redirect()->route('page.index');
+        return redirect()->back();
     }
 
     /**

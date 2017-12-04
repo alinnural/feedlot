@@ -142,7 +142,7 @@ class PostController extends Controller
             "message"=>"Berhasil menyimpan $post->title"
         ]);
 
-        return redirect()->route('post.index');
+        return redirect()->back();
     }
 
     /**
