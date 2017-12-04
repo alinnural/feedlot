@@ -17,6 +17,12 @@
                         @if($feed->latin_name != null)
                             <i>({{ $feed->latin_name }})</i>
                         @endif
+
+                        @if (Auth::check())
+                        <div class="pull-right">
+                           <a href="{{ route('feeds.edit',$feed->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
+                        </div>
+                        @endif
                     </a><br>
                     <span class="date" style="font-size:10pt">
                     </span>
