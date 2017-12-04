@@ -19,8 +19,12 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">{{ config('configuration.site_name') }}</div>
-                    <div class="panel-body">{!! wordwrap(config('configuration.site_description'), 32, "<br />\n") !!}</div>
+                    <div class="panel-body">
+                        {!! wordwrap(config('configuration.site_description'), 32, "<br />\n") !!}
+                        <br>
+                    </div>
                 </div>
+                
 
                 @role('admin')
                 <div class="list-group">
@@ -43,6 +47,12 @@
                     @endforeach
                 </div>
 
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=permana%40apps.ipb.ac.id&amp;color=%231B887A&amp;ctz=Asia%2FJakarta" style="border-width:0" width="220" height="200" frameborder="0" scrolling="no"></iframe>
+                    </div>
+                </div>
+                
                 <div class="list-group">
                     <a href="#" class="list-group-item active">Berita Terbaru</a>
                     @php 
