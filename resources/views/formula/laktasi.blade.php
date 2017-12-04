@@ -39,10 +39,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <input type="button" class="btn btn-success" value="Lihat Kebutuhan" onclick="calcKebutuhan()">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-offset-3 col-md-9">
+        <div class="col-md-offset-3 col-md-9" id="kebutuhan">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4> Kebutuhan Nutrien Ternak</h4>
+                </div>
+                <div class="panel-body">                       
+                    <div id="result_laktasi"></div>                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-offset-3 col-md-9" >
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4> Pilih pakan ternak yang akan diformulasikan</h4>
@@ -85,6 +103,7 @@
 @section('scripts')
 <script type="text/javascript">
     $(document).ready(function(){
+        $("#kebutuhan").hide();
         $(".x").val(0);
         $(".loader").fadeOut("slow");
         $('.feed_list').select2({
@@ -93,6 +112,33 @@
             dropdownAutoWidth : true
         });
     });
+
+    function calcKebutuhan(){
+        var bb = parseInt($('#bb').val());
+        var ps = parseInt($('#ps').val());
+        var bl = parseInt($('#bl').val());
+
+        $.ajax({
+            type: "GET",
+            url : "{{ route('ajax.calclaktasi') }}",
+            data : { bb: bb, ps:ps, bl:bl },
+            dataType : "json",
+            success : function(data){
+                $("#results").empty();
+                $('#loading').hide();
+                
+                if(JSON.stringify(data) === JSON.stringify({}) || JSON.stringify(data) === JSON.stringify([])) 
+                {
+                    $("#alert").show();
+                } 
+                else 
+                {        
+                    $("#kebutuhan").show();         
+                    document.getElementById("result_laktasi").innerHTML = data;
+                }
+            }
+        }, "json")        
+    }
     
     $('#btn-add-more').on('click',function(e){
         var x = parseInt($('.x').val());

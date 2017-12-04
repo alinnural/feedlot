@@ -77,10 +77,18 @@ Route::group(['prefix'=>'ajax'],function(){
         'as'   => 'ajax.calcquantity',
         'uses' => 'HomeController@AjaxCalcQ'
     ]);
+    Route::get('home/calclaktasi', [
+        'as'   => 'ajax.calclaktasi',
+        'uses' => 'HomeController@AjaxCalcLaktasi'
+    ]);
 });
 
 Route::group(['middleware'=>['web','menu']],function(){
     Route::get('/settings/profile','Admin\MemberController@Profile');
+    Route::group(['middleware'=>['auth']],function(){
+        Route::resource('ransums','RansumsController');        
+    });
+    
     Route::group(['middleware'=>['auth','role:admin']],function(){
         Route::group(['prefix'=>'admin'],function(){
             Route::get('/','Admin\HomeController@index');
@@ -112,7 +120,6 @@ Route::group(['middleware'=>['web','menu']],function(){
             'as' => 'feednutrients.create_id',
             'uses' => 'FeedNutrientsController@create'
         ]);
-        Route::resource('ransums','RansumsController');
         
         Route::get('template/feeds', [
             'as'   => 'template.feeds',
