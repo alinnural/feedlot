@@ -16,7 +16,7 @@
 
                         @if (Auth::check())
                         <div class="pull-right">
-                           <a href="{{ route('page.edit',$page->id) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                           <a href="{{ route('page.edit',$page->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
                         </div>
                         @endif
                     </h1>
