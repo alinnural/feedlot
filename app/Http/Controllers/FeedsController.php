@@ -130,7 +130,7 @@ class FeedsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'name'=> 'required|unique:feeds',
+            'name'=> 'required',
             'group_feed_id' => 'required'
         ]);
 
