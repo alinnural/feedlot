@@ -82,6 +82,7 @@
                                     {!! Html::smartNavBackend(url('/admin/slider'), 'Slider','fa fa-image') !!}
                                     {!! Html::smartNavBackend(url('/admin/social'), 'Social','fa fa-facebook') !!}
                                     {!! Html::smartNavBackend(url('/admin/album'), 'Album Foto','fa fa-camera-retro') !!}
+                                    {!! Html::smartNavBackend(url('/admin/file'), 'File & PDF','fa fa-file') !!}
                                     {!! Html::smartNavBackend(url('/admin/setting'), 'Setting','fa fa-cog') !!}
                                     {!! Html::smartNavBackend(url('/admin/member'), 'Member','fa fa-users') !!}
                                 </ul>
