@@ -187,6 +187,7 @@ return [
         
         Lavary\Menu\ServiceProvider::class,
         App\Providers\ConfigurationServiceProvider::class,
+        Riverskies\Laravel\MobileDetect\MobileDetectServiceProvider::class
     ],
 
     /*
@@ -241,6 +242,7 @@ return [
         'Calculate' => App\Helpers\Calculate::class,
         'Menu'      => Lavary\Menu\Facade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'MobileDetect' => Riverskies\Laravel\MobileDetect\Facades\MobileDetect::class
     ],
 
 ];
