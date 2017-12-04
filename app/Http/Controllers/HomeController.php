@@ -524,6 +524,60 @@ class HomeController extends Controller
                 ->with(compact('data','kebutuhan','pemberian','hasil'));
     }
 
+    public function AjaxCalcLaktasi(Request $request)
+    {
+        if(empty($request->bb) || empty($request->ps) || empty($request->bl))
+        {
+            $data = array();
+            return \Response::json($data);
+        }
+        else
+        {            
+            #  Kebutuhan
+            $kebutuhan = array();
+            $kebutuhan["Bahan Kering"]["persen"] = (2.48 - (0.002 * $request->bb) + (0.082 * $request->ps));
+            $kebutuhan["Bahan Kering"]["satuan"] = $kebutuhan["Bahan Kering"]["persen"]*$request->bb/100;
+            
+            if($request->bl < 7){
+                $kebutuhan["TDN"]["satuan"] = (0.46 + (7.743 * $request->bb/1000) + (2.053 * $request->bb/pow(1000,2)) + (0.326 * $request->ps));
+                $kebutuhan["TDN"]["persen"] = $kebutuhan["TDN"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+                $kebutuhan["Protein"]["satuan"] = 0.040 + (0.8 * $request->bb/1000) - (0.2 * pow(($request->bb/1000),2)) - 0.003 + (0.0872 * $request->ps) ;
+                $kebutuhan["Protein"]["persen"] = $kebutuhan["Protein"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+                $kebutuhan["Kalsium"]["satuan"] = 2.9343 + (32.9714 * $request->bb/1000) - 5.7143 * pow(($request->bb/1000),2) + (2.7 * $request->ps);
+                $kebutuhan["Kalsium"]["persen"] = $kebutuhan["Kalsium"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+                $kebutuhan["Posfor"]["satuan"] = 1.7914 + (30.6571 * $request->bb/1000) - 8.5714 * pow(($request->bb/1000),2) + (1.8 * $request->ps);
+                $kebutuhan["Posfor"]["persen"] = $kebutuhan["Posfor"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;   
+            }
+            else
+            {
+                $kebutuhan["TDN"]["satuan"] = (0.46 + (7.743 * $request->bb/1000) + (2.053 * $request->bb/pow(1000,2)) + (0.326 * $request->ps)) + (1.002 + 0.008 * $request->bb);
+                $kebutuhan["TDN"]["persen"] = $kebutuhan["TDN"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+                $kebutuhan["Protein"]["satuan"] = 0.040 + (0.8 * $request->bb/1000) - (0.2 * pow(($request->bb/1000),2)) - 0.003 + (0.0872 * $request->ps) + 0.125 + (0.0014 * $request->ps)  ;
+                $kebutuhan["Protein"]["persen"] = $kebutuhan["Protein"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+                $kebutuhan["Kalsium"]["satuan"] = 2.9343 + (32.9714 * $request->bb/1000) - 5.7143 * pow(($request->bb/1000),2) + (2.7 * $request->ps)+ 6.64 + (0.0488 * $request->bb);
+                $kebutuhan["Kalsium"]["persen"] = $kebutuhan["Kalsium"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;
+                $kebutuhan["Posfor"]["satuan"] = 1.7914 + (30.6571 * $request->bb/1000) - 8.5714 * pow(($request->bb/1000),2) + (1.8 * $request->ps) + 4.7 + (0.0346 * $request->bb);
+                $kebutuhan["Posfor"]["persen"] = $kebutuhan["Posfor"]["satuan"]/$kebutuhan["Bahan Kering"]["satuan"]*100;    
+            }
+
+            $text = "<table class='table table-stripped'>".
+                        "<tr>".
+                            "<th>Nutrien</th>".
+                            "<th>Kebutuhan (kg/hari)</th>".
+                        "</tr>";
+            foreach($kebutuhan as $key => $value){
+                $text .= "<tr>
+                            <td>".$key."</td>
+                            <td>".round($value["satuan"],2)."</td>
+                        </tr>";
+            }
+
+            $text .= "</table>";
+
+            return \Response::json($text);
+        }
+    }
+
     //====================================================================================
     /*
         using nutrient group show

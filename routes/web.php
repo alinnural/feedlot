@@ -74,6 +74,10 @@ Route::group(['prefix'=>'ajax'],function(){
         'as'   => 'ajax.calcquantity',
         'uses' => 'HomeController@AjaxCalcQ'
     ]);
+    Route::get('home/calclaktasi', [
+        'as'   => 'ajax.calclaktasi',
+        'uses' => 'HomeController@AjaxCalcLaktasi'
+    ]);
 });
 
 Route::group(['middleware'=>['web','menu']],function(){
