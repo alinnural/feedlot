@@ -136,9 +136,35 @@ class HomeController extends Controller
         $i_cons = 0;
         //contrainst untuk nutrisi ternak
         foreach($reqnuts as $key => $value){
-            if($request->min_composition[$key] != 0){
+            if($req_id != 11){
+                if($request->min_composition[$key] != 0){
+                    $i_cons++;
+    
+                    $i = 1;
+                    foreach($feeds as $key2 => $value2){
+                        $feednuts = FeedNutrient::SearchByNutrientAndFeed($value,$value2)->first();
+                        //print_r($value->nutrient_id.",".$value2);
+                        $data["cons".$i_cons."_".$i++] = $feednuts->composition;
+                    }
+                    $data["sign".$i_cons] = "greaterThan";
+                    $data["answer".$i_cons] = $request->min_composition[$key];
+                    if($request->max_composition[$key] > $request->min_composition[$key]){
+                        $i_cons++;
+                        
+                        $i = 1;
+                        foreach($feeds as $key2 => $value2){
+                        $feednuts = FeedNutrient::SearchByNutrientAndFeed($value,$value2)->first();
+                            $data["cons".$i_cons."_".$i++] = $feednuts->composition;
+                        }
+                        $data["sign".$i_cons] = "lessThan";
+                        $data["answer".$i_cons] = $request->max_composition[$key];
+                    }
+                } 
+            }
+            else
+            {
                 $i_cons++;
-
+                
                 $i = 1;
                 foreach($feeds as $key2 => $value2){
                     $feednuts = FeedNutrient::SearchByNutrientAndFeed($value,$value2)->first();
@@ -158,7 +184,7 @@ class HomeController extends Controller
                     $data["sign".$i_cons] = "lessThan";
                     $data["answer".$i_cons] = $request->max_composition[$key];
                 }
-            }            
+            }           
         }
         
         //contraint untuk komposisi feed
@@ -213,7 +239,9 @@ class HomeController extends Controller
             $no++;
         }
         $request->session()->put('requirement',$requirement);  
-        //print_r($request->max_composition); exit();
+        
+        
+
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
         
