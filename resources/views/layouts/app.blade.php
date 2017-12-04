@@ -55,7 +55,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Feedlot') }}
+                        {{ config('configuration.site_name') }}
                     </a>
                 </div>
 
@@ -63,10 +63,13 @@
                     <!-- Right Side Of Navbar -->
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        @if(Auth::guest())
-                            {!! $MenuUtama->asUl(['class' => 'nav navbar-nav'],['class'=>'dropdown-menu']) !!}
-                        @endif
-                        @role('admin')
+                        {!! $MenuUtama->asUl(['class' => 'nav navbar-nav'],['class'=>'dropdown-menu']) !!}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        @if (Auth::guest())
+                            <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                        @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-pencil"></i> Editor <span class="caret"></span>
@@ -78,17 +81,10 @@
                                     {!! Html::smartNavBackend(url('/admin/slider'), 'Slider','fa fa-image') !!}
                                     {!! Html::smartNavBackend(url('/admin/social'), 'Social','fa fa-facebook') !!}
                                     {!! Html::smartNavBackend(url('/admin/album'), 'Album Foto','fa fa-camera-retro') !!}
+                                    {!! Html::smartNavBackend(url('/admin/setting'), 'Setting','fa fa-cog') !!}
+                                    {!! Html::smartNavBackend(url('/admin/member'), 'Member','fa fa-users') !!}
                                 </ul>
                             </li>
-                            {!! Html::smartNavBackend(url('/admin/setting'), 'Setting','fa fa-cog') !!}
-                            {!! Html::smartNavBackend(url('/admin/member'), 'Member','fa fa-users') !!}
-                        @endrole
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
-                        @else
                             <li><a href="{{ url('/settings/profile') }}"><i class="fa fa-user"></i> Profile</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
