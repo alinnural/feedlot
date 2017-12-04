@@ -47,7 +47,10 @@ Route::group(['middleware' => ['web','menu']],function(){
         'as' => 'feeds.explore',
         'uses' => 'HomeController@explore'
     ]);
-    Route::get('feeds/detail/{id}','HomeController@showFeed');
+    Route::get('feeds/detail/{id}',[
+        'as' => 'feeds.details',
+        'uses' => 'HomeController@showFeed'
+    ]);
 });
 
 Auth::routes();

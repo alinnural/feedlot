@@ -1,37 +1,59 @@
 <div class="col-md-3">
-    <div
-    @desktop
-        class="affix"
-    @enddesktop >
-        <div class="list-group">
-            {!! Html::smartNav(url('/'), 'Beranda','fa-home') !!}
-            {!! Html::smartNav(url('/formula'), 'Formulasi Ransum','fa-calculator') !!}
-            {!! Html::smartNav(url('/laktasi'), 'Kebutuhan Nutrien Laktasi','fa-check') !!}
-            @role('admin')
-                {!! Html::smartNav(route('ransums.index'),'Ransum','fa fa-list-ul ') !!}
-            @endrole
-            {!! Html::smartNav(url('/simulasi'), 'Simulasi Linear Programming','fa-code') !!}
-            {!! Html::smartNav(url('/changelog'),'Perubahan Versi','fa-code-fork') !!}
-        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div
+            @desktop
+                class="affix"
+            @enddesktop 
+                class="panel">
+                <div class="list-group">
+                    {!! Html::smartNav(url('/'), 'Beranda','fa-home') !!}
+                    {!! Html::smartNav(url('/formula'), 'Formulasi Ransum','fa-calculator') !!}
+                    {!! Html::smartNav(url('/laktasi'), 'Kebutuhan Nutrien Laktasi','fa-check') !!}
+                    @role('admin')
+                        {!! Html::smartNav(route('ransums.index'),'Ransum','fa fa-list-ul ') !!}
+                    @endrole
+                    {!! Html::smartNav(url('/simulasi'), 'Simulasi Linear Programming','fa-code') !!}
+                    {!! Html::smartNav(url('/changelog'),'Perubahan Versi','fa-code-fork') !!}
+                </div>
 
-        @role('admin')
-        <div class="list-group">
-                {!! Html::smartNav(route('groupfeeds.index'), 'Kelompok Pakan','fa fa-circle-o') !!}
-                {!! Html::smartNav(route('feeds.index'), 'Pakan','fa fa-circle-o') !!}
-                {!! Html::smartNav(route('units.index'),'Unit Nutrien','fa fa-circle-o') !!}
-                {!! Html::smartNav(route('nutrients.index'),'Nutrien','fa fa-circle-o') !!}
-                {!! Html::smartNav(route('requirements.index'),'Kebutuhan Ternak','fa fa-circle-o') !!}
-        </div>
-        @endrole
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{{ config('configuration.site_name') }}</div>
+                    <div class="panel-body">{!! wordwrap(config('configuration.site_description'), 32, "<br />\n") !!}</div>
+                </div>
 
-        <div class="list-group">
-            {!! Html::smartNav(route('feeds.explore'),'Semua Pakan','fa fa-rss') !!}
-            @php 
-                $groupfeed = App\GroupFeed::all();
-            @endphp
-            @foreach($groupfeed as $g)
-                {!! Html::smartNav(route('feeds.group_by_id',$g->id), $g->name.' ('.$g->getTotalFeedAttribute().')','fa fa-rss-square') !!}
-            @endforeach
+                @role('admin')
+                <div class="list-group">
+                    {!! Html::smartNav(route('groupfeeds.index'), 'Kelompok Pakan','fa fa-circle-o') !!}
+                    {!! Html::smartNav(route('feeds.index'), 'Pakan','fa fa-circle-o') !!}
+                    {!! Html::smartNav(route('units.index'),'Unit Nutrien','fa fa-circle-o') !!}
+                    {!! Html::smartNav(route('nutrients.index'),'Nutrien','fa fa-circle-o') !!}
+                    {!! Html::smartNav(route('requirements.index'),'Kebutuhan Ternak','fa fa-circle-o') !!}
+                </div>
+                @endrole
+                
+
+                <div class="list-group">
+                    {!! Html::smartNav(route('feeds.explore'),'Semua Pakan','fa fa-rss') !!}
+                    @php 
+                        $groupfeed = App\GroupFeed::all();
+                    @endphp
+                    @foreach($groupfeed as $g)
+                        {!! Html::smartNav(route('feeds.group_by_id',$g->id), $g->name.' ('.$g->getTotalFeedAttribute().')','fa fa-rss-square') !!}
+                    @endforeach
+                </div>
+
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">Berita Terbaru</a>
+                    @php 
+                        $recentpost = App\Post::orderBy('created_at', 'desc')->paginate(3);
+                    @endphp
+                    @foreach($recentpost as $g)
+                        {!! Html::smartNav(url('post',$g->slug), str_limit($g->title,29),'fa fa-newspaper-o') !!}
+                    @endforeach
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
