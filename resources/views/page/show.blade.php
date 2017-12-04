@@ -40,6 +40,7 @@
                 <br>
                 <hr>
                 @include('layouts.shareit')
+                <hr>
             </div>
         </div>
     </div>
