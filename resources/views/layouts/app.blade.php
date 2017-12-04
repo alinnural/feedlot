@@ -62,11 +62,14 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Right Side Of Navbar -->
                     <!-- Left Side Of Navbar -->
-                    
+                    <ul class="nav navbar-nav">
+                        {!! $MenuUtama->asUl(['class' => 'nav navbar-nav'],['class'=>'dropdown-menu']) !!}
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                            <li><a href="{{ url('/register') }}"> Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
