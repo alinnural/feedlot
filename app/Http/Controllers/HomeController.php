@@ -62,7 +62,7 @@ class HomeController extends Controller
                         ->take(config('configuration.paging_slider'))
                         ->get();
 
-        $posts = Post::where('is_draft',0)->where('published_at', '<=', Carbon::now())
+        $posts = Post::where('is_draft',0)
                     ->orderBy('published_at', 'desc')
                     ->paginate(config('configuration.paging_news'))
                     ->setPath('post');
