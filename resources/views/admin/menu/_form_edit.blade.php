@@ -9,13 +9,13 @@
     {!! Form::label('type','Jenis Menu',['class'=>'col-md-3 control-label'])!!}
     <div class="col-sm-9">
         <select name="type" class="form-control" id="type">
-            <option selected="" readonly>
+            <option readonly>
                 - Pilih Jenis Menu -
             </option>
-            <option value="1">
+            <option value="1" @if($menu->type == 1) selected @endif>
                 Link
             </option>
-            <option value="2">
+            <option value="2" @if($menu->type == 2) selected @endif>
                 Halaman
             </option>
         </select>
@@ -80,7 +80,7 @@
     </div>
 </div>
 <div class="form-group">
-  <div class="col-md-4 col-md-offset-2">
+  <div class="col-md-4 col-md-offset-3">
     {{ Form::button('<span class="fa fa-save"></span> Simpan', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
     <a href="{{ url('admin/menu') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
   </div>

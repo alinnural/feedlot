@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Page;
 
 class MenuUpdateRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class MenuUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -25,6 +27,45 @@ class MenuUpdateRequest extends FormRequest
     {
         return [
             //
+        ];
+    }
+
+    public function postFillData()
+    {
+        if($this->type == 1)
+        {
+            $slug = '';//$this->getUniqueSlug($this->name);
+            $url = $this->url;
+            $page_id = 0;
+        }
+        else
+        {
+            $slug = Page::findOrFail($this->page_id)->slug;
+            $url = 'page/' . $slug;
+            $page_id = $this->page_id;
+        }
+
+        if($this->is_parent == 1)
+        {
+            $parent_id = 0;
+        }
+        else
+        {
+            $parent_id = $this->parent_id;
+        }
+
+        return [
+            'name' => $this->name,
+            'url' => $url,
+            'is_parent' => $this->is_parent,
+            'have_child' => $this->have_child,
+            'parent_id' => $parent_id,
+            'menu_admin' => 0,
+            'active' => $this->active,
+            'position' => $this->position,
+            'page_id' => $page_id,
+            'slug' => $slug,
+            'type' => $this->type,
         ];
     }
 }
