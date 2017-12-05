@@ -26,7 +26,7 @@
                     <hr>
                     <div class="card">
                         <img src="
-                        @if($post->image == null)
+                        @if($post->page_image == null)
                             {{asset('images/no-photo.jpg')}}
                         @else
                             {{url('img/post')}}/{{$post->page_image}}
