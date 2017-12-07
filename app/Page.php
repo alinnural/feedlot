@@ -8,7 +8,7 @@ use App\Library\Markdowner;
 class Page extends Model
 {
     protected $fillable = [
-      'title', 'content', 'image'
+      'title', 'content', 'image','show_slider'
     ];
     /**
      * Set the title attribute and automatically the slug

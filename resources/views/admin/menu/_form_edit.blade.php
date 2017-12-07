@@ -90,33 +90,43 @@
 <script>
 $(document).ready(function() {
     $('#summernote').summernote();
-    $('#row_halaman').hide();
-    $('#row_link').hide();
-    $('#row_parent').hide();
+
+    var type = "@php echo $menu->type; @endphp";
+    show(type);
+
+    var id = "@php echo $menu->is_parent; @endphp";
+    show_parent(id);    
 });
 
 $('#type').change(function(){
-    if($('#type').val() == '1') {
-        $('#row_halaman').hide();
-        $('#row_link').show();
-    }
-    if($('#type').val() == '2') {
-        $('#row_halaman').show();
-        $('#row_link').hide();
-    }
+    var type = $('type').val();
+    show(type);
 });
 
+function show(type){
+  if(type == '1') {
+      $('#row_halaman').hide();
+      $('#row_link').show();
+  }
+  if(type == '2') {
+      $('#row_halaman').show();
+      $('#row_link').hide();
+  }
+}
 
+function show_parent(id){
+  if(id == '0')
+  {
+      $("#row_parent").show();
+  }
+  else
+  {
+      $("#row_parent").hide();
+  }
+}
 $('input[name=is_parent]').change(function () {
-    if($(this).val() == '0')
-    {
-        $("#row_parent").show();
-    }
-    else
-    {
-        $("#row_parent").hide();
-    }
-
+  var id = $(this).val();
+  show_parent(id);
 });
 
 </script>

@@ -19,6 +19,17 @@
         {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div class="form-group {{ $errors->has('show_slider') ? ' has-error' : '' }}">
+    {!! Form::label('show_slider','Tampil Slider',['class'=>'col-md-3 control-label'])!!}
+    <div class="col-sm-9">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!! Form::radio('show_slider','1',true) !!}
+        Ya  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!! Form::radio('show_slider','0') !!}
+        Tidak
+      {!! $errors->first('show_slider', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
 <div class="form-group">
   <div class="col-md-4 col-md-offset-3">
     {{ Form::button('<span class="fa fa-save"></span> Simpan', array('class'=>'btn btn-primary', 'type'=>'submit')) }}

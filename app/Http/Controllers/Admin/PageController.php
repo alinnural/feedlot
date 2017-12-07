@@ -24,8 +24,11 @@ class PageController extends Controller
     public function index(Request $request, Builder $htmlBuilder)
     {
         if ($request->ajax()) {
-            $page = Page::select(['id','title']);
+            $page = Page::select(['id','title','show_slider']);
             return Datatables::of($page)
+                ->addColumn('show_slider',function($page){
+                    return $page->show_slider == true ? "Ya" : "Tidak";
+                })
                 ->addColumn('action', function($page){
                     return view('admin.datatable._action',[
                         'model' => $page,
@@ -33,10 +36,11 @@ class PageController extends Controller
                         'delete_url' => route('page.destroy', $page->id),
                         'confirm_message' => 'Are you sure to delete '. $page->title . '?'
                     ]);
-            })->make(true);
+                })->make(true);
         }
         $html = $htmlBuilder
         ->addColumn(['data' => 'title', 'name'=>'title', 'title'=>'Judul'])
+        ->addColumn(['data' => 'show_slider', 'name'=>'show_slider', 'title'=>'Tampil Slider','width'=>100])
         ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false,'width'=>100]);
         return view('admin.page.index')->with(compact('html'));
     }
@@ -62,7 +66,7 @@ class PageController extends Controller
         $page = Page::create($request->except('image'));
 
         if($request->hasFile('image')){
-            // Mengambil file yang diupload
+            // Mengambil file \App\Http\Requests\PageCreateRequest diupload
             $uploaded_photo = $request->file('image');
             // mengambil extension file
             $extension = $uploaded_photo->getClientOriginalExtension();
@@ -115,7 +119,6 @@ class PageController extends Controller
     public function update(PageUpdateRequest $request, $id)
     {
         $page = Page::findOrFail($id);
-
         if(!$page->update($request->except('image')))
             return redirect()->back();
 

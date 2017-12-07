@@ -25,7 +25,9 @@ class PageUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title'=> 'required',
+            'content'=> 'required',
+            'show_slider' => 'required'
         ];
     }
 }
