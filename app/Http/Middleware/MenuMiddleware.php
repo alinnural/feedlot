@@ -17,7 +17,7 @@ class MenuMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $menudatabase = MenuDatabase::all();
+        $menudatabase = MenuDatabase::orderBy('position','asc')->get();
         Menu::make('MenuUtama',function($men) use ($menudatabase){
             foreach($menudatabase as $m){
                 // jika punya parent
