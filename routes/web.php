@@ -20,24 +20,34 @@ Route::group(['middleware' => ['web','menu']],function(){
     Route::get('/contact','HomeController@contact');
     Route::get('/changelog','HomeController@changelog');
 
-    Route::group(['prefix'=>'formula'],function(){
-        Route::post('/input','HomeController@input');
-        Route::get('/price','HomeController@price');
-        Route::post('/calculate','HomeController@calculate');
-        Route::post('/store','HomeController@store');
-        Route::get('/', 'HomeController@index');
-        Route::post('/print','HomeController@print');
-    });
-
-    Route::group(['prefix'=>'laktasi'],function(){
-        Route::get('/', 'HomeController@laktasi');
-        Route::post('/calculate','HomeController@calc_laktasi');
-    });
-
     Route::get('post', 'PostController@index');
     Route::get('post/{slug}', 'PostController@showPost');
     Route::get('page/{slug}','PageController@showPage');
     
+    Route::group(['middleware'=>['formula']],function(){
+        Route::resource('ransums','RansumsController');
+        
+        Route::group(['prefix'=>'formula'],function(){
+            Route::post('/input','HomeController@input');
+            Route::get('/price','HomeController@price');
+            Route::post('/calculate','HomeController@calculate');
+            Route::post('/store','HomeController@store');
+            Route::get('/', 'HomeController@index');
+            Route::post('/print','HomeController@print');
+        });
+
+        Route::group(['prefix'=>'laktasi'],function(){
+            Route::get('/', 'HomeController@laktasi');
+            Route::post('/calculate','HomeController@calc_laktasi');
+        });
+
+        Route::group(['prefix'=>'simulasi'],function(){
+            Route::get('/','HomeController@simulasiIndex');
+            Route::post('/input','HomeController@simulasiInput');
+            Route::post('/calculate','HomeController@simulasiCalculate');
+            Route::get('/simplex','HomeController@simulasiSimplexMethod');
+        });
+    });
     
     Route::get('/feeds/group/{id}',[
         'as' =>'feeds.group_by_id',
@@ -51,43 +61,8 @@ Route::group(['middleware' => ['web','menu']],function(){
         'as' => 'feeds.details',
         'uses' => 'HomeController@showFeed'
     ]);
-});
 
-Auth::routes();
-
-Route::group(['prefix'=>'simulasi', 'middleware'=>['web','menu']],function(){
-    Route::get('/','HomeController@simulasiIndex');
-    Route::post('/input','HomeController@simulasiInput');
-    Route::post('/calculate','HomeController@simulasiCalculate');
-    Route::get('/simplex','HomeController@simulasiSimplexMethod');
-});
-
-Route::group(['prefix'=>'ajax'],function(){
-    Route::get('requirements/search', 'RequirementsController@AjaxSearch');
-    Route::get('requirements/find', [
-            'as'   => 'ajax.find',
-            'uses' => 'RequirementsController@AjaxFind'
-        ]);
-    Route::get('feeds/find', [
-            'as'   => 'ajax.feed_find',
-            'uses' => 'FeedsController@AjaxFind'
-        ]);
-    Route::get('feeds/search','FeedsController@AjaxSearch');
-    Route::get('home/calcquantity', [
-        'as'   => 'ajax.calcquantity',
-        'uses' => 'HomeController@AjaxCalcQ'
-    ]);
-    Route::get('home/calclaktasi', [
-        'as'   => 'ajax.calclaktasi',
-        'uses' => 'HomeController@AjaxCalcLaktasi'
-    ]);
-});
-
-Route::group(['middleware'=>['web','menu']],function(){
     Route::get('/settings/profile','Admin\MemberController@Profile');
-    Route::group(['middleware'=>['auth']],function(){
-        Route::resource('ransums','RansumsController');        
-    });
     
     Route::group(['middleware'=>['auth','role:admin']],function(){
         Route::group(['prefix'=>'admin'],function(){
@@ -140,4 +115,27 @@ Route::group(['middleware'=>['web','menu']],function(){
             'uses' =>'RequirementsController@importExcel'
         ]);
     });
+});
+
+Auth::routes();
+
+Route::group(['prefix'=>'ajax'],function(){
+    Route::get('requirements/search', 'RequirementsController@AjaxSearch');
+    Route::get('requirements/find', [
+            'as'   => 'ajax.find',
+            'uses' => 'RequirementsController@AjaxFind'
+        ]);
+    Route::get('feeds/find', [
+            'as'   => 'ajax.feed_find',
+            'uses' => 'FeedsController@AjaxFind'
+        ]);
+    Route::get('feeds/search','FeedsController@AjaxSearch');
+    Route::get('home/calcquantity', [
+        'as'   => 'ajax.calcquantity',
+        'uses' => 'HomeController@AjaxCalcQ'
+    ]);
+    Route::get('home/calclaktasi', [
+        'as'   => 'ajax.calclaktasi',
+        'uses' => 'HomeController@AjaxCalcLaktasi'
+    ]);
 });
