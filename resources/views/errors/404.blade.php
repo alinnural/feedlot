@@ -40,7 +40,9 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Oops.. Halaman tidak ditemukan.</div>
+                <div class=" title">:(</div>
+                <p>Oops.. Halaman tidak ditemukan.</p>
+                <p><a href="{{url('/')}}">Kembali ke halaman utama</a></p>
             </div>
         </div>
     </body>
