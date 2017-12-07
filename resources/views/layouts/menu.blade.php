@@ -2,14 +2,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel">
-                <div class="list-group">
+                {{--  <div class="list-group">
                     {!! Html::smartNav(url('/'), 'Beranda','fa-home') !!}
                     {!! Html::smartNav(url('/formula'), 'Formulasi Ransum','fa-calculator') !!}
                     {!! Html::smartNav(url('/laktasi'), 'Kebutuhan Nutrien Laktasi','fa-check') !!}
                     {!! Html::smartNav(route('ransums.index'),'Ransum','fa fa-list-ul ') !!}
                     {!! Html::smartNav(url('/simulasi'), 'Simulasi Linear Programming','fa-code') !!}
                     {!! Html::smartNav(url('/changelog'),'Perubahan Versi','fa-code-fork') !!}
-                </div>
+                </div>  --}}
                 
                 <div class="panel panel-primary">
                     <div class="panel-heading">{{ config('configuration.site_name') }}</div>
