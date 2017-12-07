@@ -40,7 +40,6 @@
                 @include('layouts.shareit')
             </div>
             <hr>
-            @include('layouts.disqus')    
         </div>
     </div>
 @endsection
