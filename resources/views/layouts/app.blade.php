@@ -71,6 +71,7 @@
                             <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
                             <li><a href="{{ url('/register') }}"> Register</a></li>
                         @else
+                            @role('admin')
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-pencil"></i> Editor <span class="caret"></span>
@@ -87,6 +88,7 @@
                                     {!! Html::smartNavBackend(url('/admin/member'), 'Member','fa fa-users') !!}
                                 </ul>
                             </li>
+                            @endrole
                             <li><a href="{{ url('/settings/profile') }}"><i class="fa fa-user"></i> Profile</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
