@@ -41,10 +41,8 @@
                 @endforeach
             </div>
 
-            <div class="panel panel-primary">
-                <div class="panel-body">
-                    <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;ctz=Asia%2FJakarta" style="border-width:0" width="220" height="200" frameborder="0" scrolling="no"></iframe>    
-                </div>
+            <div class="panel">
+                <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;ctz=Asia%2FJakarta" style="border-width:0" width="250" height="250" frameborder="0" scrolling="no"></iframe>    
             </div>
             
             <div class="list-group">
