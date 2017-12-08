@@ -78,7 +78,6 @@
         </div>
     </div>
 </div>
-<div class="loader"></div>
 @endsection
 
 @section('scripts')
@@ -87,7 +86,6 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".loader").fadeOut("slow");
     });
 </script>
 @endsection
