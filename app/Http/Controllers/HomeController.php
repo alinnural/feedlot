@@ -602,7 +602,6 @@ class HomeController extends Controller
     public function showFeed($id)
     {
         $feed = Feed::find($id);
-        print_r($feed);die();
         $nutrients = $feed->feednutrients()->with('nutrient')->get();
 
         return view('feeds.show')
