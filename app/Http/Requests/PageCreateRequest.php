@@ -26,7 +26,7 @@ class PageCreateRequest extends FormRequest
         return [
             'title'=> 'required|unique:pages,title',
             'content'=> 'required',
-            'image' => 'required|image|max:2048',
+            'image' => 'image|max:2048',
             'show_slider' => 'required'
         ];
     }

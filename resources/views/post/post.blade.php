@@ -24,6 +24,7 @@
                         <span class="date"><i class="fa fa-calendar"></i> {{ $post->published_at->format('Y-m-d g:ia') }}</span> 
                     </div>
                     <hr>
+                    @if($post->page_image != '')
                     <div class="card">
                         <img src="
                         @if($post->page_image == null)
@@ -33,6 +34,7 @@
                         @endif
                         " alt="{{ $post->title }}" class="img img-responsive" width="350px;" style="float:left; margin-right : 20px; margin-bottom : 20px;">
                     </div>
+                    @endif
                     {!! $post->content_html !!}
                 </div><!-- /.post-content --> 
                 <br>
