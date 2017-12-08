@@ -31,6 +31,7 @@
             
 
             <div class="list-group">
+                <a href="#" class="list-group-item active">Pakan Ternak</a>
                 {!! Html::smartNav(route('feeds.explore'),'Semua Pakan','fa fa-rss') !!}
                 @php 
                     $groupfeed = App\GroupFeed::all();

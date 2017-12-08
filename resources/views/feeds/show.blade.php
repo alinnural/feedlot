@@ -54,9 +54,12 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
                     <div class="description">
                         {!! $feed->description !!}
                     </div>
+                    <hr>
+                    <h4><b>Komposisi Nutrien Bahan Pakan</b></h4> 
                     <hr>
                     @role('admin')
                     <div class="btn-group pull-right">
