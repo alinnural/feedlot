@@ -37,7 +37,7 @@
                     $groupfeed = App\GroupFeed::all();
                 @endphp
                 @foreach($groupfeed as $g)
-                    {!! Html::smartNav(route('feeds.group_by_id',$g->id), $g->name.' ('.$g->getTotalFeedAttribute().')','fa fa-rss-square') !!}
+                    {!! Html::smartNav(route('feeds.group_by_id',$g->id), $g->name.' ('.$g->getTotalFeedAttributePublic().')','fa fa-rss-square') !!}
                 @endforeach
             </div>
 

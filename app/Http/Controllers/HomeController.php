@@ -585,7 +585,7 @@ class HomeController extends Controller
     public function groupFeeds($id)
     {
         $groupfeed = GroupFeed::find($id);
-        $feeds = $groupfeed->feeds()->paginate(5);
+        $feeds = $groupfeed->feeds()->where('is_public',1)->orderBy('urutan','asc')->paginate(5);
         
         return view('feeds.group-feeds')
             ->with(compact('feeds'))
@@ -594,7 +594,7 @@ class HomeController extends Controller
 
     public function explore()
     {
-        $feeds = Feed::paginate(5);
+        $feeds = Feed::where('is_public',1)->orderBy('urutan','asc')->paginate(5);
         return view('feeds.explore')
                 ->with(compact('feeds'));
     }

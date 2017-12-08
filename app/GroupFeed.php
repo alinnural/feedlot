@@ -41,4 +41,9 @@ class GroupFeed extends Model
     {
        return $this->hasMany('App\Feed')->whereGroupFeedId($this->id)->count();   
     }
+
+    public function getTotalFeedAttributePublic()
+    {
+        return $this->hasMany('App\Feed')->whereGroupFeedId($this->id)->where(['is_public' => 1])->count();
+    }
 }
