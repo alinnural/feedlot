@@ -29,21 +29,29 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3">Link File</label> 
+                    <label class="control-label col-md-3">Jenis File</label> 
                     <div class="col-md-9">
-                        <a href="{{asset('file')}}/{{$file->file}}" target="_blank">{{$file->file}}</a>
+                        {{$file->extension}}
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Link File</label> 
+                    <div class="col-md-9">
+                        <a href="{{asset('file')}}/{{$file->file}}" target="_blank">{{asset('file')}}/{{$file->file}}</a>
+                    </div>
+                </div>
+                @if($file->extension == 'pdf')
                 <div class="form-group">
                     <label class="control-label col-md-3">Sematkan</label> 
                     <div class="col-md-9">
                         <textarea class="form-control"><iframe src="{{asset('file')}}/{{$file->file}}" width="100%" height="500"></iframe></textarea>
                     </div>
                 </div>
+                @endif
             </div>
-            {{--  <iframe src="https://docs.google.com/viewerng/viewer?url={{asset('file')}}/{{$file->file}}&embedded" width="100%" height="500">
-            </iframe>  --}}
+            @if($file->extension == 'pdf')
             <iframe src="{{asset('file')}}/{{$file->file}}" width="100%" height="500"></iframe>
+            @endif
           </div>
         </div>
       </div>

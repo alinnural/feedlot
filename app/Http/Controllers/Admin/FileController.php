@@ -80,7 +80,7 @@ class FileController extends Controller
              // mengambil extension file
              $extension = $uploaded->getClientOriginalExtension();
              // membuat nama file random berikut extension
-             $filename = $uploaded->getClientOriginalName() . '.' . $extension;
+             $filename = $uploaded->getClientOriginalName();
              // menyimpan cover ke folder public/img
              $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'file/';
              $uploaded->move($destinationPath, $filename);
