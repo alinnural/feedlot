@@ -196,7 +196,7 @@
                     </div>
                     <br>&nbsp;<br>
                     @if($flag==1)
-                        <p class='final'>Tidak mungkin (Problem is infeasible).</p>
+                        <strong><h3 class='final text-danger text-center'>Tidak mungkin (Problem is infeasible).</h3></strong>
                     @else
                     {!! Form::open(['url' => 'formula/store', 'method' => 'post', 'class'=>'form-horizontal']) !!}          
                         <div class="row">
@@ -312,13 +312,11 @@
         </div>
     </div>
 </div>
-<div class="loader"></div>
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".loader").fadeOut("slow");
     });
 
     function calc(){

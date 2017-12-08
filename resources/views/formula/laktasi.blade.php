@@ -49,9 +49,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-offset-3 col-md-9" id="kebutuhan">
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="kebutuhan">
                 <div class="panel-heading">
                     <h4> Kebutuhan Nutrien Ternak</h4>
                 </div>
@@ -59,8 +57,6 @@
                     <div id="result_laktasi"></div>                    
                 </div>
             </div>
-        </div>
-        <div class="col-md-offset-3 col-md-9" >
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4> Pilih pakan ternak yang akan diformulasikan</h4>
@@ -80,15 +76,15 @@
                         </div>
                     </div>
                     <div class="result-btn-add"></div>
-                    <a href="#" class="btn btn-success" id="btn-add-more"><i class="fa fa-plus-square-o"></i> Tambah Pakan</a>
+                    <a href="#" class="btn btn-sm btn-success" id="btn-add-more"><i class="fa fa-plus-square-o"></i> Tambah Pakan</a>
                 </div>
                 <div class="panel-footer">
                         <div class="row">
                         <div class="col-md-4">
-                            <a href="{{url('formula')}}" class="pull-left btn btn-lg btn-primary" id="next"><i class="fa fa-lg fa-arrow-circle-o-left"></i> Kembali</a>
+                            
                         </div>
                         <div class="col-md-8">
-                            {{ Form::button('<span class="fa fa-lg fa-arrow-circle-o-right"></span> Lanjut', array('class'=>'btn btn-success btn-lg pull-right', 'type'=>'submit')) }}
+                            {{ Form::button('<span class="fa fa-arrow-circle-o-right"></span> Hitung', array('class'=>'btn btn-success pull-right', 'type'=>'submit')) }}
                         </div>
                     <div>
                 </div>
@@ -97,7 +93,6 @@
         {!! Form::close() !!}
     </div>
 </div>
-<div class="loader"></div>
 @endsection
 
 @section('scripts')
@@ -105,7 +100,6 @@
     $(document).ready(function(){
         $("#kebutuhan").hide();
         $(".x").val(0);
-        $(".loader").fadeOut("slow");
         $('.feed_list').select2({
             minimumInputLength: 0,
             width:250,
