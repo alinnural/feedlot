@@ -9,6 +9,7 @@ class Feed extends Model
     protected $fillable = [
         'name',
         'latin_name',
+        'local_name',
         'description',
         'is_public',
         'urutan',

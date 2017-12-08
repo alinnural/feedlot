@@ -12,6 +12,13 @@
         {!! $errors->first('latin_name', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div class="form-group{{ $errors->has('local_name') ? ' has-error' : '' }}"> 
+    {!! Form::label('local_name', 'Nama Lokal', ['class'=>'col-md-2 control-label']) !!} 
+    <div class="col-md-10">
+        {!! Form::text('local_name', null, ['class'=>'form-control']) !!}
+        {!! $errors->first('local_name', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 <div class="form-group {!! $errors->has('group_feed_id') ? 'has-error' : '' !!}">
     {!! Form::label('group_feed_id','Group Feed', ['class'=>'col-md-2 control-label']) !!} 
     <div class="col-md-10">

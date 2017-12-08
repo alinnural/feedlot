@@ -51,6 +51,12 @@
                                         <i>{{$feed->latin_name}}</i>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Nama Local</label>
+                                    <div class="col-md-9">
+                                        {{$feed->local_name}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -58,16 +64,16 @@
                     <div class="description">
                         {!! $feed->description !!}
                     </div>
+                    <hr> 
+                    <h4>
+                        <b>Komposisi Nutrien Bahan Pakan</b>
+                        @role('admin')
+                        <div class="btn-group pull-right">
+                            <a class="btn btn-primary btn-sm" href="{{ route('feednutrients.create_id',$feed->id) }}"><i class="fa fa-plus"></i> Tambah Nutrient</a>
+                        </div>
+                        @endrole
+                    </h4>
                     <hr>
-                    <h4><b>Komposisi Nutrien Bahan Pakan</b></h4> 
-                    <hr>
-                    @role('admin')
-                    <div class="btn-group pull-right">
-                        <a class="btn btn-primary btn-sm" href="{{ route('feednutrients.create_id',$feed->id) }}"><i class="fa fa-plus"></i> Tambah Nutrient</a>
-                    </div>
-                    &nbsp;
-                    <hr>
-                    @endrole
                     <table class="table table-responsive table-hover table-striped table-bordered">
                         <thead>
                             <tr>
