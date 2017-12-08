@@ -28,7 +28,7 @@ class PostCreateRequest extends FormRequest
       'subtitle' => 'required',
       'content' => 'required',
       'meta_description' => 'required',
-      'page_image' => 'required|image|max:2048'
+      'page_image' => 'image|max:2048'
       //'layout' => 'required',
     ];
   }
