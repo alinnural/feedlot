@@ -57,6 +57,19 @@
                                         {{$feed->local_name}}
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Minimal</label>
+                                    <div class="col-md-9">
+                                        {{$feed->min}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Maksimal</label>
+                                    <div class="col-md-9">
+                                        {{$feed->max}}
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

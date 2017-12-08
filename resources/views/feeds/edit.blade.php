@@ -10,7 +10,7 @@
       <div class="col-md-9">
         <ul class="breadcrumb">
           <li><a href="{{ url('/home') }}">Dashboard</a></li>
-          <li><a href="{{ url('/admin/feeds') }}">Feeds Stuff</a></li>
+          <li><a href="{{ url('/feeds') }}">Feeds Stuff</a></li>
           <li class="active">Edit Feeds Stuff</li>
         </ul>
         <div class="panel panel-default">

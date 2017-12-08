@@ -15,6 +15,8 @@ class Feed extends Model
         'urutan',
         'image',
         'group_feed_id',
+        'min',
+        'max'
         ];
 
     public function groupfeed()
