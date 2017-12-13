@@ -196,7 +196,7 @@
                     </div>
                     <br>&nbsp;<br>
                     @if($flag==1)
-                        <strong><h3 class='final text-danger text-center'>Tidak mungkin (Problem is infeasible).</h3></strong>
+                        <strong><h3 class='final text-danger text-center'>Tidak ada solusi yang feasible</h3></strong>
                     @else
                     {!! Form::open(['url' => 'formula/store', 'method' => 'post', 'class'=>'form-horizontal']) !!}          
                         <div class="row">
