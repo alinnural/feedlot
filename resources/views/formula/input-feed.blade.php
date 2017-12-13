@@ -53,7 +53,7 @@
                                 {{ Form::text('max_feed[]', '',['class' => 'form-control max_feed_0','placeholder' => 'Nilai maks'])}} 
                             </div>
                             <div class='col-md-2'>
-                                {{ Form::number('harga[]', '',['class' => 'form-control harga','placeholder' => 'Harga'])}} 
+                                {{ Form::number('harga[]', '',['class' => 'form-control harga_0','placeholder' => 'Harga'])}} 
                             </div>
                             <div class='col-md-1'>
                                 <a href='#' class='btn btn-sm btn-danger btn-remove'>Hapus</a>
@@ -107,7 +107,7 @@
                                         "<input class='form-control max_feed_"+x+"' placeholder='Nilai maks' name='max_feed[]' type='text' value=''> "+
                                     "</div>"+
                                     "<div class='col-md-2'>"+
-                                        "<input class='form-control harga' placeholder='Harga' name='harga[]' type='number' value=''> "+
+                                        "<input class='form-control harga_"+x+"' placeholder='Harga' name='harga[]' type='number' value=''> "+
                                     "</div>"+
                                     "<div class='col-md-1'>"+
                                         "<a href='#' class='btn btn-sm btn-danger btn-remove'>Hapus</a>"+
@@ -140,6 +140,7 @@
             success : function(data){
                 $(".min_feed_"+num_feed).val(data.min);
                 $(".max_feed_"+num_feed).val(data.max);
+                $(".harga_"+num_feed).val(data.price);
             }
         }, "json")
     };
