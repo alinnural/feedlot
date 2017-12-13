@@ -69,7 +69,7 @@
                             <a href="{{url('formula')}}" class="pull-left btn btn-primary" id="next"><i class="fa fa-arrow-circle-o-left"></i> Kembali</a>
                         </div>
                         <div class="col-md-8">
-                            {{ Form::button('<span class="fa fa-arrow-circle-o-right"></span> Formulasi', array('class'=>'btn btn-success pull-right', 'type'=>'submit')) }}
+                            {{ Form::button('<span class="fa fa-arrow-circle-o-right"></span> Formulasi', array('class'=>'btn btn-info pull-right', 'type'=>'submit')) }}
                         </div>
                     <div>
                 </div>

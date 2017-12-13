@@ -14,7 +14,7 @@
                     <div class="btn-group pull-right">
                         <a href="{{url('/')}}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
                     </div>
-                    <h4><i class="fa fa-breafcase"></i> Hasil Optimasi</h4>
+                    <h4><i class="fa fa-breafcase"></i> Hasil Formulasi</h4>
                 </div>
                 <div class="panel-body">
                     <a class="btn btn-success" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
