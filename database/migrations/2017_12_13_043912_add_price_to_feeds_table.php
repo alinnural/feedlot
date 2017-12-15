@@ -14,7 +14,7 @@ class AddPriceToFeedsTable extends Migration
     public function up()
     {
         Schema::table('feeds', function (Blueprint $table) {
-            $table->integer('price');
+            $table->integer('price')->value(0);
         });
     }
 
