@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Feed;
 use App\Requirement;
 use App\FeedNutrient;
+use App\Nutrient;
 use Session;
 
 class Calculate{
@@ -71,9 +72,7 @@ class Calculate{
         $min_composition = Session::get('min_composition');
         $feeds_id = Session::get('feeds'); 
         $feed_price = Session::get('harga');
-        $result = Session::get('results');
-
-        
+        $result = Session::get('results');        
 
         $percent = array();
         $no = 1;
@@ -96,23 +95,38 @@ class Calculate{
         $feeds = Session::get('feeds'); 
         $requirement = Session::get('requirement');
         $result = Session::get('results');
+        
+        $all_nutrient = Nutrient::all();
 
-        $no=0;
         foreach($requirement as $req)
         {
-            $nutrient[$no]['id'] = $req['id'];
-            $nutrient[$no]['name'] = $req['name'];
-            $nutrient[$no]['min_composition'] = $req['min_composition'];
-            $nutrient[$no]['max_composition'] = $req['max_composition'];
+            $reqnut[$req['id']]['min_composition'] = $req['min_composition'];
+            $reqnut[$req['id']]['max_composition'] = $req['max_composition'];
+        }
+        $no=0;
+        foreach($all_nutrient as $nut)
+        {
+            $nutrient[$no]['id'] = $nut['id'];
+            $nutrient[$no]['name'] = $nut['name'];
+            
+            if(empty($reqnut[$nut['id']]))
+            {
+                $nutrient[$no]['min_composition'] = '-';
+                $nutrient[$no]['max_composition'] = '-';
+            }
+            else
+            {
+                $nutrient[$no]['min_composition'] = $reqnut[$nut['id']]['min_composition'];
+                $nutrient[$no]['max_composition'] = $reqnut[$nut['id']]['max_composition'];
+            }
+
             $sum_comp = 0;
-            if($req['min_composition'] != 0 || $req['max_composition'] != 0){
-                foreach($feeds as $key => $value)
-                {
-                    $feednuts = FeedNutrient::SearchByNutrientAndFeed($req['id'],$value)->first(); 
-                    $temp = $result[$key+1]*$feednuts->composition;
-                    $sum_comp += $temp;
-                }
-            }           
+            foreach($feeds as $key => $value)
+            {
+                $feednuts = FeedNutrient::SearchByNutrientAndFeed($nut['id'],$value)->first(); 
+                $temp = $result[$key+1]*$feednuts->composition;
+                $sum_comp += $temp;
+            }        
             $nutrient[$no]['result'] = round($sum_comp,2);
             $no++;
         }

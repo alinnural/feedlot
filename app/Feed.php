@@ -16,7 +16,8 @@ class Feed extends Model
         'image',
         'group_feed_id',
         'min',
-        'max'
+        'max',
+        'price'
         ];
 
     public function groupfeed()

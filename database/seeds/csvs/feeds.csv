@@ -1,43 +1,43 @@
-name,min,max,group_feed_id,is_public
-Jerami Padi,0,30,1,1
-Rumput Lapang,0,50,1,1
-Rumput Gajah,0,50,1,1
-Daun Jagung,0,40,1,1
-Daun Singkong,0,30,1,1
-Daun Lamtoro,0,30,1,1
-Jagung,10,50,2,1
-Dedak Padi Halus,0,40,2,1
-Dedak Padi Kasar,0,40,2,1
-Dedak Jagung,0,30,2,1
-Bekatul,0,30,2,1
-Onggok,0,40,2,1
-Onggok Super,0,30,2,1
-Gaplek ,0,30,2,1
-Pollard,0,30,2,1
-Singkong,0,30,3,1
-Bungkil Kedelai,0,35,3,1
-Biji Kedelai,0,20,3,1
-Bungkil Kelapa Sawit,0,30,3,1
-Bungkil Kelapa,0,30,3,1
-Bungkil Biji Kapuk,0,10,3,1
-Ampas Bir Kering,0,20,3,1
-Ampas Kecap,0,20,3,1
-Ampas Tahu,0,30,3,1
-Ampas Singkong,0,20,3,1
-Bungkil Kacang Tanah,0,20,3,1
-CPO,1,5,2,1
-Molases,5,7,2,1
-Garam,0.25,1,4,1
-Kapur,0,2,4,1
-Kalsium Karbonat,0,2,4,1
-DCP,0,2,4,1
-MCP,0,1,4,1
-Premix,0,1,4,1
-Tepung Skim,0,10,3,1
-DDGS,0,10,3,1
-Kulit Kacang Asin (+ biji),0,5,2,1
-Kulit Kacang Tanah,0,5,3,1
-Kulit Kopi,0,10,3,1
-Bran Sari Boga,0,25,3,1
-Brand Jagung,0,25,3,1
-Bran Kacang Hijau,0,25,3,1
+name,min,max,price,group_feed_id,is_public
+Jerami Padi,0,30,0,1,1
+Rumput Lapang,0,50,0,1,1
+Rumput Gajah,0,50,0,1,1
+Daun Jagung,0,40,0,1,1
+Daun Singkong,0,30,0,1,1
+Daun Lamtoro,0,30,0,1,1
+Jagung,10,50,0,2,1
+Dedak Padi Halus,0,40,0,2,1
+Dedak Padi Kasar,0,40,0,2,1
+Dedak Jagung,0,30,0,2,1
+Bekatul,0,30,0,2,1
+Onggok,0,40,0,2,1
+Onggok Super,0,30,0,2,1
+Gaplek ,0,30,0,2,1
+Pollard,0,30,0,2,1
+Singkong,0,30,0,3,1
+Bungkil Kedelai,0,35,0,3,1
+Biji Kedelai,0,20,0,3,1
+Bungkil Kelapa Sawit,0,30,0,3,1
+Bungkil Kelapa,0,30,0,3,1
+Bungkil Biji Kapuk,0,10,0,3,1
+Ampas Bir Kering,0,20,0,3,1
+Ampas Kecap,0,20,0,3,1
+Ampas Tahu,0,30,0,3,1
+Ampas Singkong,0,20,0,3,1
+Bungkil Kacang Tanah,0,20,0,3,1
+CPO,1,5,0,2,1
+Molases,5,7,0,2,1
+Garam,0.25,1,0,4,1
+Kapur,0,2,0,4,1
+Kalsium Karbonat,0,2,0,4,1
+DCP,0,2,0,4,1
+MCP,0,1,0,4,1
+Premix,0,1,0,4,1
+Tepung Skim,0,10,0,3,1
+DDGS,0,10,0,3,1
+Kulit Kacang Asin (+ biji),0,5,0,2,1
+Kulit Kacang Tanah,0,5,0,3,1
+Kulit Kopi,0,10,0,3,1
+Bran Sari Boga,0,25,0,3,1
+Brand Jagung,0,25,0,3,1
+Bran Kacang Hijau,0,25,0,3,1

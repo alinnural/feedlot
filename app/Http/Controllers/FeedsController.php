@@ -361,9 +361,9 @@ class FeedsController extends Controller
             $req_id = $request->session()->get('requirement_id');
 
             if($req_id == 11){
-                $result = ['min' => 0, 'max' => 100];
+                $result = ['min' => 0, 'max' => 100, 'price' => 0];
             }else{
-                $result = ['min' => $feed->min, 'max' => $feed->max];
+                $result = ['min' => $feed->min, 'max' => $feed->max, 'price' => $feed->price];
             }
 
             return \Response::json($result);
