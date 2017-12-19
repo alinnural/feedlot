@@ -32,7 +32,7 @@ Route::group(['middleware' => ['web','menu']],function(){
             Route::post('/calculate','FormulaController@calculate');
             Route::post('/store','FormulaController@store');
             Route::get('/', 'FormulaController@index');
-            Route::post('/print','FormulaController@print');
+            Route::post('/print','FormulaController@print_forsum');
         });
 
         Route::group(['prefix'=>'laktasi'],function(){

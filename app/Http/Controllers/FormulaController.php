@@ -270,7 +270,7 @@ class FormulaController extends Controller
         }
     }
     
-    public function print(Request $request)
+    public function print_forsum(Request $request)
     {
         $id = $request->id;
         $data = array();
