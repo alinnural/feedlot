@@ -24,7 +24,7 @@ Route::group(['middleware' => ['web','menu']],function(){
     Route::get('post/{slug}', 'PostController@showPost');
     Route::get('page/{slug}','PageController@showPage');
     
-    Route::group(['middleware'=>['formula']],function(){
+    Route::group(['middleware'=>['auth']],function(){
         Route::resource('ransums','RansumsController');
         
         Route::group(['prefix'=>'formula'],function(){
