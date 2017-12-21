@@ -55,19 +55,24 @@
                             <div class='panel panel-default'>
                                 <table class='table table-stripped'>
                                     <tr>
-                                        <th>Pakan</th>
-                                        <th class='text-center'>Komposisi</th>
-                                        <th width='10'>&nbsp;</th>
-                                        <th class='text-center' width='250'>Harga</th>
-                                        <th class='text-right' width='150'>Kuantitas</th>
-                                        <th width='50'>&nbsp;</th>
-                                        <th class='text-right' width='250'>Total Harga</th>
+                                        <th rowspan=2 ><br>Pakan</th>
+                                        <th colspan=2 class='text-center'>Komposisi</th>
+                                        <th rowspan=2 width='10'>&nbsp;</th>
+                                        <th rowspan=2 class='text-center' width='250'><br>Harga</th>
+                                        <th rowspan=2 class='text-right' width='150'><br>Kuantitas</th>
+                                        <th rowspan=2 width='50'>&nbsp;</th>
+                                        <th rowspan=2 class='text-right' width='250'><br>Total Harga</th>
+                                    </tr>
+                                    <tr>                                            
+                                        <th class='text-center'>(%BK)</th>
+                                        <th class='text-center'>(%BS)</th>
                                     </tr>
                                     @php $kuantitas=0; $total_price_kuant = 0; @endphp   
                                     @foreach ($forfeeds as $item)
                                     <tr>
                                         <td>{{ $item->feed->name }}</td>
-                                        <td><span class='align-center'>{{ $item->result }} %</span></td>
+                                        <td><span class='align-center'>{{ $item->result }}</span></td>
+                                        <td><span class='align-center'>{{ $item->result_bs }}</span></td>
                                         <th>&nbsp;</th>
                                         <td><span class='pull-left'>IDR</span> <span class='pull-right'>{{ $item->price }} / kg</span></td>
                                         <td><span class='pull-right'>@php $kuant = $item->result*1000/100; $kuantitas+=$kuant; @endphp {{ $kuant }} kg</span></td>
@@ -77,6 +82,7 @@
                                     @endforeach
                                     <tr>
                                         <td width='300'><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
+                                        <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <th>&nbsp;</th>
                                         <td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>{{ round($forsum->total_price) }} /kg</span></h4></strong></td>

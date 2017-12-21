@@ -26,18 +26,23 @@
 <table style="height: 100px; width: 700px; border-collapse: collapse;" border="1">
 <tbody>
 <tr>
-<td style="width: 32px; text-align: center;">No</td>
-<td style="width: 155px; text-align: center;">Bahan Pakan</td>
-<td style="width: 98.8667px; text-align: center;">Komposisi (%)</td>
-<td style="width: 131.133px; text-align: center;">Harga (Rp/kg)</td>
-<td style="width: 159px; text-align: center;">Kuantitas (kg)</td>
+<td rowspan=2 style="width: 32px; text-align: center;">No</td>
+<td rowspan=2 style="width: 155px; text-align: center;">Bahan Pakan</td>
+<td colspan=2 style="width: 100px; text-align: center;">Komposisi</td>
+<td rowspan=2 style="width: 131.133px; text-align: center;">Harga (Rp/kg)</td>
+<td rowspan=2 style="width: 159px; text-align: center;">Kuantitas (kg)</td>
+</tr>
+<tr>
+<td style="width: 50px; text-align: center;">(%BK)</td>
+<td style="width: 50px; text-align: center;">(%BS)</td>
 </tr>
 @php $no=1; $kuantitas=0; $total_price_kuant = 0; @endphp
 @foreach ($forfeeds as $item)
 <tr>
 <td style="width: 32px; text-align: center;">{{ $no++ }}</td>
 <td style="width: 155px;">{{ $item->feed->name }}</td>
-<td style="width: 98.8667px; text-align: center;">{{ $item->result }}</td>
+<td style="width: 50px; text-align: center;">{{ $item->result }}</td>
+<td style="width: 50px; text-align: center;">{{ $item->result_bs }}</td>
 <td style="width: 131.133px; text-align: center;">{{ $item->price }}</td>
 <td style="width: 159px; text-align: center;">@php $kuant = $item->result*$qty/100; $kuantitas+=$kuant; @endphp {{ $kuant }}</td>
 </tr>
@@ -45,14 +50,16 @@
 <tr>
 <td style="width: 32px;">&nbsp;</td>
 <td style="width: 155px;">Total</td>
-<td style="width: 98.8667px; text-align: center;">100</td>
+<td style="width: 50px; text-align: center;">100</td>
+<td style="width: 50px; text-align: center;">100</td>
 <td style="width: 131.133px; text-align: center;">&nbsp;</td>
 <td style="width: 159px; text-align: center;">{{ $kuantitas }}</td>
 </tr>
 <tr>
 <td style="width: 32px;">&nbsp;</td>
 <td style="width: 155px;">Harga</td>
-<td style="width: 98.8667px; text-align: center;">&nbsp;</td>
+<td style="width: 50px; text-align: center;">&nbsp;</td>
+<td style="width: 50px; text-align: center;">&nbsp;</td>
 <td style="width: 131.133px; text-align: center;">Rp {{ $forsum->total_price }}/kg</td>
 <td style="width: 159px; text-align: center;">Rp {{ number_format($forsum->total_price*$kuantitas, 2, ',', '.') }}</td>
 </tr>
