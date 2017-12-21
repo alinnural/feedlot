@@ -150,4 +150,60 @@ class RansumsController extends Controller
         ]);
         return redirect()->route('ransums.index');
     }
+
+    public function AjaxCalcQ(Request $request)
+    {
+        if(empty($request->id))
+        {
+            $data = array();
+            return \Response::json($data);
+        }
+        else
+        {       
+            $forfeeds = ForsumFeed::SearchByForsum($request->id)->get();     
+            $kuantitas=0;
+            $total_price_kuant=0;
+            $text = "<div class='col-md-12'>".
+                        "<div class='panel panel-default'>".
+                            "<table class='table table-stripped'>".
+                                "<tr>".
+                                "<th>Pakan</th>".
+                                "<th class='text-center'>Persentase</th>".
+                                "<th width='10'>&nbsp;</th>".
+                                "<th class='text-center' width='250'>Harga</th>".
+                                "<th class='text-right' width='150'>Kuantitas</th>".
+                                "<th width='50'>&nbsp;</th>".
+                                "<th class='text-right' width='250'>Total Harga</th>".
+                                "</tr>";
+                                    
+                foreach($forfeeds as $item){
+                    $kuant = $item->result*$request->qty/100; $kuantitas+=$kuant;
+                    $price_kuant = $item->price*$kuant; $total_price_kuant+=$price_kuant;
+                    $text.= "<tr>".
+                                "<td>".$item->feed->name."</td>".
+                                "<td><span class='align-center'>".$item->result." %</span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><span class='pull-left'>IDR</span> <span class='pull-right'>".$item->price." / kg</span></td>".
+                                "<td><span class='pull-right'>".$kuant." kg</span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($price_kuant, 2, ',', '.')."</span></td>".
+                            "</tr>";
+                }
+
+                    $text .= "<tr>".
+                                "<td width='300'><strong><h4>Harga Terakhir</strong></h4></td>".
+                                "<td>&nbsp;</td>".
+                                "<th>&nbsp;</th>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".round($request->harga_terakhir)." /kg</span></h4></strong></td>".
+                                "<td><span class='pull-right'><h4>".$kuantitas." kg</h4></span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($total_price_kuant, 2, ',', '.')."</h4></span></td>".
+                            "</tr>".
+                        "</table>".
+                    "</div>".
+                "</div>";
+
+            return \Response::json($text);
+        }
+    }
 }

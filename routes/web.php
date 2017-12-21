@@ -137,4 +137,8 @@ Route::group(['prefix'=>'ajax'],function(){
         'as'   => 'ajax.calclaktasi',
         'uses' => 'FormulaController@AjaxCalcLaktasi'
     ]);
+    Route::get('ransum/calcquantity', [
+        'as'   => 'ajax.ransumcalcquantity',
+        'uses' => 'RansumsController@AjaxCalcQ'
+    ]);
 });
