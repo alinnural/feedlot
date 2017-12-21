@@ -396,7 +396,7 @@ html[xmlns] .flexslider .slides {
 			@foreach ($sliders as $slide)
 				<li>
 					<a href="#">
-						<img src="{{ url('/img/slider') }}/{{$slide->photo}}" alt="{{$slide->name}}" style="width:878px;height:366px">
+						<img src="{{ url('/img/slider') }}/{{$slide->photo}}" alt="{{$slide->name}}" style="width:878px;height:300px">
 						<div class="flex-caption">{{$slide->name}}</div>
 					</a>
 				</li>
