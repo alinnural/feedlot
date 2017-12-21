@@ -41,13 +41,14 @@ class RansumsController extends Controller
         {   
             $request = Session::get('store_ransum');
             $request['user_id'] = Auth::user()->id;
+            $request['total_price'] = Session::get('harga_terakhir');
             $forsum = Forsum::create($request);
 
             foreach(Calculate::mapping_feed_id_result($forsum->total_price) as $feed){
                 $forsumfeed['forsum_id'] = $forsum->id;
                 $forsumfeed['feed_id'] = $feed['id'];
-                $forsumfeed['min'] = $feed['min_composition'];
-                $forsumfeed['max'] = $feed['max_composition'];
+                $forsumfeed['min'] = $feed['min_feed'];
+                $forsumfeed['max'] = $feed['max_feed'];
                 $forsumfeed['price'] = $feed['price'];
                 $forsumfeed['result'] = $feed['result'];
                 ForsumFeed::create($forsumfeed);
@@ -71,7 +72,10 @@ class RansumsController extends Controller
                             'harga',
                             'requirement',
                             'nutrientresult',
-                            'results'
+                            'results',
+                            'harga_terakhir',
+                            'max_feed',
+                            'min_feed'
                             );
 
             Session::flash("flash_notification", [
