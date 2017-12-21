@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-md-5"></div>
                             <div class="col-md-7">
-                                <input type="submit" class="pull-right btn btn-lg btn-success" value="Lanjut">
+                                <input type="submit" class="pull-right btn btn-success" value="Nutrien">
                             </div>
                         <div>
                     </div>
