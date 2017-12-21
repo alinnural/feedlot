@@ -233,7 +233,6 @@
                             <div class="form-group">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-3">
-                                    <input type="hidden" name="total_price" value="@php echo $harga_terakhir @endphp">
                                     {{ Form::button('<span class="fa fa-save"></span> Simpan', array('class'=>'btn btn-success', 'type'=>'submit')) }}
                                 </div>
                             </div>
@@ -268,7 +267,7 @@
                                             <td width='300'><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
                                             <td>&nbsp;</td>
                                             <th>&nbsp;</th>
-                                            <td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>{{ round($harga_terakhir) }} /kg</span></h4></strong></td>
+                                            <td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>{{ Session::get('harga_terakhir') }} /kg</span></h4></strong></td>
                                             <td><span class='pull-right'><h4>{{ $kuantitas }} kg</h4></span></td>
                                             <th>&nbsp;</th>
                                             <td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>{{ number_format($total_price_kuant, 2, ',', '.') }}</h4></span></td>
