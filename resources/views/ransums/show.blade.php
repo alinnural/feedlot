@@ -133,11 +133,12 @@
     function calc(){
         var quantity = parseInt($('#kuantitas').val());
         var harga_terakhir = @php echo $forsum->total_price ; @endphp ;
+        var id = @php echo $forsum->id ; @endphp ;
 
         $.ajax({
             type: "GET",
-            url : "{{ route('ajax.calcquantity') }}",
-            data : { qty: quantity, harga_terakhir:harga_terakhir },
+            url : "{{ route('ajax.ransumcalcquantity') }}",
+            data : { id: id, qty: quantity, harga_terakhir:harga_terakhir },
             dataType : "json",
             success : function(data){
                 $("#results").empty();
@@ -149,7 +150,6 @@
                 } 
                 else 
                 {                 
-
                     document.getElementById("results").innerHTML = data;
                 }
             }
