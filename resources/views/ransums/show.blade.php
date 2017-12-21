@@ -8,7 +8,7 @@
             <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="btn-group pull-right">
-                    {!! Form::open(['url' => 'formula/print', 'method' => 'post', 'class'=>'form-horizontal']) !!}  
+                    {!! Form::open(['url' => 'ransums/print', 'method' => 'post', 'class'=>'form-horizontal']) !!}  
                     {{ Form::button('<span class="fa fa-print"></span> Print Ransum', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
                     <input type="hidden" name="id" value="@php echo $forsum->id @endphp">
                 </div>
@@ -56,7 +56,7 @@
                                 <table class='table table-stripped'>
                                     <tr>
                                         <th>Pakan</th>
-                                        <th class='text-center'>Persentase</th>
+                                        <th class='text-center'>Komposisi</th>
                                         <th width='10'>&nbsp;</th>
                                         <th class='text-center' width='250'>Harga</th>
                                         <th class='text-right' width='150'>Kuantitas</th>

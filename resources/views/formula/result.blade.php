@@ -244,7 +244,7 @@
                                     <table class='table table-stripped'>
                                         <tr>
                                             <th>Pakan</th>
-                                            <th class='text-center'>Persentase</th>
+                                            <th class='text-center'>Komposisi</th>
                                             <th width='10'>&nbsp;</th>
                                             <th class='text-center' width='250'>Harga</th>
                                             <th class='text-right' width='150'>Kuantitas</th>
