@@ -14,7 +14,7 @@ class AddResultBs extends Migration
     public function up()
     {
         Schema::table('forsum_feeds', function (Blueprint $table) {
-            $table->float('result_bs');
+            $table->float('result_bs')->default(0);
         });
     }
 
