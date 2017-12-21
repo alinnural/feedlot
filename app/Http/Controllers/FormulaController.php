@@ -242,7 +242,7 @@ class FormulaController extends Controller
                                 "</tr>";
                                     
                 foreach(Calculate::mapping_feed_id_result($request->harga_terakhir) as $feed){
-                    $kuant = $feed['result']*$request->qty/100; $kuantitas+=$kuant;
+                    $kuant = $feed['result_bs']*$request->qty/100; $kuantitas+=$kuant;
                     $price_kuant = $feed['price']*$kuant; $total_price_kuant+=$price_kuant;
                     $text.= "<tr>".
                                 "<td>".$feed['name']."</td>".

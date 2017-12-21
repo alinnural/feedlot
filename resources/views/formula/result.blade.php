@@ -263,7 +263,7 @@
                                             <td><span class='align-center'>{{ $feed['result_bs'] }}</span></td>
                                             <th>&nbsp;</th>
                                             <td><span class='pull-left'>IDR</span> <span class='pull-right'>{{ $feed['price'] }} / kg</span></td>
-                                            <td><span class='pull-right'>@php $kuant = $feed['result']*1000/100; $kuantitas+=$kuant; @endphp {{ $kuant }} kg</span></td>
+                                            <td><span class='pull-right'>@php $kuant = $feed['result_bs']*1000/100; $kuantitas+=$kuant; @endphp {{ $kuant }} kg</span></td>
                                             <th>&nbsp;</th>
                                             <td><span class='pull-left'>IDR</span><span class='pull-right'>@php $price_kuant = $feed['price']*$kuant; $total_price_kuant+=$price_kuant; @endphp {{ number_format($price_kuant, 2, ',', '.') }}</span></td>
                                         </tr>

@@ -183,7 +183,7 @@ class RansumsController extends Controller
                                 "</tr>";
                                     
                 foreach($forfeeds as $item){
-                    $kuant = $item->result*$request->qty/100; $kuantitas+=$kuant;
+                    $kuant = $item->result_bs*$request->qty/100; $kuantitas+=$kuant;
                     $price_kuant = $item->price*$kuant; $total_price_kuant+=$price_kuant;
                     $text.= "<tr>".
                                 "<td>".$item->feed->name."</td>".

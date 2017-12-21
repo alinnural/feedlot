@@ -18,7 +18,7 @@
 <tr>
 <td style="width: 101px;">Kuantitas</td>
 <td style="width: 10px;">:</td>
-<td style="width: 464.317px;">{{ $qty }}</td>
+<td style="width: 464.317px;">{{ $qty }} kg</td>
 </tr>
 </tbody>
 </table>
@@ -44,7 +44,7 @@
 <td style="width: 50px; text-align: center;">{{ $item->result }}</td>
 <td style="width: 50px; text-align: center;">{{ $item->result_bs }}</td>
 <td style="width: 131.133px; text-align: center;">{{ $item->price }}</td>
-<td style="width: 159px; text-align: center;">@php $kuant = $item->result*$qty/100; $kuantitas+=$kuant; @endphp {{ $kuant }}</td>
+<td style="width: 159px; text-align: center;">@php $kuant = $item->result_bs*$qty/100; $kuantitas+=$kuant; @endphp {{ $kuant }}</td>
 </tr>
 @endforeach
 <tr>
@@ -88,4 +88,4 @@
 </tbody>
 </table>
 <p>&nbsp;</p>
-<p style="text-align: right;">Dicetak pada tanggal: 08/12/17</p>
+<p style="text-align: right;">Dicetak pada tanggal: @php echo date("d/m/Y") @endphp</p>
