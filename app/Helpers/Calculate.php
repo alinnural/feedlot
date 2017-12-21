@@ -68,21 +68,38 @@ class Calculate{
 
     public static function mapping_feed_id_result($harga_terakhir)
     {
+        $max_feed = Session::get('max_feed');
+        $min_feed = Session::get('min_feed');
         $feeds_id = Session::get('feeds'); 
         $feed_price = Session::get('harga');
         $result = Session::get('results');        
 
+        $no = 1;
+        $total_result_bs = 0;
+        foreach($feeds_id as $key => $value)
+        {            
+            $nilai_bk = FeedNutrient::SearchByNutrientAndFeed(1,$value)->first();            
+            $result_bs[$no] = ($result[$no]*100)*100/$nilai_bk->composition;
+            $total_result_bs += $result_bs[$no];    
+            $no++;
+        }
+
         $percent = array();
         $no = 1;
+        $harga_terakhir = 0;
         foreach($feeds_id as $key => $value)
         {            
             $feeds = Feed::find($value);
             $percent[$no]['id'] = $feeds->id;
             $percent[$no]['name'] = $feeds->name;
-            $percent[$no]['result'] = round($result[$no]*100,2);
-            $percent[$no]['price'] = $feed_price[$key];    
+            $percent[$no]['result'] = round($result_bs[$no]/$total_result_bs*100,2);
+            $percent[$no]['price'] = $feed_price[$key]; 
+            $harga_terakhir += $percent[$no]['result']/100*$feed_price[$key];   
+            $percent[$no]['max_feed'] = $max_feed[$key];   
+            $percent[$no]['min_feed'] = $min_feed[$key];     
             $no++;
         }
+        Session::put('harga_terakhir',$harga_terakhir);
         return $percent;
     }
 

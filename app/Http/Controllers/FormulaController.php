@@ -71,21 +71,18 @@ class FormulaController extends Controller
         ]);
 
         $data["category"] = "minimization ";
-        $feeds = $request->feeds;  
+        $feeds = $request->feeds; 
         $request->session()->put('feeds',$feeds);
         $request->session()->put('max_composition',$request->max_composition);
         $request->session()->put('min_composition',$request->min_composition); 
+        $request->session()->put('max_feed',$request->max_feed);
+        $request->session()->put('min_feed',$request->min_feed); 
         
         $req_id = $request->session()->get('requirement_id');
         $reqnuts = $request->reqnuts;
         $harga = $request->harga;
         $request->session()->put('harga',$harga);  
-        $i_var = 0;
-        foreach($harga as $key => $value){
-            $i_var ++;
-            $data["var".$i_var] = $value;
-        }
-
+        
         $i_cons = 0;
         //contrainst untuk nutrisi ternak
         foreach($reqnuts as $key => $value){
@@ -140,6 +137,7 @@ class FormulaController extends Controller
             }           
         }
         
+        $i_var = 0;
         //contraint untuk komposisi feed
         foreach($feeds as $key => $value){
             for($x=1;$x<=2;$x++){ // untuk min dam max composition
@@ -160,6 +158,9 @@ class FormulaController extends Controller
                     $data["answer".$i_cons] = $request->max_feed[$key]/100;
                 }
             }
+            $nilai_bk = FeedNutrient::SearchByNutrientAndFeed(1,$value)->first();
+            $i_var++;
+            $data["var".$i_var] = ($nilai_bk->composition)/100*$harga[$key];
         }
 
         //constraint untuk total
@@ -180,7 +181,7 @@ class FormulaController extends Controller
 
         $constraint = $i_cons;
         $data["numbers"] = count($feeds).",".$constraint;
-        //print_r($data); exit();
+        
         $requirement = array();
         $no=0;
         foreach($request->reqnuts_name as $key => $value)
@@ -192,8 +193,6 @@ class FormulaController extends Controller
             $no++;
         }
         $request->session()->put('requirement',$requirement);  
-        
-        
 
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
@@ -207,7 +206,6 @@ class FormulaController extends Controller
     {
         $this->validate($request, [
             'name'=> 'required',
-            'total_price' => 'required',
             'explanation' => 'required'
         ]);
 
@@ -257,7 +255,7 @@ class FormulaController extends Controller
                                 "<td width='300'><strong><h4>Harga Terakhir</strong></h4></td>".
                                 "<td>&nbsp;</td>".
                                 "<th>&nbsp;</th>".
-                                "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".round($request->harga_terakhir)." /kg</span></h4></strong></td>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".Session::get('harga_terakhir')." /kg</span></h4></strong></td>".
                                 "<td><span class='pull-right'><h4>".$kuantitas." kg</h4></span></td>".
                                 "<th>&nbsp;</th>".
                                 "<td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($total_price_kuant, 2, ',', '.')."</h4></span></td>".
