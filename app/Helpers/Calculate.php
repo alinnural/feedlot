@@ -92,7 +92,8 @@ class Calculate{
             $feeds = Feed::find($value);
             $percent[$no]['id'] = $feeds->id;
             $percent[$no]['name'] = $feeds->name;
-            $percent[$no]['result'] = round($result_bs[$no]/$total_result_bs*100,2);
+            $percent[$no]['result'] = round($result[$no]*100,2);
+            $percent[$no]['result_bs'] = round($result_bs[$no]/$total_result_bs*100,2);
             $percent[$no]['price'] = $feed_price[$key]; 
             $harga_terakhir += $percent[$no]['result']/100*$feed_price[$key];   
             $percent[$no]['max_feed'] = $max_feed[$key];   
@@ -100,6 +101,7 @@ class Calculate{
             $no++;
         }
         Session::put('harga_terakhir',$harga_terakhir);
+        
         return $percent;
     }
 

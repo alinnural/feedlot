@@ -52,6 +52,7 @@ class RansumsController extends Controller
                 $forsumfeed['max'] = $feed['max_feed'];
                 $forsumfeed['price'] = $feed['price'];
                 $forsumfeed['result'] = $feed['result'];
+                $forsumfeed['result_bs'] = $feed['result_bs'];
                 ForsumFeed::create($forsumfeed);
             }
             
@@ -168,13 +169,17 @@ class RansumsController extends Controller
                         "<div class='panel panel-default'>".
                             "<table class='table table-stripped'>".
                                 "<tr>".
-                                "<th>Pakan</th>".
-                                "<th class='text-center'>Komposisi</th>".
-                                "<th width='10'>&nbsp;</th>".
-                                "<th class='text-center' width='250'>Harga</th>".
-                                "<th class='text-right' width='150'>Kuantitas</th>".
-                                "<th width='50'>&nbsp;</th>".
-                                "<th class='text-right' width='250'>Total Harga</th>".
+                                "<th rowspan=2 ><br>Pakan</th>".
+                                "<th colspan=2 class='text-center'><br>Komposisi</th>".
+                                "<th rowspan=2 width='10'>&nbsp;</th>".
+                                "<th rowspan=2 class='text-center' width='250'><br>Harga</th>".
+                                "<th rowspan=2 class='text-right' width='150'><br>Kuantitas</th>".
+                                "<th rowspan=2 width='50'>&nbsp;</th>".
+                                "<th rowspan=2 class='text-right' width='250'><br>Total Harga</th>".
+                                "</tr>".
+                                "<tr>".                                            
+                                    "<th class='text-center'>(%BK)</th>".
+                                    "<th class='text-center'>(%BS)</th>".
                                 "</tr>";
                                     
                 foreach($forfeeds as $item){
@@ -182,7 +187,8 @@ class RansumsController extends Controller
                     $price_kuant = $item->price*$kuant; $total_price_kuant+=$price_kuant;
                     $text.= "<tr>".
                                 "<td>".$item->feed->name."</td>".
-                                "<td><span class='align-center'>".$item->result." %</span></td>".
+                                "<td><span class='align-center'>".$item->result."</span></td>".
+                                "<td><span class='align-center'>".$item->result_bs."</span></td>".
                                 "<th>&nbsp;</th>".
                                 "<td><span class='pull-left'>IDR</span> <span class='pull-right'>".$item->price." / kg</span></td>".
                                 "<td><span class='pull-right'>".$kuant." kg</span></td>".
@@ -193,6 +199,7 @@ class RansumsController extends Controller
 
                     $text .= "<tr>".
                                 "<td width='300'><strong><h4>Harga Terakhir</strong></h4></td>".
+                                "<td>&nbsp;</td>".
                                 "<td>&nbsp;</td>".
                                 "<th>&nbsp;</th>".
                                 "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".round($request->harga_terakhir)." /kg</span></h4></strong></td>".
