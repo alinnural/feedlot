@@ -68,8 +68,6 @@ class Calculate{
 
     public static function mapping_feed_id_result($harga_terakhir)
     {
-        $max_composition = Session::get('max_composition');
-        $min_composition = Session::get('min_composition');
         $feeds_id = Session::get('feeds'); 
         $feed_price = Session::get('harga');
         $result = Session::get('results');        
@@ -82,9 +80,7 @@ class Calculate{
             $percent[$no]['id'] = $feeds->id;
             $percent[$no]['name'] = $feeds->name;
             $percent[$no]['result'] = round($result[$no]*100,2);
-            $percent[$no]['price'] = $feed_price[$key];   
-            $percent[$no]['max_composition'] = $max_composition[$key];   
-            $percent[$no]['min_composition'] = $min_composition[$key];            
+            $percent[$no]['price'] = $feed_price[$key];    
             $no++;
         }
         return $percent;
