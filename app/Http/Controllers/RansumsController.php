@@ -16,6 +16,7 @@ use Excel;
 use Validator;
 use Auth;
 use App;
+use PDF;
 
 class RansumsController extends Controller
 {
@@ -168,7 +169,7 @@ class RansumsController extends Controller
                             "<table class='table table-stripped'>".
                                 "<tr>".
                                 "<th>Pakan</th>".
-                                "<th class='text-center'>Persentase</th>".
+                                "<th class='text-center'>Komposisi</th>".
                                 "<th width='10'>&nbsp;</th>".
                                 "<th class='text-center' width='250'>Harga</th>".
                                 "<th class='text-right' width='150'>Kuantitas</th>".
@@ -205,5 +206,19 @@ class RansumsController extends Controller
 
             return \Response::json($text);
         }
+    }
+    
+    public function print_forsum(Request $request)
+    {
+        $id = $request->id;
+        $data = array();
+        $data["qty"] = $request->kuantitas;
+        $data["forsum"] = Forsum::findOrFail($id);;
+        $data["forfeeds"] = ForsumFeed::SearchByForsum($id)->get();
+        $data["fornuts"] = ForsumNutrient::SearchByForsum($id)->get();
+        //print_r($data["forsum"]); exit();
+        //return view('formula.print')->with(compact('data'));
+        $pdf = PDF::loadView('ransums.print', $data)->setPaper('a4', 'potrait')->setWarnings(false)->save('myfile.pdf');
+        return $pdf->download($data["forsum"]->name.'.pdf');
     }
 }
