@@ -29,13 +29,13 @@
 <div class="form-group{{ $errors->has('min') ? ' has-error' : '' }}"> 
     {!! Form::label('min', 'Minimal', ['class'=>'col-md-2 control-label']) !!} 
     <div class="col-md-4">
-        {!! Form::number('min', null, ['class'=>'form-control']) !!}
+        {!! Form::text('min', null, ['class'=>'form-control']) !!}
         {!! $errors->first('min', '<p class="help-block">:message</p>') !!}
     </div>
 
     {!! Form::label('max', 'Maksimal', ['class'=>'col-md-2 control-label']) !!} 
     <div class="col-md-4">
-        {!! Form::number('max', null, ['class'=>'form-control']) !!}
+        {!! Form::text('max', null, ['class'=>'form-control']) !!}
         {!! $errors->first('max', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
