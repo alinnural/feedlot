@@ -14,11 +14,11 @@
                     <h1 class="post-title">
                         {!! $post->title !!}
 
-                        @if (Auth::check())
+                        @role('admin')
                         <div class="pull-right">
                            <a href="{{ route('post.edit',$post->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
                         </div>
-                        @endif
+                        @endrole
                     </h1>
                     <div class="meta">
                         <span class="date"><i class="fa fa-calendar"></i> {{ $post->published_at->format('Y-m-d g:ia') }}</span> 

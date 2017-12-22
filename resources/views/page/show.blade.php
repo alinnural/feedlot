@@ -25,11 +25,11 @@
                                 <h1 class="post-title">
                                     {!! $page->title !!}
 
-                                    @if (Auth::check())
+                                    @role('admin')
                                     <div class="pull-right">
                                     <a href="{{ route('page.edit',$page->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
                                     </div>
-                                    @endif
+                                    @endrole
                                 </h1>
                                 <div class="meta">
                                     <span class="date"><i class="fa fa-calendar"></i> {{ $page->created_at->format('Y-m-d g:ia') }}</span> 
