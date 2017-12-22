@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ed89a2ae227bdac5c03b91fd31712a0d",
+    "hash": "bbfd17c642f05ef31a8db24f6653fca4",
     "content-hash": "1bb9d99050e7082b4090d9183c78b211",
     "packages": [
         {
@@ -265,7 +265,11 @@
                 "docblock",
                 "parser"
             ],
+<<<<<<< HEAD
+            "time": "2017-02-24 16:22:25"
+=======
             "time": "2017-12-06 07:11:42"
+>>>>>>> 818f2671c7e0be6908f76e64411669f2f92cc276
         },
         {
             "name": "doctrine/cache",
@@ -339,7 +343,11 @@
                 "cache",
                 "caching"
             ],
+<<<<<<< HEAD
+            "time": "2017-07-22 12:49:21"
+=======
             "time": "2017-08-25 07:02:50"
+>>>>>>> 818f2671c7e0be6908f76e64411669f2f92cc276
         },
         {
             "name": "doctrine/collections",
@@ -406,7 +414,11 @@
                 "collections",
                 "iterator"
             ],
+<<<<<<< HEAD
+            "time": "2017-01-03 10:49:41"
+=======
             "time": "2017-07-22 10:37:32"
+>>>>>>> 818f2671c7e0be6908f76e64411669f2f92cc276
         },
         {
             "name": "doctrine/common",
@@ -479,7 +491,11 @@
                 "persistence",
                 "spl"
             ],
+<<<<<<< HEAD
+            "time": "2017-07-22 08:35:12"
+=======
             "time": "2017-08-31 08:43:38"
+>>>>>>> 818f2671c7e0be6908f76e64411669f2f92cc276
         },
         {
             "name": "doctrine/dbal",
@@ -552,7 +568,11 @@
                 "persistence",
                 "queryobject"
             ],
+<<<<<<< HEAD
+            "time": "2017-07-22 20:44:48"
+=======
             "time": "2017-11-19 13:38:54"
+>>>>>>> 818f2671c7e0be6908f76e64411669f2f92cc276
         },
         {
             "name": "doctrine/inflector",
@@ -3543,7 +3563,11 @@
                 "constructor",
                 "instantiate"
             ],
+<<<<<<< HEAD
+            "time": "2015-06-14 21:17:01"
+=======
             "time": "2017-07-22 11:58:36"
+>>>>>>> 818f2671c7e0be6908f76e64411669f2f92cc276
         },
         {
             "name": "fzaninotto/faker",
