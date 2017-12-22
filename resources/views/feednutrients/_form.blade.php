@@ -15,7 +15,7 @@
 <div class="form-group {!! $errors->has('composition') ? 'has-error' : '' !!}">
     {!! Form::label('composition','Komposisi', ['class'=>'col-md-3 control-label']) !!} 
     <div class="col-md-8">
-        {{ Form::number('composition', '',['class' => 'form-control'])}}
+        {{ Form::text('composition', '',['class' => 'form-control'])}}
         {!! $errors->first('composition', '<p class="help-block">:message</p>') !!}
   </div>
 </div>
