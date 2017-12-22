@@ -12,7 +12,8 @@ class ForsumFeed extends Model
         'min',
         'max',
         'price',
-        'result'
+        'result',
+        'result_bs'
         ];
 
     public function forsum()

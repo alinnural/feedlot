@@ -16,6 +16,7 @@ use Excel;
 use Validator;
 use Auth;
 use App;
+use PDF;
 
 class RansumsController extends Controller
 {
@@ -41,15 +42,17 @@ class RansumsController extends Controller
         {   
             $request = Session::get('store_ransum');
             $request['user_id'] = Auth::user()->id;
+            $request['total_price'] = Session::get('harga_terakhir');
             $forsum = Forsum::create($request);
 
             foreach(Calculate::mapping_feed_id_result($forsum->total_price) as $feed){
                 $forsumfeed['forsum_id'] = $forsum->id;
                 $forsumfeed['feed_id'] = $feed['id'];
-                $forsumfeed['min'] = $feed['min_composition'];
-                $forsumfeed['max'] = $feed['max_composition'];
+                $forsumfeed['min'] = $feed['min_feed'];
+                $forsumfeed['max'] = $feed['max_feed'];
                 $forsumfeed['price'] = $feed['price'];
                 $forsumfeed['result'] = $feed['result'];
+                $forsumfeed['result_bs'] = $feed['result_bs'];
                 ForsumFeed::create($forsumfeed);
             }
             
@@ -71,7 +74,10 @@ class RansumsController extends Controller
                             'harga',
                             'requirement',
                             'nutrientresult',
-                            'results'
+                            'results',
+                            'harga_terakhir',
+                            'max_feed',
+                            'min_feed'
                             );
 
             Session::flash("flash_notification", [
@@ -145,5 +151,81 @@ class RansumsController extends Controller
             "message"=>"Feeds berhasil dihapus"
         ]);
         return redirect()->route('ransums.index');
+    }
+
+    public function AjaxCalcQ(Request $request)
+    {
+        if(empty($request->id))
+        {
+            $data = array();
+            return \Response::json($data);
+        }
+        else
+        {       
+            $forfeeds = ForsumFeed::SearchByForsum($request->id)->get();     
+            $kuantitas=0;
+            $total_price_kuant=0;
+            $text = "<div class='col-md-12'>".
+                        "<div class='panel panel-default'>".
+                            "<table class='table table-stripped'>".
+                                "<tr>".
+                                "<th rowspan=2 ><br>Pakan</th>".
+                                "<th colspan=2 class='text-center'><br>Komposisi</th>".
+                                "<th rowspan=2 width='10'>&nbsp;</th>".
+                                "<th rowspan=2 class='text-center' width='250'><br>Harga</th>".
+                                "<th rowspan=2 class='text-right' width='150'><br>Kuantitas</th>".
+                                "<th rowspan=2 width='50'>&nbsp;</th>".
+                                "<th rowspan=2 class='text-right' width='250'><br>Total Harga</th>".
+                                "</tr>".
+                                "<tr>".                                            
+                                    "<th class='text-center'>(%BK)</th>".
+                                    "<th class='text-center'>(%BS)</th>".
+                                "</tr>";
+                                    
+                foreach($forfeeds as $item){
+                    $kuant = $item->result_bs*$request->qty/100; $kuantitas+=$kuant;
+                    $price_kuant = $item->price*$kuant; $total_price_kuant+=$price_kuant;
+                    $text.= "<tr>".
+                                "<td>".$item->feed->name."</td>".
+                                "<td><span class='align-center'>".$item->result."</span></td>".
+                                "<td><span class='align-center'>".$item->result_bs."</span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><span class='pull-left'>IDR</span> <span class='pull-right'>".$item->price." / kg</span></td>".
+                                "<td><span class='pull-right'>".$kuant." kg</span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($price_kuant, 2, ',', '.')."</span></td>".
+                            "</tr>";
+                }
+
+                    $text .= "<tr>".
+                                "<td width='300'><strong><h4>Harga Terakhir</strong></h4></td>".
+                                "<td>&nbsp;</td>".
+                                "<td>&nbsp;</td>".
+                                "<th>&nbsp;</th>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".round($request->harga_terakhir)." /kg</span></h4></strong></td>".
+                                "<td><span class='pull-right'><h4>".$kuantitas." kg</h4></span></td>".
+                                "<th>&nbsp;</th>".
+                                "<td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($total_price_kuant, 2, ',', '.')."</h4></span></td>".
+                            "</tr>".
+                        "</table>".
+                    "</div>".
+                "</div>";
+
+            return \Response::json($text);
+        }
+    }
+    
+    public function print_forsum(Request $request)
+    {
+        $id = $request->id;
+        $data = array();
+        $data["qty"] = $request->kuantitas;
+        $data["forsum"] = Forsum::findOrFail($id);;
+        $data["forfeeds"] = ForsumFeed::SearchByForsum($id)->get();
+        $data["fornuts"] = ForsumNutrient::SearchByForsum($id)->get();
+        //print_r($data["forsum"]); exit();
+        //return view('formula.print')->with(compact('data'));
+        $pdf = PDF::loadView('ransums.print', $data)->setPaper('a4', 'potrait')->setWarnings(false)->save('myfile.pdf');
+        return $pdf->download($data["forsum"]->name.'.pdf');
     }
 }

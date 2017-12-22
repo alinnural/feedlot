@@ -26,13 +26,12 @@ Route::group(['middleware' => ['web','menu']],function(){
     
     Route::group(['middleware'=>['auth']],function(){
         Route::resource('ransums','RansumsController');
-        
+        Route::post('ransums/print','RansumsController@print_forsum');
         Route::group(['prefix'=>'formula'],function(){
             Route::post('/input','FormulaController@input');
             Route::post('/calculate','FormulaController@calculate');
             Route::post('/store','FormulaController@store');
             Route::get('/', 'FormulaController@index');
-            Route::post('/print','FormulaController@print_forsum');
         });
 
         Route::group(['prefix'=>'laktasi'],function(){
@@ -136,5 +135,9 @@ Route::group(['prefix'=>'ajax'],function(){
     Route::get('formula/calclaktasi', [
         'as'   => 'ajax.calclaktasi',
         'uses' => 'FormulaController@AjaxCalcLaktasi'
+    ]);
+    Route::get('ransum/calcquantity', [
+        'as'   => 'ajax.ransumcalcquantity',
+        'uses' => 'RansumsController@AjaxCalcQ'
     ]);
 });

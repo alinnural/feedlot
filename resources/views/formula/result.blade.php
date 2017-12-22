@@ -233,7 +233,6 @@
                             <div class="form-group">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-3">
-                                    <input type="hidden" name="total_price" value="@php echo $harga_terakhir @endphp">
                                     {{ Form::button('<span class="fa fa-save"></span> Simpan', array('class'=>'btn btn-success', 'type'=>'submit')) }}
                                 </div>
                             </div>
@@ -244,22 +243,27 @@
                                 <div class='panel panel-default'>
                                     <table class='table table-stripped'>
                                         <tr>
-                                            <th>Pakan</th>
-                                            <th class='text-center'>Persentase</th>
-                                            <th width='10'>&nbsp;</th>
-                                            <th class='text-center' width='250'>Harga</th>
-                                            <th class='text-right' width='150'>Kuantitas</th>
-                                            <th width='50'>&nbsp;</th>
-                                            <th class='text-right' width='250'>Total Harga</th>
+                                            <th rowspan=2 ><br>Pakan</th>
+                                            <th colspan=2 class='text-center'>Komposisi</th>
+                                            <th rowspan=2 width='10'>&nbsp;</th>
+                                            <th rowspan=2 class='text-center' width='250'><br>Harga</th>
+                                            <th rowspan=2 class='text-right' width='150'><br>Kuantitas</th>
+                                            <th rowspan=2 width='50'>&nbsp;</th>
+                                            <th rowspan=2 class='text-right' width='250'><br>Total Harga</th>
+                                        </tr>
+                                        <tr>                                            
+                                            <th class='text-center'>(%BK)</th>
+                                            <th class='text-center'>(%BS)</th>
                                         </tr>
                                         @php $kuantitas=0; $total_price_kuant = 0; Session::put('results',$feeds) @endphp   
                                         @foreach (Calculate::mapping_feed_id_result($harga_terakhir) as $feed)
                                         <tr>
                                             <td>{{ $feed['name'] }}</td>
-                                            <td><span class='align-center'>{{ $feed['result'] }} %</span></td>
+                                            <td><span class='align-center'>{{ $feed['result'] }}</span></td>
+                                            <td><span class='align-center'>{{ $feed['result_bs'] }}</span></td>
                                             <th>&nbsp;</th>
                                             <td><span class='pull-left'>IDR</span> <span class='pull-right'>{{ $feed['price'] }} / kg</span></td>
-                                            <td><span class='pull-right'>@php $kuant = $feed['result']*1000/100; $kuantitas+=$kuant; @endphp {{ $kuant }} kg</span></td>
+                                            <td><span class='pull-right'>@php $kuant = $feed['result_bs']*1000/100; $kuantitas+=$kuant; @endphp {{ $kuant }} kg</span></td>
                                             <th>&nbsp;</th>
                                             <td><span class='pull-left'>IDR</span><span class='pull-right'>@php $price_kuant = $feed['price']*$kuant; $total_price_kuant+=$price_kuant; @endphp {{ number_format($price_kuant, 2, ',', '.') }}</span></td>
                                         </tr>
@@ -268,7 +272,8 @@
                                             <td width='300'><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
                                             <td>&nbsp;</td>
                                             <th>&nbsp;</th>
-                                            <td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>{{ round($harga_terakhir) }} /kg</span></h4></strong></td>
+                                            <th>&nbsp;</th>
+                                            <td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>{{ Session::get('harga_terakhir') }} /kg</span></h4></strong></td>
                                             <td><span class='pull-right'><h4>{{ $kuantitas }} kg</h4></span></td>
                                             <th>&nbsp;</th>
                                             <td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>{{ number_format($total_price_kuant, 2, ',', '.') }}</h4></span></td>
