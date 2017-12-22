@@ -19,11 +19,11 @@
                                 <i>({{ $feed->latin_name }})</i>
                             @endif
 
-                            @if (Auth::check())
+                            @role('admin')
                             <div class="pull-right">
                             <a href="{{ route('feeds.edit',$feed->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
                             </div>
-                            @endif
+                            @endrole
                         </a><br>
                         <span class="date" style="font-size:10pt">
                         </span>
