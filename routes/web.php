@@ -23,6 +23,12 @@ Route::group(['middleware' => ['web','menu']],function(){
     Route::get('post', 'PostController@index');
     Route::get('post/{slug}', 'PostController@showPost');
     Route::get('page/{slug}','PageController@showPage');
+
+    Route::get('/tanya-jawab','QuestionController@index');
+    Route::get('/tanya-jawab/{id}','QuestionController@showQuestion');
+    Route::get('/tanyakan','QuestionController@create');
+    Route::post('/tanyakan','QuestionController@store');
+
     
     Route::group(['middleware'=>['auth']],function(){
         Route::resource('ransums','RansumsController');

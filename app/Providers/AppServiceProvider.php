@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         require base_path() . '/app/Helpers/frontend.php';
         //
+        Validator::extend('recaptcha','App\\Validators\\ReCaptcha@validate');
     }
 
     /**
