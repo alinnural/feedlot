@@ -63,7 +63,7 @@
                     <!-- Right Side Of Navbar -->
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        {!! $MenuUtama->asUl(['class' => 'nav navbar-nav'],['class'=>'dropdown-menu']) !!}
+                        @include('layouts.menu-atas')
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
