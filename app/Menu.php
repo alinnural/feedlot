@@ -11,4 +11,9 @@ class Menu extends Model
      *
      * @param string $value
      */
+
+    public function scopeOrderPosition($query)
+    {
+        return $query->orderBy('position','asc');
+    }
 }
