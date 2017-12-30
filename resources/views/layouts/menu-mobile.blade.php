@@ -1,7 +1,6 @@
 <div class="col-md-3">
     <div class="row">
         <div class="col-md-12">
-            @desktop
             {{--  <div class="list-group">
                 {!! Html::smartNav(url('/'), 'Beranda','fa-home') !!}
                 {!! Html::smartNav(url('/formula'), 'Formulasi Ransum','fa-calculator') !!}
@@ -55,7 +54,6 @@
                     {!! Html::smartNav(url('post',$g->slug), str_limit($g->title,29),'fa fa-newspaper-o') !!}
                 @endforeach
             </div>
-            @enddesktop
         </div>
     </div>
 </div>

@@ -8,7 +8,7 @@
         @include('layouts.menu')
         
         <div class="col-md-9">
-            <div class="row">
+            <div class="">
                 @include('layouts.slider')
             </div>
             @if(!empty($sliders))
@@ -16,7 +16,7 @@
             @endif
 
             @foreach($posts as $post)
-                <div class="row">
+                <div class="">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <a href="{{ url('post') }}/{{$post->slug}}" style="font-size:20pt;text-decoration:none">
@@ -42,12 +42,15 @@
                     </div>
                 </div>
             @endforeach
-                <div class="row">
+                <div class="">
                     <div class="text-center">    
                         {{ $posts->links() }} 
                     </div>
                 </div>
         </div>
+        @mobile
+            @include('layouts.menu-mobile')
+        @endmobile
     </div>
 @endsection
 

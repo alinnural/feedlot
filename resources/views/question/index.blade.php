@@ -44,5 +44,8 @@ Semua Tanya Jawab {{ $questions->currentPage() }} of {{ $questions->lastPage() }
                 </div>
             </div>
         </div>
+        @mobile
+            @include('layouts.menu-mobile')
+        @endmobile
     </div>
 @endsection

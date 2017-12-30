@@ -10,14 +10,14 @@
         @include('layouts.menu')
         <div class="col-md-9">
             @if($page->show_slider == true)
-                <div class="row">
+                <div class="">
                     @include('layouts.slider')
                 </div>
                 @if(!empty($sliders))
                     <hr>
                 @endif
             @endif
-            <div class="row">
+            <div class="">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="post">
@@ -57,5 +57,8 @@
                 </div>
             </div>
         </div>
+        @mobile
+            @include('layouts.menu-mobile')
+        @endmobile
     </div>
 @endsection

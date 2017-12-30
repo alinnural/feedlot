@@ -21,6 +21,9 @@
           </div>
         </div>
       </div>
+      @mobile
+          @include('layouts.menu-mobile')
+      @endmobile
     </div>
   </div>
 @endsection
