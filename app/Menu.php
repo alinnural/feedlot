@@ -12,23 +12,8 @@ class Menu extends Model
      * @param string $value
      */
 
-    public function scopeOrderPositionAndActive($query)
+    public function scopeIsParentParentID($query,$parent_id=0)
     {
-        $menudatabase = $query->where('active','1')->orderBy('position','asc')->get();
-
-        $menuactive = array();
-        foreach($menudatabase as $key=>$menu)
-        {
-            $menuactive[$key]['id'] = $menu->id;
-            $menuactive[$key]['name'] = $menu->name;
-            $menuactive[$key]['url'] = $menu->url;
-            $menuactive[$key]['is_parent'] = $menu->is_parent;
-            $menuactive[$key]['parent_id'] = $menu->parent_id;
-            $menuactive[$key]['have_child'] = $menu->have_child;
-            $menuactive[$key]['page_id'] = $menu->page_id;
-            $menuactive[$key]['slug'] = $menu->slug;
-            $menuactive[$key]['type'] = $menu->type;
-        }
-        return $menuactive;
+        return $query->where('is_parent',1)->where('parent_id',$parent_id);
     }
 }
