@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Requirement extends Model
 {
     protected $fillable = [
-        'animal_type',
-        'current_weight',
-        'average_daily_gain'
+        'animal_type'
     ];
 
     public function requirementnutrients()

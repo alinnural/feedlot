@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class RequirementNutrient extends Model 
 {
     protected $fillable = [
-        'feed_id',
+        'requirement_id',
         'nutrient_id',
-        'composition_max',
-        'composition_min'
+        'min_composition',
+        'max_composition'
         ];
 
     public function requirement()
