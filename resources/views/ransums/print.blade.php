@@ -33,18 +33,18 @@
 <td rowspan=2 style="width: 159px; text-align: center;">Kuantitas (kg)</td>
 </tr>
 <tr>
-<td style="width: 150px; text-align: center;">(%BK)</td>
-<td style="width: 150px; text-align: center;">(%BS)</td>
+<td style="width: 120px; text-align: center;">(%BK)</td>
+<td style="width: 120px; text-align: center;">(%BS)</td>
 </tr>
 @php $no=1; $kuantitas=0; $total_price_kuant = 0; @endphp
 @foreach ($forfeeds as $item)
 <tr>
 <td style="width: 32px; text-align: center;">{{ $no++ }}</td>
 <td style="width: 155px;">{{ $item->feed->name }}</td>
-<td style="width: 50px; text-align: center;">{{ round($item->result,3) }}</td>
-<td style="width: 50px; text-align: center;">{{ round($item->result_bs,3) }}</td>
+<td style="width: 50px; text-align: center;">{{ number_format($item->result, 2, ',', '') }}</td>
+<td style="width: 50px; text-align: center;">{{ number_format($item->result_bs, 2, ',', '') }}</td>
 <td style="width: 100px; text-align: center;">{{ $item->price }}</td>
-<td style="width: 159px; text-align: center;">@php $kuant = $item->result_bs*$qty/100; $kuantitas+=$kuant; @endphp {{ $kuant }}</td>
+<td style="width: 159px; text-align: center;">@php $kuant = $item->result_bs*$qty/100; $kuantitas+=$kuant; @endphp {{ number_format($kuant, 2, ',', '') }}</td>
 @php $price_kuant = $item->price*$kuant; $total_price_kuant+=$price_kuant; @endphp
 </tr>
 @endforeach
@@ -59,8 +59,8 @@
 <tr>
 <td style="width: 32px;">&nbsp;</td>
 <td style="width: 155px;">Harga</td>
-<td style="width: 50px; text-align: center;">Rp {{ round($forsum->total_price,2) }}/kg</td>
-<td style="width: 50px; text-align: center;">Rp {{ round($forsum->total_price_bs,2) }}/kg</td>
+<td style="width: 50px; text-align: center;">Rp {{ number_format($forsum->total_price, 2, ',', '.') }}/kg</td>
+<td style="width: 50px; text-align: center;">Rp {{ number_format($forsum->total_price_bs, 2, ',', '.') }}/kg</td>
 <td style="width: 100px; text-align: center;">&nbsp;</td>
 <td style="width: 159px; text-align: center;">Rp {{ number_format($total_price_kuant, 2, ',', '.') }}</td>
 </tr>
@@ -83,7 +83,7 @@
 <td style="width: 155px;">{{ $item->nutrient->name }}</td>
 <td style="width: 98.8667px; text-align: center;">{{ $item->min }}</td>
 <td style="width: 131.133px; text-align: center;">{{ $item->max }}</td>
-<td style="width: 159px; text-align: center;">{{ $item->result }}</td>
+<td style="width: 159px; text-align: center;">{{ number_format($item->result, 2, ',', '.') }}</td>
 </tr>
 @endforeach
 </tbody>
