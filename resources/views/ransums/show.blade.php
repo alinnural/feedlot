@@ -85,7 +85,7 @@
                                         <td><strong><h4><span class='pull-right'>Rp {{ number_format($forsum->total_price, 2, ',', '.') }} /kg</span></h4></strong></td>
                                         <td><strong><h4><span class='pull-right'>Rp {{ number_format($forsum->total_price_bs, 2, ',', '.') }} /kg</span></h4></strong></td>
                                         <td></td>
-                                        <td><span class='pull-right'><h4>{{ number_format($kuantitas, 2, ',', '') }} kg</h4></span></td>
+                                        <td><span class='pull-right'><h4>{{ round($kuantitas, 2) }} kg</h4></span></td>
                                         <td><strong><h4><span class='pull-right'>Rp {{ number_format($total_price_kuant, 2, ',', '.') }}</h4></span></td>
                                     </tr>
                                 </table>
