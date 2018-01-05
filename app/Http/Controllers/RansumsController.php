@@ -112,14 +112,12 @@ class RansumsController extends Controller
                 $html = $htmlBuilder
                 ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
                 ->addColumn(['data' => 'user.name', 'name'=>'user.name', 'title'=>'Pembuat'])
-                ->addColumn(['data' => 'total_price', 'name'=>'total_price', 'title'=>'Total Harga'])
                 ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
             }
             else
             {
                 $html = $htmlBuilder
                 ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
-                ->addColumn(['data' => 'total_price', 'name'=>'total_price', 'title'=>'Total Harga'])
                 ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
             }
             
