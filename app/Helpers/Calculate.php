@@ -86,21 +86,22 @@ class Calculate{
 
         $percent = array();
         $no = 1;
-        $harga_terakhir = 0;
+        $harga_terakhir_bs = 0;
         foreach($feeds_id as $key => $value)
         {            
             $feeds = Feed::find($value);
             $percent[$no]['id'] = $feeds->id;
             $percent[$no]['name'] = $feeds->name;
-            $percent[$no]['result'] = round($result[$no]*100,2);
-            $percent[$no]['result_bs'] = round($result_bs[$no]/$total_result_bs*100,2);
+            $percent[$no]['result'] = round($result[$no]*100,5);
+            $percent[$no]['result_bs'] = round($result_bs[$no]/$total_result_bs*100,5);
             $percent[$no]['price'] = $feed_price[$key]; 
-            $harga_terakhir += $percent[$no]['result']/100*$feed_price[$key];   
+            $harga_terakhir_bs += $percent[$no]['result_bs']/100*$feed_price[$key];   
             $percent[$no]['max_feed'] = $max_feed[$key];   
             $percent[$no]['min_feed'] = $min_feed[$key];     
             $no++;
         }
         Session::put('harga_terakhir',$harga_terakhir);
+        Session::put('harga_terakhir_bs',$harga_terakhir_bs);
         
         return $percent;
     }
@@ -139,7 +140,10 @@ class Calculate{
             foreach($feeds as $key => $value)
             {
                 $feednuts = FeedNutrient::SearchByNutrientAndFeed($nut['id'],$value)->first(); 
-                $temp = $result[$key+1]*$feednuts->composition;
+                if($feednuts!=null)
+                    $temp = $result[$key+1]*$feednuts->composition;
+                else
+                    $temp = 0;
                 $sum_comp += $temp;
             }        
             $nutrient[$no]['result'] = round($sum_comp,2);

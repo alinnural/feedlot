@@ -11,6 +11,10 @@
                     {!! Form::open(['url' => 'ransums/print', 'method' => 'post', 'class'=>'form-horizontal']) !!}  
                     {{ Form::button('<span class="fa fa-print"></span> Print Ransum', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
                     <input type="hidden" name="id" value="@php echo $forsum->id @endphp">
+                    <a class="btn btn-primary" href="{{ route('ransums.index') }}"><i class="fa fa-arrow-left"></i> Kembali</a>
+                </div>
+                <div class="btn-group pull-right">                    
+                    
                 </div>
                 <h4><i class="fa fa-breafcase"></i> Ransum</h4>
             </div>
@@ -57,38 +61,32 @@
                                     <tr>
                                         <th rowspan=2 ><br>Pakan</th>
                                         <th colspan=2 class='text-center'>Komposisi</th>
-                                        <th rowspan=2 width='10'>&nbsp;</th>
-                                        <th rowspan=2 class='text-center' width='250'><br>Harga</th>
-                                        <th rowspan=2 class='text-right' width='150'><br>Kuantitas</th>
-                                        <th rowspan=2 width='50'>&nbsp;</th>
-                                        <th rowspan=2 class='text-right' width='250'><br>Total Harga</th>
+                                        <th rowspan=2 class='text-center' width='150'><br>Harga BS (Rp/Kg)</th>
+                                        <th rowspan=2 class='text-right' width='150'><br>Kuantitas (Kg)</th>
+                                        <th rowspan=2 class='text-right' width='250'><br>Total Harga (Rp)</th>
                                     </tr>
                                     <tr>                                            
-                                        <th class='text-center'>(%BK)</th>
-                                        <th class='text-center'>(%BS)</th>
+                                        <th class='text-center' width="250">(%BK)</th>
+                                        <th class='text-center' width="250">(%BS)</th>
                                     </tr>
                                     @php $kuantitas=0; $total_price_kuant = 0; @endphp   
                                     @foreach ($forfeeds as $item)
                                     <tr>
                                         <td>{{ $item->feed->name }}</td>
-                                        <td><span class='align-center'>{{ $item->result }}</span></td>
-                                        <td><span class='align-center'>{{ $item->result_bs }}</span></td>
-                                        <th>&nbsp;</th>
-                                        <td><span class='pull-left'>IDR</span> <span class='pull-right'>{{ $item->price }} / kg</span></td>
-                                        <td><span class='pull-right'>@php $kuant = $item->result_bs*1000/100; $kuantitas+=$kuant; @endphp {{ $kuant }} kg</span></td>
-                                        <th>&nbsp;</th>
-                                        <td><span class='pull-left'>IDR</span><span class='pull-right'>@php $price_kuant = $item->price*$kuant; $total_price_kuant+=$price_kuant; @endphp {{ number_format($price_kuant, 2, ',', '.') }}</span></td>
+                                        <td class='text-center'>{{ number_format($item->result, 2, ',', '') }}</td>
+                                        <td class='text-center'>{{ number_format($item->result_bs, 2, ',', '') }}</td>
+                                        <td class='text-center'>{{ $item->price }}</td>
+                                        <td><span class='pull-right'>@php $kuant = $item->result_bs*1000/100; $kuantitas+=$kuant; @endphp {{ number_format($kuant, 2, ',', '') }}</span></td>
+                                        <td class='text-right'>@php $price_kuant = $item->price*$kuant; $total_price_kuant+=$price_kuant; @endphp {{ number_format($price_kuant, 2, ',', '.') }}</td>
                                     </tr>
                                     @endforeach
                                     <tr>
                                         <td width='300'><strong><h4>{!! Form::label('var', 'Harga Terakhir', ['class' => 'control-label']) !!}</strong></h4></td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <th>&nbsp;</th>
-                                        <td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>{{ round($forsum->total_price) }} /kg</span></h4></strong></td>
-                                        <td><span class='pull-right'><h4>{{ $kuantitas }} kg</h4></span></td>
-                                        <th>&nbsp;</th>
-                                        <td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>{{ number_format($total_price_kuant, 2, ',', '.') }}</h4></span></td>
+                                        <td><strong><h4><span class='pull-right'>Rp {{ number_format($forsum->total_price, 2, ',', '.') }} /kg</span></h4></strong></td>
+                                        <td><strong><h4><span class='pull-right'>Rp {{ number_format($forsum->total_price_bs, 2, ',', '.') }} /kg</span></h4></strong></td>
+                                        <td></td>
+                                        <td><span class='pull-right'><h4>{{ number_format($kuantitas, 2, ',', '') }} kg</h4></span></td>
+                                        <td><strong><h4><span class='pull-right'>Rp {{ number_format($total_price_kuant, 2, ',', '.') }}</h4></span></td>
                                     </tr>
                                 </table>
                             </div>
@@ -112,7 +110,7 @@
                                             <td><label class="control-label">{{ $item->nutrient->name }}</label></td>
                                             <td>{{ $item->min }}</td>
                                             <td>{{ $item->max }}</td>
-                                            <td>{{ $item->result }}</td>
+                                            <td>{{ number_format($item->result, 2, ',', '') }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -139,12 +137,13 @@
     function calc(){
         var quantity = parseInt($('#kuantitas').val());
         var harga_terakhir = @php echo $forsum->total_price ; @endphp ;
+        var harga_terakhir_bs = @php echo $forsum->total_price_bs ; @endphp ;
         var id = @php echo $forsum->id ; @endphp ;
 
         $.ajax({
             type: "GET",
             url : "{{ route('ajax.ransumcalcquantity') }}",
-            data : { id: id, qty: quantity, harga_terakhir:harga_terakhir },
+            data : { id: id, qty: quantity, harga_terakhir:harga_terakhir, harga_terakhir_bs:harga_terakhir_bs },
             dataType : "json",
             success : function(data){
                 $("#results").empty();

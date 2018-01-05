@@ -100,7 +100,12 @@ Route::group(['middleware' => ['web']],function(){
             'as' => 'feednutrients.create_id',
             'uses' => 'FeedNutrientsController@create'
         ]);
-        
+        Route::resource('requirementnutrients','RequirementNutrientsController');
+        Route::get('/requirementnutriets/{id}/create',[
+            'as' => 'requirementnutrients.create_id',
+            'uses' => 'RequirementNutrientsController@create'
+        ]);
+
         Route::get('template/feeds', [
             'as'   => 'template.feeds',
             'uses' => 'FeedsController@generateExcelTemplate'
