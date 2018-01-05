@@ -14,8 +14,8 @@ class AddResultBk extends Migration
     public function up()
     {
         Schema::table('forsums', function (Blueprint $table) {
-            $table->decimal('total_price',8,5)->change();
-            $table->decimal('total_price_bs',8,5)->default(0);
+            $table->decimal('total_price',12,5)->change();
+            $table->decimal('total_price_bs',12,5)->default(0);
         });
     }
 
