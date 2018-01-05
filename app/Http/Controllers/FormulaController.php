@@ -119,7 +119,10 @@ class FormulaController extends Controller
                 foreach($feeds as $key2 => $value2){
                     $feednuts = FeedNutrient::SearchByNutrientAndFeed($value,$value2)->first();
                     //print_r($value->nutrient_id.",".$value2);
-                    $data["cons".$i_cons."_".$i++] = $feednuts->composition;
+                    if($feednuts!=null)
+                        $data["cons".$i_cons."_".$i++] = $feednuts->composition;
+                    else
+                        $data["cons".$i_cons."_".$i++] = 0;
                 }
                 $data["sign".$i_cons] = "greaterThan";
                 $data["answer".$i_cons] = $request->min_composition[$key];
@@ -129,7 +132,10 @@ class FormulaController extends Controller
                     $i = 1;
                     foreach($feeds as $key2 => $value2){
                     $feednuts = FeedNutrient::SearchByNutrientAndFeed($value,$value2)->first();
-                        $data["cons".$i_cons."_".$i++] = $feednuts->composition;
+                        if($feednuts!=null)
+                            $data["cons".$i_cons."_".$i++] = $feednuts->composition;
+                        else
+                            $data["cons".$i_cons."_".$i++] = 0;
                     }
                     $data["sign".$i_cons] = "lessThan";
                     $data["answer".$i_cons] = $request->max_composition[$key];
@@ -227,44 +233,38 @@ class FormulaController extends Controller
             $text = "<div class='col-md-12'>".
                         "<div class='panel panel-default'>".
                             "<table class='table table-stripped'>".
-                                "<tr>".
-                                "<th rowspan=2 ><br>Pakan</th>".
-                                "<th colspan=2 class='text-center'><br>Komposisi</th>".
-                                "<th rowspan=2 width='10'>&nbsp;</th>".
-                                "<th rowspan=2 class='text-center' width='250'><br>Harga</th>".
-                                "<th rowspan=2 class='text-right' width='150'><br>Kuantitas</th>".
-                                "<th rowspan=2 width='50'>&nbsp;</th>".
-                                "<th rowspan=2 class='text-right' width='250'><br>Total Harga</th>".
-                                "</tr>".
-                                "<tr>".                                            
-                                    "<th class='text-center'>(%BK)</th>".
-                                    "<th class='text-center'>(%BS)</th>".
-                                "</tr>";
+                            "<tr>".
+                            "<th rowspan=2 ><br>Pakan</th>".
+                            "<th colspan=2 class='text-center'>Komposisi</th>".
+                            "<th rowspan=2 class='text-center' width='150'><br>Harga BS (Rp/Kg)</th>".
+                            "<th rowspan=2 class='text-right' width='150'><br>Kuantitas (Kg)</th>".
+                            "<th rowspan=2 class='text-right' width='250'><br>Total Harga (Rp)</th>".
+                        "</tr>".
+                        "<tr>".
+                            "<th class='text-center' width='250'>(%BK)</th>".
+                            "<th class='text-center' width='250'>(%BS)</th>".
+                        "</tr>";
                                     
                 foreach(Calculate::mapping_feed_id_result($request->harga_terakhir) as $feed){
                     $kuant = $feed['result_bs']*$request->qty/100; $kuantitas+=$kuant;
                     $price_kuant = $feed['price']*$kuant; $total_price_kuant+=$price_kuant;
                     $text.= "<tr>".
                                 "<td>".$feed['name']."</td>".
-                                "<td><span class='align-center'>".$feed['result']."</span></td>".
-                                "<td><span class='align-center'>".$feed['result_bs']."</span></td>".
-                                "<th>&nbsp;</th>".
-                                "<td><span class='pull-left'>IDR</span> <span class='pull-right'>".$feed['price']." / kg</span></td>".
-                                "<td><span class='pull-right'>".$kuant." kg</span></td>".
-                                "<th>&nbsp;</th>".
-                                "<td><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($price_kuant, 2, ',', '.')."</span></td>".
+                                "<td class='text-center'>".number_format($feed['result'], 2, ',', '')."</td>".
+                                "<td class='text-center'>".number_format($feed['result_bs'], 2, ',', '')."</td>".
+                                "<td class='text-center'>".$feed['price']."</td>".
+                                "<td><span class='pull-right'>".number_format($kuant, 2, ',', '')." </span></td>".
+                                "<td class='text-right'>".number_format($price_kuant, 2, ',', '.')."</td>".
                             "</tr>";
                 }
 
                     $text .= "<tr>".
                                 "<td width='300'><strong><h4>Harga Terakhir</strong></h4></td>".
-                                "<td>&nbsp;</td>".
-                                "<td>&nbsp;</td>".
+                                "<td><strong><h4><span class='pull-right'>Rp ".number_format(Session::get('harga_terakhir'), 2, ',', '.')." /kg</span></h4></strong></td>".
+                                "<td><strong><h4><span class='pull-right'>Rp ".number_format(Session::get('harga_terakhir_bs'), 2, ',', '.')." /kg</span></h4></strong></td>".
                                 "<th>&nbsp;</th>".
-                                "<td><strong><h4><span class='pull-left'>IDR</span> <span class='pull-right'>".Session::get('harga_terakhir')." /kg</span></h4></strong></td>".
-                                "<td><span class='pull-right'><h4>".$kuantitas." kg</h4></span></td>".
-                                "<th>&nbsp;</th>".
-                                "<td><strong><h4><span class='pull-left'>IDR</span><span class='pull-right'>".number_format($total_price_kuant, 2, ',', '.')."</h4></span></td>".
+                                "<td><span class='pull-right'><h4>".number_format($kuantitas, 2, ',', '')." kg</h4></span></td>".
+                                "<td><strong><h4><span class='pull-right'>Rp ".number_format($total_price_kuant, 2, ',', '.')."</h4></span></td>".
                             "</tr>".
                         "</table>".
                     "</div>".
