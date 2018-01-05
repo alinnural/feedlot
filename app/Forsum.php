@@ -9,6 +9,7 @@ class Forsum extends Model
     protected $fillable = [
         'name',
         'total_price',
+        'total_price_bs',
         'user_id',
         'explanation'
         ];
