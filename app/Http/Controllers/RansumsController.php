@@ -128,8 +128,11 @@ class RansumsController extends Controller
     public function show($id)
     {
         $forsum = Forsum::findOrFail($id);
-        if($forsum->user_id != Auth::user()->id)
-            return redirect()->route('ransums.index');
+        if(Auth::user()->id != 1)
+        {
+            if($forsum->user_id != Auth::user()->id)
+                return redirect()->route('ransums.index');    
+        }
             
         $forfeeds = ForsumFeed::SearchByForsum($id)->get();
         $fornuts = ForsumNutrient::SearchByForsum($id)->get();
