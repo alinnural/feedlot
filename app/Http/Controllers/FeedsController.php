@@ -360,7 +360,7 @@ class FeedsController extends Controller
             $feed = Feed::find($request->feed_id);
             $req_id = $request->session()->get('requirement_id');
 
-            if($req_id == 11){
+            if($req_id == 11 || $req_id == 5){
                 $result = ['min' => 0, 'max' => 100, 'price' => $feed->price];
             }else{
                 $result = ['min' => $feed->min, 'max' => $feed->max, 'price' => $feed->price];
