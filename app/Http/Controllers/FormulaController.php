@@ -166,7 +166,8 @@ class FormulaController extends Controller
             }
             $nilai_bk = FeedNutrient::SearchByNutrientAndFeed(1,$value)->first();
             $i_var++;
-            $data["var".$i_var] = ($nilai_bk->composition)/100*$harga[$key];
+            $data["var".$i_var] = 100/($nilai_bk->composition)*$harga[$key];
+            //echo $data["var".$i_var]; exit;
         }
 
         //constraint untuk total
@@ -199,7 +200,7 @@ class FormulaController extends Controller
             $no++;
         }
         $request->session()->put('requirement',$requirement);  
-
+        //echo '<pre>'; print_r($data); exit;
         $minimization = new MinimizationFeedlot;
         $initial_tableau = $minimization->optimize($data);
         
