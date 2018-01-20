@@ -23,12 +23,13 @@ class RequirementsController extends Controller
     {
         if($request->ajax())
         {
-            $requirements = Requirement::select(['id','animal_type','current_weight','average_daily_gain']);
+            $requirements = Requirement::select(['id','animal_type']);
             return Datatables::of($requirements)
                 ->addColumn('action',function($requirements)
                 {
-                    return view('datatable._action',[
+                    return view('datatable._actionall',[
                         'model' => $requirements,
+                        'show_url' => route('requirements.show',$requirements->id),
                         'edit_url' => route('requirements.edit',$requirements->id),
                         'delete_url' => route('requirements.destroy', $requirements->id),
                         'confirm_message' => 'Apakah Anda yakin akan menghapus ' . $requirements->animal_type . '?'
@@ -37,9 +38,7 @@ class RequirementsController extends Controller
         }
         $html = $htmlBuilder
             ->addColumn(['data'=>'animal_type', 'name'=>'animal_type','title'=>'Animal Type'])
-            ->addColumn(['data'=>'current_weight', 'name'=>'current_weight','title'=>'Current Body'])
-            ->addColumn(['data'=>'average_daily_gain', 'name'=>'average_daily_gain','title'=>'Average Daily Gain'])
-            ->addColumn(['data'=>'action','name'=>'action','title'=>'Action','orderable'=>false,'searchable'=>false,'width'=>100]);
+            ->addColumn(['data'=>'action','name'=>'action','title'=>'Action','orderable'=>false,'searchable'=>false,'width'=>150]);
         return view('requirements.index')->with(compact('html'));
     }
 
@@ -62,9 +61,7 @@ class RequirementsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-                'animal_type'=>'required',
-                'current_weight'=> 'required|numeric',
-                'average_daily_gain'=> 'required|numeric',
+                'animal_type'=>'required'
             ]);
         $requirements = Requirement::create($request->all());
         
@@ -81,9 +78,13 @@ class RequirementsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request, Builder $htmlBuilder)
     {
-        //
+        $req = Requirement::find($id);
+        $nutrients = $req->requirementnutrients()->with('nutrient')->get();
+        return view('requirements.show')
+                ->with(compact('req'))
+                ->with(compact('nutrients'));
     }
 
     /**
@@ -108,9 +109,7 @@ class RequirementsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-                'animal_type'=>'required',
-                'current_weight'=> 'required|numeric',
-                'average_daily_gain'=> 'required|numeric',
+                'animal_type'=>'required'
             ]);
         $requirements = Requirement::find($id);
         $requirements->update($request->all());

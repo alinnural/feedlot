@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
-use App\Nutrient;
-use App\Unit;
+use App\Requirement;
+use App\RequirementNutrient;
 use Session;
 use Excel;
 use Validator;
 
-class NutrientsController extends Controller
+class RequirementNutrientsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,25 +22,24 @@ class NutrientsController extends Controller
     public function index(Request $request, Builder $htmlBuilder)
     {
         if ($request->ajax()) {
-            $nutrients = Nutrient::with('unit');
-            return Datatables::of($nutrients)
-                ->addColumn('group', function($nutrients) {
-                    return $nutrients->unit->name; })
-                ->addColumn('action', function($nutrients){
-                    return view('nutrients._action',[
-                        'model' => $nutrients,
-                        'edit_url' => route('nutrients.edit',$nutrients->id),
-                        'delete_url' => route('nutrients.destroy', $nutrients->id),
-                        'confirm_message' => 'Apakah Anda yakin akan menghapus '. $nutrients->name . '?'
+            $requirementnutrients = RequirementNutrient::with('requirement','nutrient');
+            return Datatables::of($requirementnutrients)
+                ->addColumn('action', function($requirementnutrient){
+                    return view('datatable._action',[
+                        'model' => $requirementnutrient,
+                        'edit_url' => route('requirementnutrients.edit',$requirementnutrient->id),
+                        'delete_url' => route('requirementnutrients.destroy', $requirementnutrient->id),
+                        'confirm_message' => 'Apakah Anda yakin akan menghapus pakan '. $requirementnutrient->requirement->name .' dengan nutrien '. $requirementnutrient->nutrient->name .' ?'
                     ]);
             })->make(true);
         }
         $html = $htmlBuilder
-        ->addColumn(['data' => 'name', 'name'=>'name', 'title'=>'Nama'])
-        ->addColumn(['data' => 'abbreviation', 'name'=>'abbreviation', 'title'=>'Abbreviation'])
-        ->addColumn(['data' => 'unit.name', 'name'=>'unit.name', 'title'=>'Unit'])
+        ->addColumn(['data' => 'requirement.name', 'name'=>'requirement.name', 'title'=>'Requirements'])
+        ->addColumn(['data' => 'nutrient.name', 'name'=>'nutrient.name', 'title'=>'Nutrien'])
+        ->addColumn(['data' => 'min_composition', 'name'=>'min_composition', 'title'=>'Minimum Komposisi'])
+        ->addColumn(['data' => 'max_composition', 'name'=>'max_composition', 'title'=>'Maksimum Komposisi'])
         ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false,'width'=>100]);
-        return view('nutrients.index')->with(compact('html'));
+        return view('requirementnutrients.index')->with(compact('html'));
     }
 
     /**
@@ -48,9 +47,11 @@ class NutrientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('nutrients.create');
+        $requirement = Requirement::find($id);
+        return view('requirementnutrients.create')
+                    ->with(compact('requirement'));
     }
 
     /**
@@ -61,20 +62,19 @@ class NutrientsController extends Controller
      */
     public function store(Request $request)
     {
-        // print_r($request->all());
-        // die();
         $this->validate($request, [
-            'name'=> 'required|unique:nutrients',
-            'abbreviation' => 'required',
-            'unit_id' => 'required'
+            'nutrient_id'=> 'required',
+            'requirement_id' => 'required',
+            'min_composition' => 'required',
+            'max_composition' => 'required'
         ]);
-        $nutrients = Nutrient::create($request->all());
+        $requirementnutrients = RequirementNutrient::create($request->all());
 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil menyimpan $nutrients->name"
+            "message"=>"Berhasil menyimpan nutrien ternak"
         ]);
-        return redirect()->route('nutrients.index');
+        return redirect()->route('requirements.show',$request->requirement_id);
     }
 
     /**
@@ -96,8 +96,11 @@ class NutrientsController extends Controller
      */
     public function edit($id)
     {
-        $nutrients = Nutrient::find($id);
-        return view('nutrients.edit')->with(compact('nutrients'));
+        $requirementnutrients = RequirementNutrient::find($id);
+        $requirement = Requirement::find($requirementnutrients->requirement_id);
+        return view('requirementnutrients.edit')
+                    ->with(compact('requirementnutrients'))
+                    ->with(compact('requirement'));
     }
 
     /**
@@ -110,17 +113,18 @@ class NutrientsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'name'=> 'required|unique:nutrients',
-            'abbreviation' => 'required',
-            'unit_id' => 'required'
+            'nutrient_id'=> 'required',
+            'requirement_id' => 'required',
+            'min_composition' => 'required',
+            'max_composition' => 'required'
         ]);
-        $nutrients = Nutrient::find($id);
-        $nutrients->update($request->all());
+        $requirementnutrients = RequirementNutrient::find($id);
+        $requirementnutrients->update($request->all());
 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil mengubah $nutrients->name" ]);
-        return redirect()->route('nutrients.index');
+            "message"=>"Berhasil mengubah nutrien ternak" ]);
+        return redirect()->route('requirements.show',$request->requirement_id);
     }
 
     /**
@@ -131,35 +135,28 @@ class NutrientsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $nutrients = Nutrient::find($id);
-
-        if(!$nutrients->delete()) 
-            return redirect()->back();
-        
-        // handle hapus nutrients via ajax
-        if ($request->ajax()) 
-            return response()->json(['id' => $id]);
-        
+        $req_id = RequirementNutrient::find($id)->requirement_id;
+        if(!RequirementNutrient::destroy($id)) return redirect()->back();
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Nutrients berhasil dihapus"
+            "message"=>"Nutrien Ternak berhasil dihapus"
         ]);
-        return redirect()->route('nutrients.index');
+        return redirect()->route('requirements.show',$req_id);
     }
 
     public function generateExcelTemplate() 
     {
-        Excel::create('Template Import Nutrients', function($excel) 
+        Excel::create('Template Import Requirements', function($excel) 
         { // Set the properties
-            $excel->setTitle('Template Import Nutrients')
+            $excel->setTitle('Template Import Requirements')
                 ->setCreator('Ihsan Arif Rahman')
-                ->setCompany('Feedlot')
-                ->setDescription('Template import nutrients untuk Feedlot');
-            $excel->sheet('Data Feeds', function($sheet) { 
+                ->setCompany('Requirementlot')
+                ->setDescription('Template import requirements untuk Requirementlot');
+            $excel->sheet('Data Requirements', function($sheet) { 
             $row = 1;
             $sheet->row($row, [
-                'feed_stuff',
-                'group_feed_id',
+                'requirement_stuff',
+                'group_requirement_id',
                 'dry_matter',
                 'mineral',
                 'organic_matter',
@@ -207,12 +204,12 @@ class NutrientsController extends Controller
         })->get();
         // rule untuk validasi setiap row pada file excel
         $rowRules = [
-            'feed_stuff'=> 'required',
-            'group_feed_id' => 'required'
+            'requirement_stuff'=> 'required',
+            'group_requirement_id' => 'required'
         ];
-        // Catat semua id feeds baru
+        // Catat semua id requirements baru
         // ID ini kita butuhkan untuk menghitung total buku yang berhasil diimport
-        $feeds_id = [];
+        $requirements_id = [];
         // looping setiap baris, mulai dari baris ke 2 (karena baris ke 1 adalah nama kolom)
         foreach ($excels as $row) {
             // Membuat validasi untuk row di excel
@@ -220,17 +217,17 @@ class NutrientsController extends Controller
             $validator = Validator::make($row->toArray(), $rowRules);
             // Skip baris ini jika tidak valid, langsung ke baris selanjutnya
             if ($validator->fails()) continue;
-            // check data group feed
-            $group_feeds = Unit::where('name', $row['group_feed_id'])->first();
+            // check data group requirement
+            $group_requirements = GroupRequirement::where('name', $row['group_requirement_id'])->first();
             // buat penulis jika belum ada
-            if (!$group_feeds) 
+            if (!$group_requirements) 
             {
-                $group_feeds = Unit::create(['name'=>$row['group_feed_id']]);
+                $group_requirements = GroupRequirement::create(['name'=>$row['group_requirement_id']]);
             }
-            // buat feeds baru
-            $feed = Nutrient::create([
-                'feed_stuff'=> $row['feed_stuff'],
-                'group_feed_id' => $group_feeds->id,
+            // buat requirements baru
+            $requirement = Requirement::create([
+                'requirement_stuff'=> $row['requirement_stuff'],
+                'group_requirement_id' => $group_requirements->id,
                 'dry_matter' => $row['dry_matter'],
                 'mineral' => $row['mineral'],
                 'organic_matter'=> $row['organic_matter'],
@@ -264,13 +261,13 @@ class NutrientsController extends Controller
             ]);
             
             // catat id dari buku yang baru dibuat
-            array_push($feeds_id, $feed->id);
+            array_push($requirements_id, $requirement->id);
         }
         
         // Ambil semua buku yang baru dibuat
-        $feed = Nutrient::whereIn('id', $feeds_id)->get();
+        $requirement = Requirement::whereIn('id', $requirements_id)->get();
         // redirect ke form jika tidak ada buku yang berhasil diimport
-        if ($feed->count() == 0) 
+        if ($requirement->count() == 0) 
         {
             Session::flash("flash_notification", [
                 "level"   => "danger",
@@ -278,13 +275,13 @@ class NutrientsController extends Controller
             ]);
             return redirect()->back();
         }
-        // set feedback
+        // set requirementback
         Session::flash("flash_notification", [
             "level"   => "success",
-            "message" => "Berhasil mengimport " . $feed->count() . " pakan."
+            "message" => "Berhasil mengimport " . $requirement->count() . " pakan."
         ]);
         // Tampilkan halaman review buku
-        return redirect()->route('feeds.index');
+        return redirect()->route('requirements.index');
     }
 
     public function AjaxSearch(Request $request)
@@ -294,13 +291,13 @@ class NutrientsController extends Controller
             return \Response::json([]);
         }
 
-        $nutrients = Nutrient::SearchByKeyword($term)->get();
+        $requirements = Requirement::SearchByKeyword($term)->get();
 
-        $formatted_nutrients = [];
-        foreach ($nutrients as $nutrient) {
-            $formatted_nutrients[] = ['id' => $nutrient->id, 'text' => $nutrient->nutrient_stuff ];
+        $formatted_requirements = [];
+        foreach ($requirements as $requirement) {
+            $formatted_requirements[] = ['id' => $requirement->id, 'text' => $requirement->requirement_stuff ];
         }
 
-        return \Response::json($formatted_nutrients);
+        return \Response::json($formatted_requirements);
     }
 }

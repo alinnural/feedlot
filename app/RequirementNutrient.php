@@ -27,6 +27,10 @@ class RequirementNutrient extends Model
     {
         if ($req_id != '') {
             if ($req_id == 11) {
+        if($req_id != '')
+        {
+            if($req_id == 11 || $req_id == 5)
+            {                
                 $query->join('nutrients', function ($join) use ($req_id) {
                     $join->on('nutrients.id', '=', 'nutrient_id');
                 })
