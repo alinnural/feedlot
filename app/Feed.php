@@ -1,11 +1,11 @@
-<?php 
-
+<?php
 namespace App;
- 
+
 use Illuminate\Database\Eloquent\Model;
- 
-class Feed extends Model 
+
+class Feed extends Model
 {
+
     protected $fillable = [
         'name',
         'latin_name',
@@ -18,11 +18,11 @@ class Feed extends Model
         'min',
         'max',
         'price'
-        ];
+    ];
 
     public function groupfeed()
     {
-        return $this->belongsTo('App\GroupFeed','group_feed_id','id');
+        return $this->belongsTo('App\GroupFeed', 'group_feed_id', 'id');
     }
 
     public function feednutrients()
@@ -37,13 +37,13 @@ class Feed extends Model
 
     public function scopeSearchByKeyword($query, $keyword)
     {
-        if ($keyword!='') {
+        if ($keyword != '') {
             $query->where(function ($query) use ($keyword) {
-                $query->where('feed_stuff','LIKE',"%$keyword%");
-                    // ->orWhere("feed_stuff", "LIKE","%$keyword%");
-                    // ->orWhere("email", "LIKE", "%$keyword%")
-                    // ->orWhere("blood_group", "LIKE", "%$keyword%")
-                    // ->orWhere("phone", "LIKE", "%$keyword%");
+                $query->where('feed_stuff', 'LIKE', "%$keyword%");
+                // ->orWhere("feed_stuff", "LIKE","%$keyword%");
+                // ->orWhere("email", "LIKE", "%$keyword%")
+                // ->orWhere("blood_group", "LIKE", "%$keyword%")
+                // ->orWhere("phone", "LIKE", "%$keyword%");
             });
         }
         return $query;

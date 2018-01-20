@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,7 +6,10 @@ use Illuminate\Support\Facades\Session;
 
 class GroupFeed extends Model
 {
-    protected $fillable = ['name'];
+
+    protected $fillable = [
+        'name'
+    ];
 
     public function feeds()
     {
@@ -17,7 +19,7 @@ class GroupFeed extends Model
     public static function boot()
     {
         parent::boot();
-        self::deleting(function($group) {
+        self::deleting(function ($group) {
             // mengecek apakah penulis masih punya buku
             if ($group->feeds->count() > 0) {
                 // menyiapkan pesan error
@@ -28,22 +30,29 @@ class GroupFeed extends Model
                 }
                 $html .= '</ul>';
                 Session::flash("flash_notification", [
-                    "level"=>"danger",
-                    "message"=>$html
+                    "level" => "danger",
+                    "message" => $html
                 ]);
                 // membatalkan proses penghapusan
                 return false;
             }
-        }); 
+        });
     }
 
     public function getTotalFeedAttribute()
     {
-       return $this->hasMany('App\Feed')->whereGroupFeedId($this->id)->count();   
+        return $this->hasMany('App\Feed')
+            ->whereGroupFeedId($this->id)
+            ->count();
     }
 
     public function getTotalFeedAttributePublic()
     {
-        return $this->hasMany('App\Feed')->whereGroupFeedId($this->id)->where(['is_public' => 1])->count();
+        return $this->hasMany('App\Feed')
+            ->whereGroupFeedId($this->id)
+            ->where([
+            'is_public' => 1
+        ])
+            ->count();
     }
 }
