@@ -24,7 +24,10 @@ Route::group(['middleware' => ['web']],function(){
     Route::get('post/{slug}', 'PostController@showPost');
     Route::get('page/{slug}','PageController@showPage');
 
-    Route::get('/tanya-jawab','QuestionController@index');
+    Route::get('/tanya-jawab',[
+        'as'=>'tanya.jawab.index',
+        'uses'=>'QuestionController@index'
+    ]);
     Route::get('/tanya-jawab/{id}','QuestionController@showQuestion');
     Route::get('/tanyakan','QuestionController@create');
     Route::post('/tanyakan','QuestionController@store');

@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ReCaptchataTestFormRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,7 +25,20 @@ class ReCaptchataTestFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'g-recaptcha-response'=>'required|recaptcha'
+            'g-recaptcha-response' => 'required|recaptcha',
+            'name' => 'required',
+            'email' => 'required|email',
+            'title' => 'required'
+        ];
+    }
+
+    public function postFillData()
+    {
+        return [
+            'title' => $this->title,
+            'name' => $this->name,
+            'email' => $this->email,
+            'description' => $this->description
         ];
     }
 }

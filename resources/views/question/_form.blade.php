@@ -6,8 +6,8 @@
     </div>
     {!! Form::label('email', 'email', ['class'=>'col-md-2 control-label']) !!} 
     <div class="col-md-4">
-        {!! Form::text('latin_name', null, ['class'=>'form-control']) !!}
-        {!! $errors->first('latin_name', '<p class="help-block">:message</p>') !!}
+        {!! Form::text('email', null, ['class'=>'form-control']) !!}
+        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 

@@ -3,13 +3,13 @@
 namespace App\Validators;
 
 use GuzzleHttp\Client;
+use PhpParser\Node\Expr\Print_;
 
 class ReCaptcha
 {
     public function validate($attribute, $value, $parameters, $validator){
 
         $client = new Client();
-
         $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
             ['form_params'=>
                 [
@@ -18,9 +18,7 @@ class ReCaptcha
                  ]
             ]
         );
-
         $body = json_decode((string)$response->getBody());
         return $body->success;
     }
-
 }
