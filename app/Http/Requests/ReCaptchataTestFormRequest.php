@@ -3,6 +3,7 @@ namespace App\Http\Requests;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Validators;
 
 class ReCaptchataTestFormRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class ReCaptchataTestFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'g-recaptcha-response' => 'required|recaptcha',
+            'g-recaptcha-response' => 'required|Recaptcha',
             'name' => 'required',
             'email' => 'required|email',
             'title' => 'required'
