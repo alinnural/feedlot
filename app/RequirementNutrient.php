@@ -25,8 +25,6 @@ class RequirementNutrient extends Model
 
     public function scopeSearchNutrient($query, $req_id)
     {
-        if ($req_id != '') {
-            if ($req_id == 11) {
         if($req_id != '')
         {
             if($req_id == 11 || $req_id == 5)
