@@ -3,7 +3,6 @@ namespace App\Http\Requests;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Validators;
 
 class ReCaptchataTestFormRequest extends FormRequest
 {

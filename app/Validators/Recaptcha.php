@@ -5,7 +5,7 @@ namespace App\Validators;
 use GuzzleHttp\Client;
 use PhpParser\Node\Expr\Print_;
 
-class ReCaptcha
+class Recaptcha
 {
     public function validate($attribute, $value, $parameters, $validator){
 
