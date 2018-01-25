@@ -23,12 +23,18 @@ Route::group(['middleware' => ['web']],function(){
     Route::get('post', 'PostController@index');
     Route::get('post/{slug}', 'PostController@showPost');
     Route::get('page/{slug}','PageController@showPage');
-
-    Route::get('/tanya-jawab',[
-        'as'=>'tanya.jawab.index',
-        'uses'=>'QuestionController@index'
-    ]);
-    Route::get('/tanya-jawab/{id}','QuestionController@showQuestion');
+    
+    Route::group(['prefix'=>'tanya-jawab'],function(){
+        Route::get('/', [
+            'as' => 'tanya.jawab.index',
+            'uses' => 'QuestionController@index'
+        ]);
+        Route::get('/search',[
+            'as' => 'tanya.jawab.search',
+            'uses'=>'QuestionController@search'
+        ]);
+        Route::get('{id}','QuestionController@showQuestion');
+    });
     Route::get('/tanyakan','QuestionController@create');
     Route::post('/tanyakan','QuestionController@store');
 

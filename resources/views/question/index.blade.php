@@ -10,11 +10,20 @@ Semua Tanya Jawab {{ $questions->currentPage() }} of {{ $questions->lastPage() }
         @include('layouts.menu')
         <div class="col-md-9">
             <div class="row">
+            		<ul class="breadcrumb">
+                  <li><a href="{{ url('/home') }}">Dashboard</a></li>
+                  <li><a href="{{ url('/tanya-jawab') }}">Tanya Jawab</a></li>
+                </ul>
                 <div class="panel panel-default">
+                		<div class="panel-header">
+                			&nbsp;
+                		</div>
                     <div class="panel-body">
-                    		<div class="col-md-9">
-                    			<input class="form-control" name="search">
-                    		</div>
+                        {!! Form::open(['url' => route('tanya.jawab.search'), 'method' => 'get', 'class'=>'form-horizontal']) !!} 
+                          	<div class="col-md-9">
+                        			<input class="form-control" name="keyword" id="search" placeholder="Ketik kata kunci yang akan dicari lalu tekan ENTER" >
+                        		</div>
+                        {!! Form::close() !!}
                         <div class="col-md-3">
                             <a href="{{ url('tanyakan') }}"> <i class="fa fa-pencil"></i> Ajukan Pertanyaan</a><br>
                             <a href="{{ url('tanyakan') }}"> <i class="fa fa-search"></i> Periksa Pertanyaan Saya</a>
@@ -49,11 +58,11 @@ Semua Tanya Jawab {{ $questions->currentPage() }} of {{ $questions->lastPage() }
                               @endforeach
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="text-center">    
-                    {{ $questions->links() }} 
+                    <div class="row">
+                        <div class="text-center">    
+                            {{ $questions->links() }} 
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,4 +70,15 @@ Semua Tanya Jawab {{ $questions->currentPage() }} of {{ $questions->lastPage() }
             @include('layouts.menu-mobile')
         @endmobile
     </div>
+@endsection
+
+@section('scripts')
+<script>
+$("#input").keypress(function(event) {
+    if (event.which == 13) {
+        event.preventDefault();
+        $("#formsearch").submit();
+    }
+});
+</script>
 @endsection
