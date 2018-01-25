@@ -31,6 +31,15 @@
         z-index: 9999;
         background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
     }
+    
+    .footer {
+      bottom: 0;
+      width: 100%;
+      height: 60px; /* Set the fixed height of the footer here */
+      line-height: 60px; /* Vertically center the text there */
+      background-color: #f5f5f5;
+    }
+    
     </style>
 
     <!-- Scripts -->
@@ -118,6 +127,11 @@
         @include('layouts._flash')
         @yield('content')
         </div>
+        <footer class="footer">
+          <div class="container">
+            <span class="text-muted" style="color:#43a047;">Copyright 2017 by Dairy Feed Online</span>
+          </div>
+        </footer>
     </div>
 
     
