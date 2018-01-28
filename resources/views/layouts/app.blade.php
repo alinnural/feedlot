@@ -89,6 +89,7 @@
                                     {!! Html::smartNavBackend(url('/admin/post'), 'Berita','fa fa-pencil') !!}
                                     {!! Html::smartNavBackend(url('/admin/page'), 'Halaman','fa fa-book') !!}
                                     {!! Html::smartNavBackend(url('/admin/menu'), 'Menu','fa fa-book') !!}
+                                    {!! Html::smartNavBackend(url('/admin/question'), 'Tanya Jawab','fa fa-question') !!}
                                     {!! Html::smartNavBackend(url('/admin/slider'), 'Slider','fa fa-image') !!}
                                     {!! Html::smartNavBackend(url('/admin/social'), 'Social','fa fa-facebook') !!}
                                     {!! Html::smartNavBackend(url('/admin/album'), 'Album Foto','fa fa-camera-retro') !!}
