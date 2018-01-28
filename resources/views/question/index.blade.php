@@ -48,10 +48,8 @@ Semua Tanya Jawab {{ $questions->currentPage() }} of {{ $questions->lastPage() }
                                         </a><br>
                                         <hr>
                                         <p>{!! str_limit($question->description,400) !!}</p>
-                                        @if($question->answers()->count() == 0)
-                                        		<pre class="bg-light"><i>Belum Ada Jawaban</i></pre>
-                                        @else
-                                        		<pre class="bg-light"><i></i></pre>
+                                        @if($question->answers()->count() > 0)
+                                        		<pre class="bg-light"><i>Pakar : <b>{{ $question->answers()->first()->user()->first()->name }}({{ $question->answers()->first()->user()->first()->email }})</b> <br>{!! $question->answers()->first()->answer !!}</i></pre>
                                         @endif
                                     </div>
                                 </div>

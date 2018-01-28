@@ -11,7 +11,8 @@ class Question extends Model
         'title',
         'name',
         'email',
-        'description'
+        'description',
+        'created_at'
     ];
 
     public function answers()
@@ -28,26 +29,5 @@ class Question extends Model
             });
         }
         return $query;
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-        self::deleting(function ($group) {
-            if ($group->answers->count() > 0) {
-                // menyiapkan pesan error
-                $html = 'Pertanyaan tidak bisa dihapus karena masih memiliki : ';
-                $html .= '<ul>';
-                foreach ($group->answers as $answers) {
-                    $html .= "<li>$answers->answer</li>";
-                }
-                $html .= '</ul>';
-                Session::flash("flash_notification", [
-                    "level" => "danger",
-                    "message" => $html
-                ]);
-                return false;
-            }
-        });
     }
 }

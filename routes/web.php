@@ -90,6 +90,7 @@ Route::group(['middleware' => ['web']],function(){
             Route::resource('setting','Admin\SettingController');
             Route::resource('album','Admin\AlbumController');
             Route::resource('file','Admin\FileController');
+            Route::resource('question','Admin\QuestionController');
     
             Route::resource('image','Admin\ImageController');
             Route::put('/image/{image}/move', array('as' => 'image.move', 'uses' => 'Admin\ImageController@move'));
