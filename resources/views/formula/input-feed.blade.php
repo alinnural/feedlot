@@ -41,8 +41,8 @@
                     <h4> Pilih pakan yang digunakan</h4>
                 </div>
                 <div class="panel-body">
-                <div class='form-group feeds-container'>
-                        <div id="0">
+                    <div class='form-group'>
+                        <div>
                             <div class='col-md-4'>
                                 <strong>Pakan</strong>
                             </div>
