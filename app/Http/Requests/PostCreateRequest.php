@@ -29,25 +29,23 @@ class PostCreateRequest extends FormRequest
       'content' => 'required',
       'meta_description' => 'required',
       'page_image' => 'image|max:2048'
-      //'layout' => 'required',
-    ];
-  }
+            // 'layout' => 'required',
+        ];
+    }
 
-  /**
-   * Return the fields and values to create a new post from
-   */
-  public function postFillData()
-  {
-    $published_at = new Carbon(
-      $this->publish_date.' '.$this->publish_time
-    );
-    return [
-      'title' => $this->title,
-      'subtitle' => $this->subtitle,
-      'page_image' => $this->page_image,
-      'content_raw' => $this->get('content'),
-      'meta_description' => $this->meta_description,
-      'is_draft' => (bool)$this->is_draft,
+    /**
+     * Return the fields and values to create a new post from
+     */
+    public function postFillData()
+    {
+        $published_at = new Carbon($this->publish_date . ' ' . $this->publish_time);
+        return [
+            'title' => $this->title,
+            'subtitle' => $this->subtitle,
+            'page_image' => $this->page_image,
+            'content_raw' => $this->get('content'),
+            'meta_description' => $this->meta_description,
+            'is_draft' => (bool) $this->is_draft,
       'published_at' => $published_at,
       'layout' => '',//$this->layout,
     ];

@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['web','menu']],function(){
+Route::group(['middleware' => ['web']],function(){
     Route::get('/', [
         'uses'=> 'HomeController@beranda'
     ]);
@@ -24,28 +24,41 @@ Route::group(['middleware' => ['web','menu']],function(){
     Route::get('post/{slug}', 'PostController@showPost');
     Route::get('page/{slug}','PageController@showPage');
     
-    Route::group(['middleware'=>['formula']],function(){
+    Route::group(['prefix'=>'tanya-jawab'],function(){
+        Route::get('/', [
+            'as' => 'tanya.jawab.index',
+            'uses' => 'QuestionController@index'
+        ]);
+        Route::get('/search',[
+            'as' => 'tanya.jawab.search',
+            'uses'=>'QuestionController@search'
+        ]);
+        Route::get('{id}','QuestionController@showQuestion');
+    });
+    Route::get('/tanyakan','QuestionController@create');
+    Route::post('/tanyakan','QuestionController@store');
+
+    
+    Route::group(['middleware'=>['auth']],function(){
         Route::resource('ransums','RansumsController');
-        
+        Route::post('ransums/print','RansumsController@print_forsum');
         Route::group(['prefix'=>'formula'],function(){
-            Route::post('/input','HomeController@input');
-            Route::get('/price','HomeController@price');
-            Route::post('/calculate','HomeController@calculate');
-            Route::post('/store','HomeController@store');
-            Route::get('/', 'HomeController@index');
-            Route::post('/print','HomeController@print');
+            Route::post('/input','FormulaController@input');
+            Route::post('/calculate','FormulaController@calculate');
+            Route::post('/store','FormulaController@store');
+            Route::get('/', 'FormulaController@index');
         });
 
         Route::group(['prefix'=>'laktasi'],function(){
-            Route::get('/', 'HomeController@laktasi');
-            Route::post('/calculate','HomeController@calc_laktasi');
+            Route::get('/', 'FormulaController@laktasi');
+            Route::post('/calculate','FormulaController@calc_laktasi');
         });
 
         Route::group(['prefix'=>'simulasi'],function(){
-            Route::get('/','HomeController@simulasiIndex');
-            Route::post('/input','HomeController@simulasiInput');
-            Route::post('/calculate','HomeController@simulasiCalculate');
-            Route::get('/simplex','HomeController@simulasiSimplexMethod');
+            Route::get('/','SimulasiController@simulasiIndex');
+            Route::post('/input','SimulasiController@simulasiInput');
+            Route::post('/calculate','SimulasiController@simulasiCalculate');
+            Route::get('/simplex','SimulasiController@simulasiSimplexMethod');
         });
     });
     
@@ -77,6 +90,7 @@ Route::group(['middleware' => ['web','menu']],function(){
             Route::resource('setting','Admin\SettingController');
             Route::resource('album','Admin\AlbumController');
             Route::resource('file','Admin\FileController');
+            Route::resource('question','Admin\QuestionController');
     
             Route::resource('image','Admin\ImageController');
             Route::put('/image/{image}/move', array('as' => 'image.move', 'uses' => 'Admin\ImageController@move'));
@@ -96,7 +110,12 @@ Route::group(['middleware' => ['web','menu']],function(){
             'as' => 'feednutrients.create_id',
             'uses' => 'FeedNutrientsController@create'
         ]);
-        
+        Route::resource('requirementnutrients','RequirementNutrientsController');
+        Route::get('/requirementnutriets/{id}/create',[
+            'as' => 'requirementnutrients.create_id',
+            'uses' => 'RequirementNutrientsController@create'
+        ]);
+
         Route::get('template/feeds', [
             'as'   => 'template.feeds',
             'uses' => 'FeedsController@generateExcelTemplate'
@@ -130,12 +149,16 @@ Route::group(['prefix'=>'ajax'],function(){
             'uses' => 'FeedsController@AjaxFind'
         ]);
     Route::get('feeds/search','FeedsController@AjaxSearch');
-    Route::get('home/calcquantity', [
+    Route::get('formula/calcquantity', [
         'as'   => 'ajax.calcquantity',
-        'uses' => 'HomeController@AjaxCalcQ'
+        'uses' => 'FormulaController@AjaxCalcQ'
     ]);
-    Route::get('home/calclaktasi', [
+    Route::get('formula/calclaktasi', [
         'as'   => 'ajax.calclaktasi',
-        'uses' => 'HomeController@AjaxCalcLaktasi'
+        'uses' => 'FormulaController@AjaxCalcLaktasi'
+    ]);
+    Route::get('ransum/calcquantity', [
+        'as'   => 'ajax.ransumcalcquantity',
+        'uses' => 'RansumsController@AjaxCalcQ'
     ]);
 });

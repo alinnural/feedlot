@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Nama Local</label>
+                                    <label class="col-md-3 control-label">Nama Lokal</label>
                                     <div class="col-md-9">
                                         {{$feed->local_name}}
                                     </div>
@@ -69,7 +69,12 @@
                                         {{$feed->max}}
                                     </div>
                                 </div>
-                                
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Harga</label>
+                                    <div class="col-md-9">
+                                        {{$feed->price}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,6 +127,9 @@
                 </div>
             </div>
         </div>
+        @mobile
+            @include('layouts.menu-mobile')
+        @endmobile
     </div>
 </div>
 @endsection

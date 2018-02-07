@@ -20,8 +20,8 @@
                         <thead>
                             <tr>
                                 <th width="200px;">Nutrisi</th>
-                                <th width="200px;">Minimum</th>
-                                <th width="200px;">Maksimum</th>
+                                <th width="200px;">Minimum (%)</th>
+                                <th width="200px;">Maksimum (%)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,25 @@
                 <div class="panel-heading">
                     <h4> Pilih pakan yang digunakan</h4>
                 </div>
-                <div class="panel-body">    
+                <div class="panel-body">
+                    <div class='form-group'>
+                        <div>
+                            <div class='col-md-4'>
+                                <strong>Pakan</strong>
+                            </div>
+                            <div class='col-md-2'>
+                                <strong>Minumum (%)</strong> 
+                            </div>
+                            <div class='col-md-2'>
+                                <strong>Maksimum (%)</strong> 
+                            </div>
+                            <div class='col-md-2'>
+                                <strong>Harga (Rp)</strong> 
+                            </div>
+                            <div class='col-md-1'>                                
+                            </div>
+                        </div>
+                    </div>
                     <div class='form-group feeds-container'>
                         <div id="0">
                             <div class='col-md-4'>
@@ -53,7 +71,7 @@
                                 {{ Form::text('max_feed[]', '',['class' => 'form-control max_feed_0','placeholder' => 'Nilai maks'])}} 
                             </div>
                             <div class='col-md-2'>
-                                {{ Form::number('harga[]', '',['class' => 'form-control harga','placeholder' => 'Harga'])}} 
+                                {{ Form::number('harga[]', '',['class' => 'form-control harga_0','placeholder' => 'Harga'])}} 
                             </div>
                             <div class='col-md-1'>
                                 <a href='#' class='btn btn-sm btn-danger btn-remove'>Hapus</a>
@@ -69,7 +87,7 @@
                             <a href="{{url('formula')}}" class="pull-left btn btn-primary" id="next"><i class="fa fa-arrow-circle-o-left"></i> Kembali</a>
                         </div>
                         <div class="col-md-8">
-                            {{ Form::button('<span class="fa fa-arrow-circle-o-right"></span> Formulasi', array('class'=>'btn btn-success pull-right', 'type'=>'submit')) }}
+                            {{ Form::button('<span class="fa fa-arrow-circle-o-right"></span> Formulasi', array('class'=>'btn btn-info pull-right', 'type'=>'submit')) }}
                         </div>
                     <div>
                 </div>
@@ -107,7 +125,7 @@
                                         "<input class='form-control max_feed_"+x+"' placeholder='Nilai maks' name='max_feed[]' type='text' value=''> "+
                                     "</div>"+
                                     "<div class='col-md-2'>"+
-                                        "<input class='form-control harga' placeholder='Harga' name='harga[]' type='number' value=''> "+
+                                        "<input class='form-control harga_"+x+"' placeholder='Harga' name='harga[]' type='number' value=''> "+
                                     "</div>"+
                                     "<div class='col-md-1'>"+
                                         "<a href='#' class='btn btn-sm btn-danger btn-remove'>Hapus</a>"+
@@ -140,6 +158,7 @@
             success : function(data){
                 $(".min_feed_"+num_feed).val(data.min);
                 $(".max_feed_"+num_feed).val(data.max);
+                $(".harga_"+num_feed).val(data.price);
             }
         }, "json")
     };

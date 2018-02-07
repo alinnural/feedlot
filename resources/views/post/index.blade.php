@@ -10,7 +10,7 @@ Semua Berita {{ $posts->currentPage() }} of {{ $posts->lastPage() }} - {{ config
         @include('layouts.menu')
         <div class="col-md-9">
             @foreach($posts as $post)
-            <div class="row">
+            <div class="">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <a href="{{ url('post') }}/{{$post->slug}}" style="font-size:20pt">
@@ -37,11 +37,14 @@ Semua Berita {{ $posts->currentPage() }} of {{ $posts->lastPage() }} - {{ config
                 </div>
             </div>
             @endforeach
-            <div class="row">
+            <div class="">
                 <div class="text-center">    
                     {{ $posts->links() }} 
                 </div>
             </div>
         </div>
+        @mobile
+            @include('layouts.menu-mobile')
+        @endmobile
     </div>
 @endsection
