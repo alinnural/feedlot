@@ -20,8 +20,8 @@
                         <thead>
                             <tr>
                                 <th width="200px;">Nutrisi</th>
-                                <th width="200px;">Minimum</th>
-                                <th width="200px;">Maksimum</th>
+                                <th width="200px;">Minimum (%)</th>
+                                <th width="200px;">Maksimum (%)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,25 @@
                 <div class="panel-heading">
                     <h4> Pilih pakan yang digunakan</h4>
                 </div>
-                <div class="panel-body">    
+                <div class="panel-body">
+                <div class='form-group feeds-container'>
+                        <div id="0">
+                            <div class='col-md-4'>
+                                <strong>Pakan</strong>
+                            </div>
+                            <div class='col-md-2'>
+                                <strong>Minumum (%)</strong> 
+                            </div>
+                            <div class='col-md-2'>
+                                <strong>Maksimum (%)</strong> 
+                            </div>
+                            <div class='col-md-2'>
+                                <strong>Harga (Rp)</strong> 
+                            </div>
+                            <div class='col-md-1'>                                
+                            </div>
+                        </div>
+                    </div>
                     <div class='form-group feeds-container'>
                         <div id="0">
                             <div class='col-md-4'>
