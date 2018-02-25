@@ -189,6 +189,8 @@ return [
         App\Providers\ConfigurationServiceProvider::class,
         Riverskies\Laravel\MobileDetect\MobileDetectServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class
     ],
 
     /*
@@ -243,7 +245,9 @@ return [
         'Calculate' => App\Helpers\Calculate::class,
         'Menu'      => Lavary\Menu\Facade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'MobileDetect' => Riverskies\Laravel\MobileDetect\Facades\MobileDetect::class
+        'MobileDetect' => Riverskies\Laravel\MobileDetect\Facades\MobileDetect::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];
