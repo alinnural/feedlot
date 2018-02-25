@@ -41,18 +41,21 @@ Semua Tanya Jawab {{ $questions->currentPage() }} of {{ $questions->lastPage() }
                         	@else
                         	@endif
                         		@foreach($questions as $question)
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <a href="{{ url('tanya-jawab') }}/{{$question->id}}" style="font-size:20pt">
-                                            {{ str_limit($question->title,35) }}
-                                        </a><br>
-                                        <hr>
-                                        <p>{!! str_limit($question->description,400) !!}</p>
-                                        @if($question->answers()->count() > 0)
-                                        		<pre class="bg-light"><i>Pakar : <b>{{ $question->answers()->first()->user()->first()->name }}({{ $question->answers()->first()->user()->first()->email }})</b> <br>{!! $question->answers()->first()->answer !!}</i></pre>
-                                        @endif
-                                    </div>
-                                </div>
+                                    @if($question->answers()->count() > 0)
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <a href="{{ url('tanya-jawab') }}/{{$question->id}}" style="font-size:20pt">
+                                                    {{ str_limit($question->title,35) }}
+                                                </a><br>
+                                                <hr>
+                                                <p>{!! str_limit($question->description,400) !!}</p>
+                                                <pre class="bg-light">
+                                                    <i>Pakar : <b>{{ $question->answers()->first()->user()->first()->name }}({{ $question->answers()->first()->user()->first()->email }})</b> 
+                                                    <br>{!! $question->answers()->first()->answer !!}</i>
+                                                </pre>
+                                            </div>
+                                        </div>
+                                    @endif
                               @endforeach
                         </div>
                     </div>
