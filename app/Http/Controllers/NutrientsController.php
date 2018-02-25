@@ -27,7 +27,7 @@ class NutrientsController extends Controller
                 ->addColumn('group', function($nutrients) {
                     return $nutrients->unit->name; })
                 ->addColumn('action', function($nutrients){
-                    return view('datatable._action',[
+                    return view('nutrients._action',[
                         'model' => $nutrients,
                         'edit_url' => route('nutrients.edit',$nutrients->id),
                         'delete_url' => route('nutrients.destroy', $nutrients->id),

@@ -1,7 +1,3 @@
-@section('styles')
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
-@endsection
-
 <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}"> 
   {!! Form::label('title', 'Judul', ['class'=>'col-md-3 control-label']) !!} 
   <div class="col-md-9">
@@ -23,6 +19,17 @@
         {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div class="form-group {{ $errors->has('show_slider') ? ' has-error' : '' }}">
+    {!! Form::label('show_slider','Tampil Slider',['class'=>'col-md-3 control-label'])!!}
+    <div class="col-sm-9">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!! Form::radio('show_slider','1',true) !!}
+        Ya  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!! Form::radio('show_slider','0') !!}
+        Tidak
+      {!! $errors->first('show_slider', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+
 <div class="form-group">
   <div class="col-md-4 col-md-offset-3">
     {{ Form::button('<span class="fa fa-save"></span> Simpan', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
@@ -31,10 +38,12 @@
 </div>
 
 @section('scripts')
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+<script src="{{asset('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
+<script src="{{asset('vendor/unisharp/laravel-ckeditor/adapters/jquery.js')}}"></script>
 <script>
-$(document).ready(function() {
-  $('#summernote').summernote();
-});
+    CKEDITOR.replace('summernote',{
+      skin: 'moono-lisa',
+	    preset: 'full',
+    });
 </script>
 @endsection

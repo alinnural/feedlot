@@ -16,13 +16,13 @@ class SettingTableSeeder extends Seeder
         $setting1 = new Setting();
         $setting1->name = "Nama Website";
         $setting1->code = "site_name";
-        $setting1->value = "Formula Ransum Ternak Ruminansia";
+        $setting1->value = "Dairy Feed Online";
         $setting1->save();
 
         $setting4 = new Setting();
         $setting4->name = "Deskripsi Website";
         $setting4->code = "site_description";
-        $setting4->value = "Formula Ransum Ternak Ruminansia";
+        $setting4->value = 'Dairy Feed Online adalah sistem informasi pakan sapi perah yang dapat diakses oleh para praktisi, peternak dan koperasi sapi perah';
         $setting4->save();
 
         $setting2 = new Setting();

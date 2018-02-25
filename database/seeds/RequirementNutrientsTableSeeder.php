@@ -3,9 +3,16 @@
 use Illuminate\Database\Seeder;
 use App\Nutrient;
 use App\requirement;
+use Flynsarmy\CsvSeeder\CsvSeeder;
 
-class RequirementNutrientsTableSeeder extends Seeder
+class RequirementNutrientsTableSeeder extends CsvSeeder
 {
+    public function __construct()
+	{
+		$this->table = 'requirement_nutrients';
+		$this->filename = base_path().'/database/seeds/csvs/requirement_nutrients.csv';
+	}
+
     /**
      * Run the database seeds.
      *
@@ -13,61 +20,12 @@ class RequirementNutrientsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('requirement_nutrients')->insert([
-        [
-            'requirement_id'        =>'1',
-            'nutrient_id'           =>'1',
-            'min_composition'       =>'86',
-            'max_composition'       =>'0'
-        ],
-        [
-            'requirement_id'        =>'1',
-            'nutrient_id'           =>'2',
-            'min_composition'       =>'0',
-            'max_composition'       =>'0'
-        ],
-        [
-            'requirement_id'        =>'1',
-            'nutrient_id'           =>'3',
-            'min_composition'       =>'13',
-            'max_composition'       =>'15'
-        ],
-        [
-            'requirement_id'        =>'1',
-            'nutrient_id'           =>'4',
-            'min_composition'       =>'7',
-            'max_composition'       =>'0'
-        ],
-        [
-            'requirement_id'        =>'1',
-            'nutrient_id'           =>'5',
-            'min_composition'       =>'0',
-            'max_composition'       =>'0'
-        ],
-        [
-            'requirement_id'        =>'1',
-            'nutrient_id'           =>'6',
-            'min_composition'       =>'0',
-            'max_composition'       =>'0'
-        ],
-        [
-            'requirement_id'        =>'1',
-            'nutrient_id'           =>'7',
-            'min_composition'       =>'70',
-            'max_composition'       =>'72'
-        ],
-        [
-            'requirement_id'        =>'1',
-            'nutrient_id'           =>'8',
-            'min_composition'       =>'0.80',
-            'max_composition'       =>'1.00'
-        ],
-        [
-            'requirement_id'        =>'1',
-            'nutrient_id'           =>'9',
-            'min_composition'       =>'0.6',
-            'max_composition'       =>'0.8'
-        ]
-        ]);        	
+        // Recommended when importing larger CSVs
+		DB::disableQueryLog();
+        
+        // Uncomment the below to wipe the table clean before populating
+        DB::table($this->table)->truncate();
+
+        parent::run();   
     }
 }

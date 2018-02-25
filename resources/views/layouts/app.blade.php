@@ -31,6 +31,15 @@
         z-index: 9999;
         background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
     }
+    
+    .footer {
+      bottom: 0;
+      width: 100%;
+      height: 60px; /* Set the fixed height of the footer here */
+      line-height: 60px; /* Vertically center the text there */
+      background-color: #f5f5f5;
+    }
+    
     </style>
 
     <!-- Scripts -->
@@ -55,7 +64,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Feedlot') }}
+                        {{ config('configuration.site_name') }}
                     </a>
                 </div>
 
@@ -63,10 +72,15 @@
                     <!-- Right Side Of Navbar -->
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        @if(Auth::guest())
-                            {!! $MenuUtama->asUl(['class' => 'nav navbar-nav'],['class'=>'dropdown-menu']) !!}
-                        @endif
-                        @role('admin')
+                        @include('layouts.menu-atas')
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        @if (Auth::guest())
+                            <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                            <li><a href="{{ url('/register') }}"> Registrasi</a></li>
+                        @else
+                            @role('admin')
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa fa-pencil"></i> Editor <span class="caret"></span>
@@ -75,22 +89,17 @@
                                     {!! Html::smartNavBackend(url('/admin/post'), 'Berita','fa fa-pencil') !!}
                                     {!! Html::smartNavBackend(url('/admin/page'), 'Halaman','fa fa-book') !!}
                                     {!! Html::smartNavBackend(url('/admin/menu'), 'Menu','fa fa-book') !!}
+                                    {!! Html::smartNavBackend(url('/admin/question'), 'Tanya Jawab','fa fa-question') !!}
                                     {!! Html::smartNavBackend(url('/admin/slider'), 'Slider','fa fa-image') !!}
                                     {!! Html::smartNavBackend(url('/admin/social'), 'Social','fa fa-facebook') !!}
                                     {!! Html::smartNavBackend(url('/admin/album'), 'Album Foto','fa fa-camera-retro') !!}
+                                    {!! Html::smartNavBackend(url('/admin/file'), 'File & PDF','fa fa-file') !!}
+                                    {!! Html::smartNavBackend(url('/admin/setting'), 'Setting','fa fa-cog') !!}
+                                    {!! Html::smartNavBackend(url('/admin/member'), 'Member','fa fa-users') !!}
                                 </ul>
                             </li>
-                            {!! Html::smartNavBackend(url('/admin/setting'), 'Setting','fa fa-cog') !!}
-                            {!! Html::smartNavBackend(url('/admin/member'), 'Member','fa fa-users') !!}
-                        @endrole
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
-                            <li><a href="{{ url('/register') }}"><i class="fa fa-user"></i> Register</a></li>
-                        @else
-                            <li><a href="{{ url('/settings/profile') }}"><i class="fa fa-user"></i> Profile</a></li>
+                            @endrole
+                            <li><a href="{{ url('/settings/profile') }}"><i class="fa fa-user"></i> Profil</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -119,6 +128,11 @@
         @include('layouts._flash')
         @yield('content')
         </div>
+        <footer class="footer">
+          <div class="container">
+            <span class="text-muted" style="color:#43a047;">Copyright 2017 by Dairy Feed Online</span>
+          </div>
+        </footer>
     </div>
 
     

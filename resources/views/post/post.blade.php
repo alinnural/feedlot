@@ -9,28 +9,46 @@
     <div class="row">
         @include('layouts.menu')
         <div class="col-md-9">
-            <div class="post">
-                <div class="post-content image-caption">
-                    <h1 class="post-title">{!! $post->title !!}</h1>
-                    <div class="meta">
-                        <span class="date">{{ $post->published_at->format('M jS Y g:ia') }}</span> 
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="post">
+                        <div class="post-content image-caption">
+                            <h1 class="post-title">
+                                {!! $post->title !!}
+
+                                @role('admin')
+                                <div class="pull-right">
+                                <a href="{{ route('post.edit',$post->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
+                                </div>
+                                @endrole
+                            </h1>
+                            <div class="meta">
+                                <span class="date"><i class="fa fa-calendar"></i> {{ $post->published_at->format('Y-m-d g:ia') }}</span> 
+                            </div>
+                            <hr>
+                            @if($post->page_image != '')
+                            <div class="card">
+                                <img src="
+                                @if($post->page_image == null)
+                                    {{asset('images/no-photo.jpg')}}
+                                @else
+                                    {{url('img/post')}}/{{$post->page_image}}
+                                @endif
+                                " alt="{{ $post->title }}" class="img img-responsive" width="350px;" style="float:left; margin-right : 20px; margin-bottom : 20px;">
+                            </div>
+                            @endif
+                            {!! $post->content_html !!}
+                        </div><!-- /.post-content --> 
+                        <br>
+                        <hr>
+                        @include('layouts.shareit')
                     </div>
                     <hr>
-                    <div class="card">
-                        @if($post->page_image == '')
-                            <img src="http://5uoqf25iuenklnzqg8khs17s.wpengine.netdna-cdn.com/wp-content/uploads/2014/10/d61-1024x525.jpg" class="attachment-large size-large wp-post-image" asizes="(max-width: 1024px) 100vw, 1024px">		</a>
-                        @else
-                            <img src="{{url('img/post')}}/{{$post->page_image}}" alt="{{ $post->title }}" class="img img-responsive" width="350px;" style="float:left; margin-right : 20px; margin-bottom : 20px;">
-                        @endif
-                    </div>
-                    {!! $post->content_html !!}
-                </div><!-- /.post-content --> 
-                <br>
-                <hr>
-                @include('layouts.shareit')
+                </div>
             </div>
-            <hr>
-            @include('layouts.disqus')    
         </div>
+        @mobile
+            @include('layouts.menu-mobile')
+        @endmobile
     </div>
 @endsection

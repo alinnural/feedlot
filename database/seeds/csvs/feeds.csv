@@ -1,0 +1,43 @@
+name,price,min,max,group_feed_id,is_public
+Jerami Padi,200,0,30,1,1
+Rumput Lapang,200,0,50,1,1
+Rumput Gajah,200,0,50,1,1
+Daun Jagung,250,0,40,1,1
+Daun Singkong,500,0,30,1,1
+Daun Lamtoro,300,0,30,1,1
+Jagung,3000,10,50,2,1
+Dedak Padi Halus,1800,0,40,2,1
+Dedak Padi Kasar,1800,0,40,2,1
+Dedak Jagung,3500,0,30,2,1
+Bekatul,2500,0,30,2,1
+Onggok,2200,0,40,2,1
+Onggok Super,2200,0,30,2,1
+Gaplek ,3000,0,30,2,1
+Pollard,3300,0,30,2,1
+Singkong,3500,0,30,3,1
+Bungkil Kedelai,6500,0,35,3,1
+Biji Kedelai,8000,0,20,3,1
+Bungkil Kelapa Sawit,1400,0,30,3,1
+Bungkil Kelapa,2750,0,30,3,1
+Bungkil Biji Kapuk,2100,0,10,3,1
+Ampas Bir Kering,2000,0,20,3,1
+Ampas Kecap,1000,0,20,3,1
+Ampas Tahu,417,0,30,3,1
+Ampas Singkong,400,0,20,3,1
+Bungkil Kacang Tanah,4000,0,20,3,1
+CPO,5000,1,5,2,1
+Molases,3000,5,7,2,1
+Garam,1500,0.25,1,4,1
+Kapur,500,0,2,4,1
+Kalsium Karbonat,750,0,2,4,1
+DCP,20000,0,2,4,1
+MCP,15000,0,1,4,1
+Premix,30000,0,1,4,1
+Tepung Skim,20000,0,10,3,1
+DDGS,4800,0,10,3,1
+Kulit Kacang Asin (+ biji),2700,0,5,2,1
+Kulit Kacang Tanah,1000,0,5,3,1
+Kulit Kopi,700,0,10,3,1
+Bran Sari Boga,1900,0,25,3,1
+Brand Jagung,1600,0,25,3,1
+Bran Kacang Hijau,1700,0,25,3,1

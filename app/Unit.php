@@ -1,16 +1,16 @@
-<?php 
-
+<?php
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
- 
-class Unit extends Model 
+
+class Unit extends Model
 {
+
     protected $fillable = [
         'name',
         'symbol'
-        ];
+    ];
 
     public function nutrients()
     {
@@ -20,7 +20,7 @@ class Unit extends Model
     public static function boot()
     {
         parent::boot();
-        self::deleting(function($group) {
+        self::deleting(function ($group) {
             // mengecek apakah penulis masih punya buku
             if ($group->nutrients->count() > 0) {
                 // menyiapkan pesan error
@@ -31,13 +31,13 @@ class Unit extends Model
                 }
                 $html .= '</ul>';
                 Session::flash("flash_notification", [
-                    "level"=>"danger",
-                    "message"=>$html
+                    "level" => "danger",
+                    "message" => $html
                 ]);
                 // membatalkan proses penghapusan
                 return false;
             }
-        }); 
+        });
     }
 }
  

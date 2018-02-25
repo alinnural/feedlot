@@ -9,13 +9,13 @@
     {!! Form::label('type','Jenis Menu',['class'=>'col-md-3 control-label'])!!}
     <div class="col-sm-9">
         <select name="type" class="form-control" id="type">
-            <option selected="" readonly>
+            <option readonly>
                 - Pilih Jenis Menu -
             </option>
-            <option value="1">
+            <option value="1" @if($menu->type == 1) selected @endif>
                 Link
             </option>
-            <option value="2">
+            <option value="2" @if($menu->type == 2) selected @endif>
                 Halaman
             </option>
         </select>
@@ -80,7 +80,7 @@
     </div>
 </div>
 <div class="form-group">
-  <div class="col-md-4 col-md-offset-2">
+  <div class="col-md-4 col-md-offset-3">
     {{ Form::button('<span class="fa fa-save"></span> Simpan', array('class'=>'btn btn-primary', 'type'=>'submit')) }}
     <a href="{{ url('admin/menu') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
   </div>
@@ -90,33 +90,43 @@
 <script>
 $(document).ready(function() {
     $('#summernote').summernote();
-    $('#row_halaman').hide();
-    $('#row_link').hide();
-    $('#row_parent').hide();
+
+    var type = "@php echo $menu->type; @endphp";
+    show(type);
+
+    var id = "@php echo $menu->is_parent; @endphp";
+    show_parent(id);    
 });
 
 $('#type').change(function(){
-    if($('#type').val() == '1') {
-        $('#row_halaman').hide();
-        $('#row_link').show();
-    }
-    if($('#type').val() == '2') {
-        $('#row_halaman').show();
-        $('#row_link').hide();
-    }
+    var type = $('type').val();
+    show(type);
 });
 
+function show(type){
+  if(type == '1') {
+      $('#row_halaman').hide();
+      $('#row_link').show();
+  }
+  if(type == '2') {
+      $('#row_halaman').show();
+      $('#row_link').hide();
+  }
+}
 
+function show_parent(id){
+  if(id == '0')
+  {
+      $("#row_parent").show();
+  }
+  else
+  {
+      $("#row_parent").hide();
+  }
+}
 $('input[name=is_parent]').change(function () {
-    if($(this).val() == '0')
-    {
-        $("#row_parent").show();
-    }
-    else
-    {
-        $("#row_parent").hide();
-    }
-
+  var id = $(this).val();
+  show_parent(id);
 });
 
 </script>

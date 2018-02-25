@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,        
 
         /*
          * Package Service Providers...
@@ -186,6 +187,8 @@ return [
         
         Lavary\Menu\ServiceProvider::class,
         App\Providers\ConfigurationServiceProvider::class,
+        Riverskies\Laravel\MobileDetect\MobileDetectServiceProvider::class,
+        Unisharp\Ckeditor\ServiceProvider::class,
     ],
 
     /*
@@ -239,6 +242,8 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Calculate' => App\Helpers\Calculate::class,
         'Menu'      => Lavary\Menu\Facade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'MobileDetect' => Riverskies\Laravel\MobileDetect\Facades\MobileDetect::class
     ],
 
 ];

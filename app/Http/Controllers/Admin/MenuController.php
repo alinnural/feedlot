@@ -27,8 +27,9 @@ class MenuController extends Controller
             $menu = menu::select(['id','name','is_parent','parent_id','type','position']);
             return Datatables::of($menu)
                 ->addColumn('action', function($menu){
-                    return view('admin.menu._action',[
+                    return view('admin.datatable._action',[
                         'model' => $menu,
+                        'edit_url' => route('menu.edit',$menu->id),
                         'delete_url' => route('menu.destroy', $menu->id),
                         'confirm_message' => 'Are you sure to delete '. $menu->title . '?'
                     ]);
@@ -108,9 +109,9 @@ class MenuController extends Controller
      */
     public function update(menuUpdateRequest $request, $id)
     {
-        $menu = menu::findOrFail($id);
+        $menu = Menu::findOrFail($id);
 
-        if(!$menu->update($request->all()))
+        if(!$menu->update($request->postFillData()))
             return redirect()->back();
 
         Session::flash("flash_notification", [
